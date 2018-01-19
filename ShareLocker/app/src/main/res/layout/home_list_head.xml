@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 首页list中的head view -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!--分割线-->
+    <include layout="@layout/split_line" />
+
+    <!--banner-->
+    <com.youth.banner.Banner
+        android:id="@+id/banner_home"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" /><!--TODO 图片尺寸应该多大？-->
+
+    <!--分割线-->
+    <include layout="@layout/split_line" />
+
+    <!--推广位-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingLeft="5dp" android:paddingRight="5dp">
+
+        <!--left-->
+        <LinearLayout
+            android:id="@+id/opt_left"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/opt_left_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/item_left"/>
+
+            <TextView
+                android:id="@+id/opt_left_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="带妹子去兜风吧~" />
+        </LinearLayout>
+
+        <!--right-->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
+            <!--right1-->
+            <LinearLayout
+                android:id="@+id/opt_right1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/opt_right_img1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:src="@mipmap/item_right2"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:orientation="vertical"
+                    android:paddingLeft="5dp">
+
+                    <TextView
+                        android:id="@+id/opt_right_title1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="这是光盘"/>
+
+                    <TextView
+                        android:id="@+id/opt_right_txt1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="里面是什么？里面是什么？里面是什么？里面是什么？"
+                        android:textSize="4pt"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!--right2-->
+            <LinearLayout
+                android:id="@+id/opt_right2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/opt_right_img2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="4"
+                    android:src="@mipmap/item_right1"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="5"
+                    android:orientation="vertical"
+                    android:paddingLeft="5dp">
+
+                    <TextView
+                        android:id="@+id/opt_right_title2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="这是游戏"/>
+
+                    <TextView
+                        android:id="@+id/opt_right_txt2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="里面是什么？里面是什么？里面是什么？里面是什么？"
+                        android:textSize="4pt" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--分割线-->
+    <include layout="@layout/split_line" />
+
+</LinearLayout>
