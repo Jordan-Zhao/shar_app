@@ -6,7 +6,9 @@ package com.share.locker.common;
  */
 
 public class Constants {
-    public final static String APP_CONFIG = "APP_CONFIG";   //系统配置信息在ShareRefer中的key
+    public final static String SHARED_REF_NAME = "share_locker";
+    public final static String SHARED_REF_KEY_APP_CONFIG = "app_config";   //系统配置信息在ShareRefer中的key
+    public final static String SHARED_REF_KEY_LOGIN_info = "login_info";    //登录信息
 
     public final static String PASSWORD_MD5_KEY = "passworkMD5Key";
 
@@ -18,4 +20,5 @@ public class Constants {
 
     public final static String HTTP_RESULT_JSON_TYPE_OBJECT = "HTTP_RESULT_JSON_TYPE_OBJECT";	//http 请求返回的json：Object
     public final static String HTTP_RESULT_JSON_TYPE_ARRAY = "HTTP_RESULT_JSON_TYPE_ARRAY";	//http 请求返回的json：ARRAY
+
 }

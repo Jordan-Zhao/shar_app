@@ -1,5 +1,6 @@
 package com.share.locker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
@@ -34,6 +35,29 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initApplication();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent){
+        switch (requestCode){
+            case 1:
+                if(resultCode == RESULT_OK){
+                    String tab = intent.getStringExtra("tab");
+                    if(tab != null){
+                        if("mine".equals(tab)){
+                            fragTabhost.setCurrentTab(4);
+                            String mineFragTag = fragTabhost.getCurrentTabTag();
+                            TabMineFragment mineFragment = (TabMineFragment)getSupportFragmentManager().findFragmentByTag(mineFragTag);
+                            mineFragment.loadMineData();
+                        }
+                    }
+                }
+        }
     }
 
     /**

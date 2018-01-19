@@ -27,8 +27,6 @@ import org.xutils.x;
 @ContentView(R.layout.fragment_home)
 public class TabHomeFragment extends Fragment {
     private final String TAG_LOG = "TabHomeFragment";
-//    private final String URL_GET_OPERATION_INFO = Constants.URL_BASE + "getOperationInfo.json";
-//    private final String URL_GET_GET_HOT_ITEM_LIST = Constants.URL_BASE + "getHotItemList.json";
 
     private final String URL_GET_OPERATION_DATA = Constants.URL_BASE + "getOperationData.json";
 
@@ -41,19 +39,12 @@ public class TabHomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater,container,savedInstanceState);
+
         //xutil 渲染fragment
         view = x.view().inject(this, inflater, container);
-//        View view = inflater.inflate(R.layout.fragment_home,container,false);
-
-//        testShowBanner();
 
         loadOperationData();
-
-        //加载运营推广数据，并显示
-//        showOperationInfo(/**/);
-
-        //加载火热宝贝数据，并显示
-//        showHotItemList();
 
         return view;
     }

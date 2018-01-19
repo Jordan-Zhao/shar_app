@@ -41,8 +41,8 @@ public class LockerAppInitializer {
         }
 
         //检查系统配置信息是否存在
-        SharedPreferences sharedPreferences = mainActivity.getSharedPreferences("config", Context.MODE_PRIVATE);
-        String config = sharedPreferences.getString(Constants.APP_CONFIG,null);
+        SharedPreferences sharedPreferences = mainActivity.getSharedPreferences(Constants.SHARED_REF_NAME, Context.MODE_PRIVATE);
+        String config = sharedPreferences.getString(Constants.SHARED_REF_KEY_APP_CONFIG,null);
         if(config == null){
             //没有配置信息，从接口获取
             LockerHttpUtil.getJson(URL_GET_APP_CONFIG,
@@ -50,9 +50,9 @@ public class LockerAppInitializer {
                     @Override
                     public void processSuccess(String successData){
                         //保存到sharedPref
-                        SharedPreferences sharedPreferences = mainActivity.getSharedPreferences("config", Context.MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = mainActivity.getSharedPreferences(Constants.SHARED_REF_NAME, Context.MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(Constants.APP_CONFIG,successData);
+                        editor.putString(Constants.SHARED_REF_KEY_APP_CONFIG,successData);
                         editor.apply();
 
                         //初始化配置对象
