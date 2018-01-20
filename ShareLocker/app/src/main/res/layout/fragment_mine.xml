@@ -1,80 +1,169 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:orientation="vertical">
 
     <!--我的基本信息系-->
+    <!--登录后显示-->
     <LinearLayout
+        android:id="@+id/mine_logined_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp">
+
         <ImageView
             android:id="@+id/mine_icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:src="@mipmap/p1"/>
+            android:layout_weight="3"
+            android:src="@mipmap/unlogin2" />
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="10"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
+
             <TextView
                 android:id="@+id/mine_nick_txt"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
-            <TextView
-                android:id="@+id/mine_register_id_txt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="测试账号"
+                android:textSize="6pt" />
 
+            <TextView
+                android:id="@+id/mine_email_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="jindongzhao@126.com" />
+
+            <TextView
+                android:id="@+id/mine_phone_txt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="18658894043" />
+        </LinearLayout>
+    </LinearLayout>
+    <!--未登录时显示-->
+    <LinearLayout
+        android:id="@+id/mine_unlogin_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:src="@mipmap/unlogin2" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:orientation="vertical"
+            android:paddingLeft="10dp">
             <!--未登录时显示-->
             <Button
                 android:id="@+id/mine_login_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="请登录"
-                android:visibility="gone"/>
+                android:text="请登录" />
         </LinearLayout>
     </LinearLayout>
+
+    <include layout="@layout/split_line" />
 
     <!--我的收藏-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp">
+
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@mipmap/heart"/>
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:src="@mipmap/heart" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="10"
             android:paddingLeft="5dp"
-            android:text="收藏的宝贝"/>
+            android:text="收藏的宝贝"
+            android:textSize="8pt" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:src="@mipmap/nav1" />
     </LinearLayout>
+
     <include layout="@layout/split_line" />
 
     <!--我发布的宝贝-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp">
+
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@mipmap/heart"/>
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:src="@mipmap/heart" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="10"
             android:paddingLeft="5dp"
-            android:text="发布的宝贝"/>
+            android:text="发布的宝贝"
+            android:textSize="8pt" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:src="@mipmap/nav1" />
     </LinearLayout>
+
     <include layout="@layout/split_line" />
 
 
@@ -82,18 +171,62 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp">
+
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:src="@mipmap/heart"/>
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:src="@mipmap/heart" />
+
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:layout_weight="10"
             android:paddingLeft="5dp"
-            android:text="租用记录"/>
+            android:text="租用记录"
+            android:textSize="8pt" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:src="@mipmap/nav1" />
     </LinearLayout>
+
     <include layout="@layout/split_line" />
+
+    <!--退出登录按钮-->
+    <LinearLayout
+        android:id="@+id/mine_logout_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="3dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="3dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/mine_loginout_btn"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/btn_action"
+            android:text="退出登录"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
+    </LinearLayout>
 </LinearLayout>

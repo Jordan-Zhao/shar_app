@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Tab> bottomTabList = new ArrayList<>();
     private LayoutInflater mainInflater;
-    private FragmentTabHost fragTabhost;
+    public FragmentTabHost fragTabhost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent){
         switch (requestCode){
             case 1:
@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         }
-    }
+    }*/
 
     /**
      * 初始化应用程序
