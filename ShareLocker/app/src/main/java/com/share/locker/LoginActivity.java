@@ -1,8 +1,6 @@
 package com.share.locker;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -11,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
@@ -28,7 +27,7 @@ import java.util.Map;
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends AppCompatActivity {
     private final String TAG_LOG = "LoginActivity";
-    private final String URL_LOGIN = Constants.URL_BASE+"login.json";
+    private final String URL_LOGIN = Constants.URL_BASE + "login.json";
     private View view;
 
     @ViewInject(R.id.login_email_phone_txt)
@@ -62,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //TODO 条件判断
 
-        //post请求，服务端注册
+        //post请求，服务端
         Map<String, String> paramMap = new HashMap<>();
         paramMap.put("userName", userName);
         paramMap.put("password", password);
@@ -74,15 +73,10 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         //把userName和password存入SharedRef
-                        SharedPreferences sharedPreferences = getSharedPreferences(Constants.SHARED_REF_NAME, Context.MODE_PRIVATE);
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString(Constants.SHARED_REF_KEY_LOGIN_info,userName+";"+password);
-                        editor.apply();
-                        //跳转到mine fragment
-                        Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                        mainIntent.putExtra("tab", "mine");
-                        setResult(RESULT_OK, mainIntent);
-                        finish();
+                        BizUtil.saveValueInPref(Constants.SHARED_REF_KEY_LOGIN_info, userName + ";" + password, LoginActivity.this);
+
+                        //登录成功后，返回到上一个页面
+                        backToLastPage();
                     }
                 });
             }
@@ -92,7 +86,24 @@ public class LoginActivity extends AppCompatActivity {
                 //TODO 失败，给出失败原因提示
             }
         });
+    }
 
+    /**
+     * 登录成功后，返回到上一个页面
+     */
+    private void backToLastPage(){
+        Intent inIntent = getIntent();
+        String jumpTo = inIntent.getStringExtra(Constants.KEY_LOGINED_JUMP);
+        if(Constants.LOGINED_JUMP_TO_MINE.equals(jumpTo)) {
+            //跳转到mine fragment
+            Intent mineFragIntent = new Intent();
+            setResult(RESULT_OK, mineFragIntent);
+            finish();
+        }else if(Constants.LOGINED_JUMP_TO_PUBLISH_ITEM.equals(jumpTo)){
+            //跳转到发布宝贝的activity
+            Intent publishItemIntent = new Intent(this,PublishItemActivity.class);
+            startActivity(publishItemIntent);
+        }
     }
 }
 

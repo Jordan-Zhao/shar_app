@@ -4,10 +4,5 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <TextView
-        android:text="@string/tab_item_publish"
-        android:textSize="30dp"
-        android:gravity="center"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+    <!-- 发布宝贝在activity中进行，这个Fragment永远不会显示,所以为空-->
 </LinearLayout>

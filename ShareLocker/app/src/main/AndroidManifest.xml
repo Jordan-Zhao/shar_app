@@ -25,6 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- main, 5个fragment-->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleInstance"
@@ -35,9 +36,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login"></activity>
+
+        <!--login-->
+        <activity android:name=".LoginActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+
+        <!--发布宝贝-->
+        <activity android:name=".PublishItemActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
     </application>
 
 </manifest>

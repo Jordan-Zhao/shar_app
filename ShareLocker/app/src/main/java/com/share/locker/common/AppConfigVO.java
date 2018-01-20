@@ -16,8 +16,8 @@ import java.util.Map;
  * Created by Jordan on 16/01/2018.
  */
 
-public class AppConfig {
-    private final static String TAG_LOG = "AppConfig";
+public class AppConfigVO {
+    private final static String TAG_LOG = "AppConfigVO";
 
     public static String passwordMD5Key;
 

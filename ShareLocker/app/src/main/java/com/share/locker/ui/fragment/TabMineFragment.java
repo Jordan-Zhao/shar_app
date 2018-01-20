@@ -1,9 +1,7 @@
 package com.share.locker.ui.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -19,7 +17,9 @@ import com.bumptech.glide.Glide;
 import com.share.locker.LoginActivity;
 import com.share.locker.MainActivity;
 import com.share.locker.R;
+import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
+import com.share.locker.common.LoginUserVO;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 
@@ -79,19 +79,20 @@ public class TabMineFragment extends Fragment {
     }
 
     //登录按钮
-    @Event(value = R.id.mine_login_btn,type = View.OnClickListener.class)
+    @Event(value = R.id.mine_login_btn, type = View.OnClickListener.class)
     private void onClickLoginBtn(View view) {
-        Intent intent = new Intent(getActivity(), LoginActivity.class);
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        intent.putExtra(Constants.KEY_LOGINED_JUMP,Constants.LOGINED_JUMP_TO_MINE);
         startActivityForResult(intent, 1);
     }
 
     //接收发出的intent回传数据
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent){
-        switch (requestCode){
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        switch (requestCode) {
             case 1:
-                if(resultCode == Activity.RESULT_OK){
-                    MainActivity mainActivity = (MainActivity)getActivity();
+                if (resultCode == Activity.RESULT_OK) {
+                    MainActivity mainActivity = (MainActivity) getActivity();
                     mainActivity.fragTabhost.setCurrentTab(4);
                     loadMineData();
                 }
@@ -100,13 +101,10 @@ public class TabMineFragment extends Fragment {
 
 
     //退出登录按钮
-    @Event(value = R.id.mine_loginout_btn,type = View.OnClickListener.class)
+    @Event(value = R.id.mine_loginout_btn, type = View.OnClickListener.class)
     private void onClickLoginoutBtn(View view) {
         //清理sharedRef数据
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_REF_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.remove(Constants.SHARED_REF_KEY_LOGIN_info);
-        editor.apply();
+        BizUtil.removeValueFromPref(Constants.SHARED_REF_KEY_LOGIN_info, getActivity());
 
         showUnLoginUi();
     }
@@ -114,14 +112,12 @@ public class TabMineFragment extends Fragment {
     //加载用户数据，public可调用
     private void loadMineData() {
         //从sharedRef取用户账号和密码信息，如果存在，则请求用户数据，不存在，则显示登录按钮
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(Constants.SHARED_REF_NAME, Context.MODE_PRIVATE);
-        String loginInfo = sharedPreferences.getString(Constants.SHARED_REF_KEY_LOGIN_info, null);
-        if (loginInfo == null) {
+        LoginUserVO loginUserVO = BizUtil.getLoginUser(getActivity());
+        if (loginUserVO == null) {
             //显示登录按钮
             showUnLoginUi();
         } else {
-            String[] loginInfoArr = loginInfo.split(";");
-            showLogin(loginInfoArr[0], loginInfoArr[1]);
+            showLogin(loginUserVO);
         }
     }
 
@@ -133,11 +129,11 @@ public class TabMineFragment extends Fragment {
     }
 
     //用户登录过，根据用户名和密码加载数据，然后显示
-    private void showLogin(String userName, String password) {
+    private void showLogin(LoginUserVO loginUserVO) {
         //从服务端加载数据
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("userName", userName);
-        paramMap.put("password", password);
+        paramMap.put("userName", loginUserVO.getUserName());
+        paramMap.put("password", loginUserVO.getPassword());
         LockerHttpUtil.postJson(URL_GET_USER_INFO, paramMap, new HttpCallback() {
             @Override
             public void processSuccess(final String successData) {
@@ -179,7 +175,7 @@ public class TabMineFragment extends Fragment {
     }
 
     //显示登录后的UI
-    private void showLoginedUi(){
+    private void showLoginedUi() {
         loginedLayout.setVisibility(View.VISIBLE);
         unloginLayout.setVisibility(View.GONE);
         logoutLayout.setVisibility(View.VISIBLE);
