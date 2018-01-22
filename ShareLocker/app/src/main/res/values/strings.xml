@@ -20,4 +20,23 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <string name="permission_request_denied">Permission request denied</string>
+    <string name="error_gif">x or y bound size should be at least %1$dpx and file size should be no more than %2$sM</string>
+
+    <!--租用最小时间单元 -->
+    <string-array name="price_time_unit">
+        <item>天</item>
+        <item>半天</item>
+        <item>小时</item>
+    </string-array>
+
+    <!--柜门尺寸 -->
+    <string-array name="locker_size">
+        <item>小柜(15mm*15mm*10mm)</item>
+        <item>中柜(25mm*25mm*25mm)</item>
+        <item>大柜(50mm*50mm*50mm)</item>
+    </string-array>
+
+
 </resources>

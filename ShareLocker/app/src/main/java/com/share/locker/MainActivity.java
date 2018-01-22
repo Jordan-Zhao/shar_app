@@ -1,5 +1,6 @@
 package com.share.locker;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTabHost;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TabHost;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
@@ -117,12 +119,28 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(loginIntent);
                 }
                 else{
+                    //切换到发布宝贝frag
+                    fragTabhost.setCurrentTab(2);
                     //如果已登录，跳转到发布宝贝页面
                     Intent intent = new Intent(MainActivity.this,PublishItemActivity.class);
-                    startActivity(intent);
+                    startActivityForResult(intent,Constants.INTENT_REQUEST_CODE_PUBLISH_ITEM);
                 }
             }
         });
 
+    }
+
+    //接收发出的intent回传数据
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        switch (requestCode) {
+            case Constants.INTENT_REQUEST_CODE_PUBLISH_ITEM:
+                if (resultCode == Activity.RESULT_OK) {
+                    //TODO 在”发布宝贝“的fragment里显示宝贝发布完成。并显示宝贝 title
+                    //加载已发布的宝贝title
+                    Long itemId = Long.parseLong(intent.getStringExtra("itemId"));
+                    Toast.makeText(this,String.valueOf(itemId),1000*1000).show();
+                }
+        }
     }
 }

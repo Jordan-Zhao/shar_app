@@ -83,14 +83,14 @@ public class TabMineFragment extends Fragment {
     private void onClickLoginBtn(View view) {
         Intent intent = new Intent(getContext(), LoginActivity.class);
         intent.putExtra(Constants.KEY_LOGINED_JUMP,Constants.LOGINED_JUMP_TO_MINE);
-        startActivityForResult(intent, 1);
+        startActivityForResult(intent, Constants.INTENT_REQUEST_CODE_LOGIN);
     }
 
     //接收发出的intent回传数据
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
-            case 1:
+            case Constants.INTENT_REQUEST_CODE_LOGIN:
                 if (resultCode == Activity.RESULT_OK) {
                     MainActivity mainActivity = (MainActivity) getActivity();
                     mainActivity.fragTabhost.setCurrentTab(4);
