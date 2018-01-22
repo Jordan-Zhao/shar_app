@@ -5,30 +5,24 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
-import com.share.locker.common.MachineVO;
+import com.share.locker.common.SelectableLockerVO;
 import com.share.locker.common.MockUtil;
-import com.share.locker.common.SpinnerItemData;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 import com.share.locker.ui.PublishPhotoListAdapter;
 import com.share.locker.ui.PublishPhotoListItemData;
 import com.share.locker.ui.common.HorizontalListView;
-import com.share.locker.ui.common.SelectorAdapter;
-import com.share.locker.util.LogUtil;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -44,15 +38,12 @@ import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.datatype.Duration;
-
 @ContentView(R.layout.activity_publish_item)
-public class PublishItemActivity extends AppCompatActivity {
+public class PublishItemActivity extends BaseActivity {
     private static final String TAG_LOG = "PublishItemActivity";
     private static final int REQUEST_CODE_ADD_PHOTO = 21;//定义请求码常量
     private static final String URL_PUBLISH_ITEM = Constants.URL_BASE+"publishItem.json";
@@ -86,11 +77,15 @@ public class PublishItemActivity extends AppCompatActivity {
 
     @ViewInject(R.id.publish_description_txt)
     private EditText descriptionTxt;
+
+    @ViewInject(R.id.publish_status_cbox)
+    private CheckBox publishStatusCBox;
+
     @ViewInject(R.id.publish_submit_btn)
     private Button submitBtn;
 
     private List<Uri> photoUrlList; //选择的图片URI
-    private MachineVO[] machineVOArr;   //绑定的箱柜selector的数据源
+    private SelectableLockerVO[] selectableLockerVOArr;   //绑定的箱柜selector的数据源
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,13 +98,13 @@ public class PublishItemActivity extends AppCompatActivity {
     }
 
     private void addEventListener() {
-        //柜门尺寸改变后，影响可选择的柜箱
+        //柜门尺寸改变后，结合当前位置，重新加载可选择的箱柜列表
         lockerSizeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                machineVOArr = MockUtil.getMatchedMachine(i);
+                selectableLockerVOArr = MockUtil.getMatchedMachine(i);  //TODO 应该去服务端取数据
                 ArrayAdapter<String> machineSelectorAdapter = new ArrayAdapter<String>(PublishItemActivity.this,
-                        android.R.layout.simple_spinner_item, getMachineNameArr(machineVOArr));
+                        android.R.layout.simple_spinner_item, getMachineNameArr(selectableLockerVOArr));
                 machineSelector.setAdapter(machineSelectorAdapter);
             }
 
@@ -174,8 +169,9 @@ public class PublishItemActivity extends AppCompatActivity {
         paramMap.put("price",priceTxt.getText().toString());
         paramMap.put("deposit",depositTxt.getText().toString());
         paramMap.put("lockerSize",getLockerSizeCode(lockerSizeSelector.getSelectedItemPosition()));
-        paramMap.put("lockerId",String.valueOf(getMachineId(machineSelector.getSelectedItemPosition())));   //TODO 应该是取lockerId
+        paramMap.put("lockerId",String.valueOf(getSelectedLockerId(machineSelector.getSelectedItemPosition())));
         paramMap.put("description",descriptionTxt.getText().toString());
+        paramMap.put("publishStatus",String.valueOf(publishStatusCBox.isChecked()));
         List<File> imgList = new ArrayList<>();
         for(Uri uri : photoUrlList){
             imgList.add(BizUtil.convertUriToFile(uri,this));
@@ -187,9 +183,9 @@ public class PublishItemActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                               @Override
                               public void run() {
-                                  //TODO 提取item ID
                                   Intent mainIntent = new Intent();
-                                   mainIntent.putExtra("itemId",successData);
+                                  mainIntent.putExtra("itemId",successData);
+                                  mainIntent.putExtra("itemTitle",titleTxt.getText().toString());//返回给main，显示已发布成功
                                   setResult(RESULT_OK,mainIntent);
                                   finish();
                               }
@@ -203,10 +199,10 @@ public class PublishItemActivity extends AppCompatActivity {
                 });
     }
 
-    private String[] getMachineNameArr(MachineVO[] machineVOArr){
+    private String[] getMachineNameArr(SelectableLockerVO[] machineVOArr){
         String[] resultArr = new String[machineVOArr.length];
         for(int i=0;i<machineVOArr.length;i++){
-            resultArr[i] = machineVOArr[i].getAddress();
+            resultArr[i] = machineVOArr[i].getMachineName();
         }
         return resultArr;
     }
@@ -226,8 +222,8 @@ public class PublishItemActivity extends AppCompatActivity {
         map.put(2,"MAX");
         return map.get(selectedPosition);
     }
-    private Integer getMachineId(int selectedPosition){
-        return machineVOArr[selectedPosition].getId();
+    private Integer getSelectedLockerId(int selectedPosition){
+        return selectableLockerVOArr[selectedPosition].getLockerId();
     }
 
 }

@@ -26,7 +26,7 @@ import com.share.locker.ui.fragment.TabMineFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private List<MainTabData> bottomTabList = new ArrayList<>();
     private LayoutInflater mainInflater;
@@ -136,10 +136,12 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case Constants.INTENT_REQUEST_CODE_PUBLISH_ITEM:
                 if (resultCode == Activity.RESULT_OK) {
-                    //TODO 在”发布宝贝“的fragment里显示宝贝发布完成。并显示宝贝 title
                     //加载已发布的宝贝title
                     Long itemId = Long.parseLong(intent.getStringExtra("itemId"));
-                    Toast.makeText(this,String.valueOf(itemId),1000*1000).show();
+                    String itemTitle = intent.getStringExtra("itemTitle");
+                    TabItemPublishFragment itemPublishFragment =
+                            (TabItemPublishFragment) getSupportFragmentManager().findFragmentByTag(fragTabhost.getCurrentTabTag());
+                    itemPublishFragment.showPublishSuccess(itemId,itemTitle);
                 }
         }
     }

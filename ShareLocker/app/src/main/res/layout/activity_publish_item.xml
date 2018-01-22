@@ -1,235 +1,294 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.share.locker.PublishItemActivity"
-    android:background="@color/white">
+    tools:context="com.share.locker.PublishItemActivity">
 
-    <!--title-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/grey"
-        android:padding="10dp">
-        <Button
-            android:id="@+id/publish_back_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@mipmap/back"/>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="发布宝贝"
-            android:textSize="10pt"/>
-    </LinearLayout>
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
 
-    <!--照片缩略图,横向滚动-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:padding="10dp"
-        android:orientation="horizontal">
-        <!--添加照片按钮-->
+        <!--title-->
         <LinearLayout
-            android:id="@+id/publish_add_photo_layout"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="100dp"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:background="@color/grey">
-            <ImageView
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey"
+            android:padding="10dp"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/publish_back_btn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:background="@mipmap/back" />
+
+            <TextView
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/camera1"/>
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="发布宝贝"
+                android:textSize="10pt" />
+        </LinearLayout>
+
+        <!--照片缩略图,横向滚动-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:orientation="horizontal"
+            android:padding="10dp"
+            android:gravity="center_vertical">
+            <!--添加照片按钮-->
+            <LinearLayout
+                android:id="@+id/publish_add_photo_layout"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:background="@color/grey"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/camera1" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="添加照片"
+                    android:textSize="8pt" />
+            </LinearLayout>
+            <!--缩略图list-->
+            <com.share.locker.ui.common.HorizontalListView
+                android:id="@+id/publish_photo_list"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="2"></com.share.locker.ui.common.HorizontalListView>
+        </LinearLayout>
+
+        <include layout="@layout/split_line" />
+
+        <!--标题-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="添加照片"
-                android:textSize="8pt"/>
+                android:text="标题(必填)"
+                android:textSize="6pt" />
+
+            <EditText
+                android:id="@+id/publish_title"
+                android:layout_width="0dp"
+                android:layout_height="60dp"
+                android:layout_weight="1"
+                android:background="@mipmap/card_9"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
         </LinearLayout>
-        <!--缩略图list-->
-        <com.share.locker.ui.common.HorizontalListView
-            android:id="@+id/publish_photo_list"
-            android:layout_width="0dp"
-            android:layout_height="100dp"
-            android:layout_weight="2"
-            >
-        </com.share.locker.ui.common.HorizontalListView>
-    </LinearLayout>
-    <include layout="@layout/split_line" />
 
-    <!--标题-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp" android:paddingRight="10dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
+        <include layout="@layout/split_line" />
+
+        <!--价格-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="价格(必填)"
+                android:textSize="6pt" />
+
+            <EditText
+                android:id="@+id/publish_price_time_txt"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:background="@mipmap/card_9"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+
+            <Spinner
+                android:id="@+id/publish_price_time_unit_selector"
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:entries="@array/price_time_unit"
+                android:gravity="center"
+                android:textSize="6pt"></Spinner>
+
+            <EditText
+                android:id="@+id/publish_price_txt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@mipmap/card_9"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" />
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="元"
+                android:textSize="6pt" />
+        </LinearLayout>
+
+        <include layout="@layout/split_line" />
+
+        <!--押金-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="押金(必填)"
+                android:textSize="6pt" />
+
+            <EditText
+                android:id="@+id/publish_deposit_txt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@mipmap/card_9"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+
+            <TextView
+                android:layout_width="30dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="元"
+                android:textSize="6pt" />
+        </LinearLayout>
+
+        <include layout="@layout/split_line" />
+
+        <!--柜门尺寸-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="柜门尺寸(必填)"
+                android:textSize="6pt" />
+
+            <Spinner
+                android:id="@+id/publish_locker_size_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:entries="@array/locker_size"
+                android:gravity="center"
+                android:textSize="6pt"></Spinner>
+        </LinearLayout>
+        <!--箱柜-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="附近可选箱柜"
+                android:textSize="6pt" />
+
+            <Spinner
+                android:id="@+id/publish_machine_selector"
+                android:layout_width="wrap_content"
+                android:minWidth="150dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="6pt"></Spinner>
+        </LinearLayout>
+
+        <include layout="@layout/split_line" />
+
+        <!--描述-->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="标题(必填)"
-            android:textSize="6pt"/>
-        <EditText
-            android:id="@+id/publish_title"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="60dp"
-            android:background="@mipmap/card"/>
-    </LinearLayout>
-    <include layout="@layout/split_line" />
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
-    <!--价格-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:paddingLeft="10dp" android:paddingRight="10dp"
-        android:orientation="horizontal"
-        android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="描述"
+                android:textSize="6pt"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="价格(必填)"
-            android:textSize="6pt"
-            android:gravity="center"/>
-        <EditText
-            android:id="@+id/publish_price_time_txt"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:background="@mipmap/card"/>
-        <Spinner
-            android:id="@+id/publish_price_time_unit_selector"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="6pt"
-            android:gravity="center"
-            android:entries="@array/price_time_unit">
-        </Spinner>
-        <EditText
-            android:id="@+id/publish_price_txt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@mipmap/card"/>
-        <TextView
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:text="元"
-            android:textSize="6pt"
-            android:gravity="center"/>
-    </LinearLayout>
-    <include layout="@layout/split_line" />
+            <EditText
+                android:id="@+id/publish_description_txt"
+                android:layout_width="0dp"
+                android:layout_height="100dp"
+                android:layout_weight="1"
+                android:background="@mipmap/card_9"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"/>
+        </LinearLayout>
 
-    <!--押金-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:paddingLeft="10dp" android:paddingRight="10dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="押金(必填)"
-            android:textSize="6pt"
-            android:gravity="center"/>
-        <EditText
-            android:id="@+id/publish_deposit_txt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:background="@mipmap/card"/>
-        <TextView
-            android:layout_width="30dp"
-            android:layout_height="match_parent"
-            android:text="元"
-            android:textSize="6pt"
-            android:gravity="center"/>
-    </LinearLayout>
-    <include layout="@layout/split_line" />
+        <!--是否上架-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
 
-    <!--柜门尺寸-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:paddingLeft="10dp" android:paddingRight="10dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="柜门尺寸(必填)"
-            android:textSize="6pt"
-            android:gravity="center"/>
-        <Spinner
-            android:id="@+id/publish_locker_size_selector"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="6pt"
-            android:gravity="center"
-            android:entries="@array/locker_size">
-        </Spinner>
-    </LinearLayout>
-    <!--箱柜-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:paddingLeft="10dp" android:paddingRight="10dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="附近可选箱柜"
-            android:textSize="6pt"
-            android:gravity="center"/>
-        <Spinner
-            android:id="@+id/publish_machine_selector"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:textSize="6pt"
-            android:gravity="center">
-        </Spinner>
-    </LinearLayout>
-    <include layout="@layout/split_line" />
+            <CheckBox
+                android:id="@+id/publish_status_cbox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="是否上架" />
+        </LinearLayout>
 
-    <!--描述-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp" android:paddingRight="10dp"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="描述"
-            android:textSize="6pt"
-            android:gravity="center"/>
-        <EditText
-            android:id="@+id/publish_description_txt"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="100dp"
-            android:background="@mipmap/card"/>
+        <Button
+            android:id="@+id/publish_submit_btn"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@color/btn_action"
+            android:text="发布"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
     </LinearLayout>
-
-    <Button
-        android:id="@+id/publish_submit_btn"
-        style="?android:textAppearanceSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="发布"
-        android:textStyle="bold"
-        android:background="@color/btn_action"
-        android:textColor="@color/white"/>
-</LinearLayout>
+</ScrollView>

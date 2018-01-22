@@ -5,6 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
     <color name="grey">#f4f3f3</color>
+    <color name="blue">#79bee9</color>
+    <color name="red">#f40202</color>
     <color name="selector_tab_text">#de464646</color>
     <color name="btn_action">#658fce</color>
 

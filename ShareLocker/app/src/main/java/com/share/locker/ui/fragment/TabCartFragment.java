@@ -13,7 +13,7 @@ import com.share.locker.R;
 /**
  * Created by ruolan on 2015/11/29.
  */
-public class TabCartFragment extends Fragment {
+public class TabCartFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

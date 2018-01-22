@@ -5,10 +5,15 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.share.locker.common.BizUtil;
+import com.share.locker.common.Constants;
+import com.share.locker.common.GlobalManager;
+import com.share.locker.common.LoginUserVO;
 import com.share.locker.util.LogUtil;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
+import org.xutils.common.util.KeyValue;
 import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.Event;
@@ -37,6 +42,7 @@ public class LockerHttpUtil {
 //        LockerHttpRequestParams params = new LockerHttpRequestParams();
         RequestParams params = new RequestParams(url);
 //        params.wd = "xUtils";
+        addLoginUserToRequestParams(params);
         Callback.Cancelable cancelable = x.http().get(params,
                 new Callback.CommonCallback<String>() {
                     @Override
@@ -79,6 +85,7 @@ public class LockerHttpUtil {
                 params.addBodyParameter(key,paramMap.get(key));
             }
         }
+        addLoginUserToRequestParams(params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String resultJson) {
@@ -124,6 +131,7 @@ public class LockerHttpUtil {
                 i++;
             }
         }
+        addLoginUserToRequestParams(params);
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String resultJson) {
@@ -167,6 +175,29 @@ public class LockerHttpUtil {
         }
     }
 
+    private static void addLoginUserToRequestParams(RequestParams params){
+        LoginUserVO loginUserVO = BizUtil.getLoginUser(GlobalManager.currentContext);
+        if(loginUserVO != null){
+            List<KeyValue> paramList = params.getStringParams();
+            if(paramList != null) {
+                boolean isContainUserName = false;
+                boolean isContainPassword = false;
+                for (KeyValue kv : paramList) {
+                    if("userName".equals(kv.key)){
+                        isContainUserName = true;
+                    }else if("password".equals(kv.key)){
+                        isContainPassword = true;
+                    }
+                }
+                if(!isContainUserName && !isContainPassword){
+                    //!!!只能addQueryStringParameter，不能addBodyParameter到body中，因为如果是文件表单，服务端无法通过getParam取到这个值
+                    params.addQueryStringParameter("userName",loginUserVO.getUserName());
+                    params.addQueryStringParameter("password",loginUserVO.getPassword());
+                }
+            }
+        }
+    }
+
     static class LockerHttpResponseData{
         private boolean isSuccess;
         private String data;
@@ -187,4 +218,5 @@ public class LockerHttpUtil {
             this.data = data;
         }
     }
+
 }

@@ -6,19 +6,19 @@ package com.share.locker.common;
 
 public class MockUtil {
     //暂时MOCK,应该根据lockerSize和“我的位置”去服务端取数据
-    public static MachineVO[] getMatchedMachine(int i){
-        MachineVO[] arr = new MachineVO[2];
-        MachineVO vo1 = new MachineVO();
-        vo1.setId(1);
-        vo1.setAddress("浙大东门");
+    public static SelectableLockerVO[] getMatchedMachine(int i){
+        SelectableLockerVO[] arr = new SelectableLockerVO[2];
+        SelectableLockerVO vo1 = new SelectableLockerVO();
+        vo1.setLockerId(1);
+        vo1.setMachineName("浙大东门1号柜");
 
-        MachineVO vo2 = new MachineVO();
-        vo2.setId(2);
-        vo2.setAddress("江晖路16号");
+        SelectableLockerVO vo2 = new SelectableLockerVO();
+        vo2.setLockerId(2);
+        vo2.setMachineName("江晖路16号柜");
 
-        MachineVO vo3 = new MachineVO();
-        vo3.setId(3);
-        vo3.setAddress("浙大西门");
+        SelectableLockerVO vo3 = new SelectableLockerVO();
+        vo3.setLockerId(3);
+        vo3.setMachineName("浙大西门3号柜");
         if(i == 0) {    //小柜
             arr[0] = vo1;
             arr[1] = vo2;

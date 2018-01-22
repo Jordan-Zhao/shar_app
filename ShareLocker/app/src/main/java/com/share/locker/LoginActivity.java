@@ -25,7 +25,7 @@ import java.util.Map;
  * 登录activity
  */
 @ContentView(R.layout.activity_login)
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends BaseActivity {
     private final String TAG_LOG = "LoginActivity";
     private final String URL_LOGIN = Constants.URL_BASE + "login.json";
     private View view;

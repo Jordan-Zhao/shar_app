@@ -38,7 +38,7 @@ import java.util.Map;
  * Created by ruolan on 2015/11/29.
  */
 @ContentView(R.layout.fragment_mine)
-public class TabMineFragment extends Fragment {
+public class TabMineFragment extends BaseFragment {
     private final String TAG_LOG = "TabMineFragment";
     private final String URL_GET_USER_INFO = Constants.URL_BASE + "getMineData.json";
 
@@ -68,8 +68,6 @@ public class TabMineFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-
         //xutil 渲染fragment
         view = x.view().inject(this, inflater, container);
 

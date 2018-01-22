@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <!-- 发布宝贝在activity中进行，这个Fragment永远不会显示,所以为空-->
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/frag_publish_jump_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/frag_publish_success"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="发布宝贝成功!"
+            android:textSize="14pt"/>
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="20dp" />
+        <TextView
+            android:id="@+id/frag_publish_title_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14pt"
+            android:textColor="@color/blue"/>
+    </LinearLayout>
+</FrameLayout>

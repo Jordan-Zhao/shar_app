@@ -13,7 +13,7 @@ import com.share.locker.R;
 /**
  * Created by ruolan on 2015/11/29.
  */
-public class TabMessageFragment extends Fragment{
+public class TabMessageFragment extends BaseFragment{
 
     @Nullable
     @Override

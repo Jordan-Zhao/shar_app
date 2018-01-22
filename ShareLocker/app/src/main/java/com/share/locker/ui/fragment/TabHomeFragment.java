@@ -25,7 +25,7 @@ import org.xutils.x;
  * Created by ruolan on 2015/11/29.
  */
 @ContentView(R.layout.fragment_home)
-public class TabHomeFragment extends Fragment {
+public class TabHomeFragment extends BaseFragment {
     private final String TAG_LOG = "TabHomeFragment";
 
     private final String URL_GET_OPERATION_DATA = Constants.URL_BASE + "getOperationData.json";
