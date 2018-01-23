@@ -1,12 +1,9 @@
 package com.share.locker.util;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import com.google.gson.reflect.TypeToken;
+import com.share.locker.common.dto.ItemDTO;
 
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -16,22 +13,31 @@ import java.util.List;
  */
 
 public class JsonUtil {
+    /**
+     * json 转 map
+     * @param jsonStr
+     * @return
+     */
     public static HashMap json2Map(String jsonStr) {
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
+        Gson gson = new Gson();
         HashMap hashMap = gson.fromJson(jsonStr, HashMap.class);
         return hashMap;
     }
 
-    public static ArrayList json2List(String jsonStr) {
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        ArrayList list = gson.fromJson(jsonStr, ArrayList.class);
-        return list;
+    /**
+     * json 转 list
+     * @param jsonStr
+     * @param tClass list中的类
+     * @return
+     */
+    public static List json2List(String jsonStr,Class  tClass){
+        Gson gson = new Gson();
+        return gson.fromJson(jsonStr,new TypeToken<List<ItemDTO>>() {}.getType());
     }
 
+
     public static void main(String[] ar) throws  Exception{
-        System.out.println("zzzzzzzzz");
+        /*System.out.println("zzzzzzzzz");
 
         String json = "[{\"configCode\":\"OPERATION_BANNER\",\"content\":\"" +
                 "[{\\\"img_url\\\":\\\"http://192.168.1.6:8080/locker/banner1.png\\\",\\\"link_item_id\\\":1016}," +
@@ -50,8 +56,32 @@ public class JsonUtil {
         Gson gson = builder.create();
         JsonElement jsonElement = gson.toJsonTree(json);
 
-        JSONObject jsonObject = new JSONObject(json);
+        JSONObject jsonObject = new JSONObject(json);*/
 
+        ///////////////
+        List<ItemDTO> list = new ArrayList<>();
+        ItemDTO itemDTO = new ItemDTO();
+        itemDTO.setItemId(111L);
+        itemDTO.setTitle("HHHHHHHHH");
+        list.add(itemDTO);
+
+
+        Gson gson = new Gson();
+
+        String s = gson.toJson(list);
+
+System.out.println(s);
+
+         List<ItemDTO> retList = gson.fromJson(s,new TypeToken<List<ItemDTO>>() {}.getType());
+
+        System.out.println(retList.size());
+        ////
+       /* net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(list);
+        String s = jsonArray.toString();
+        System.out.println(s);
+
+        Object obj2 = JSONArray.toCollection(JSONArray.fromObject(s),ItemDTO.class);
+System.out.println(obj2);*/
 
 
     }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.share.locker.LoginActivity;
 import com.share.locker.MainActivity;
+import com.share.locker.MinePublishItemListActivity;
 import com.share.locker.R;
 import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
@@ -64,6 +65,9 @@ public class TabMineFragment extends BaseFragment {
 
     @ViewInject(R.id.mine_loginout_btn)
     private Button loginOutBtn;
+
+    @ViewInject(R.id.mine_publish_item_list_layout)
+    private LinearLayout publicItemListLayout;
 
     @Nullable
     @Override
@@ -177,6 +181,14 @@ public class TabMineFragment extends BaseFragment {
         loginedLayout.setVisibility(View.VISIBLE);
         unloginLayout.setVisibility(View.GONE);
         logoutLayout.setVisibility(View.VISIBLE);
+    }
+
+    //我发布的宝贝 点击
+    @Event(value = R.id.mine_publish_item_list_layout, type = View.OnClickListener.class)
+    private void onClickPublishedItemLayout(View view) {
+        //打开published item activity
+        Intent intent = new Intent(getContext(), MinePublishItemListActivity.class);
+        startActivity(intent);
     }
 
     @Nullable

@@ -25,7 +25,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- main, 5个fragment-->
+        <!-- main, 5个fragment -->
         <activity
             android:name=".MainActivity"
             android:launchMode="singleInstance"
@@ -37,11 +37,16 @@
             </intent-filter>
         </activity>
 
-        <!--login-->
-        <activity android:name=".LoginActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+        <!-- login -->
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--发布宝贝-->
-        <activity android:name=".PublishItemActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+        <!-- 发布宝贝 -->
+        <activity
+            android:name=".PublishItemActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".MinePublishItemListActivity"></activity>
     </application>
 
 </manifest>

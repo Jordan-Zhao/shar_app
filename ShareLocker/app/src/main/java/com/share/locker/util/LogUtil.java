@@ -3,8 +3,6 @@ package com.share.locker.util;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.json.JSONObject;
-
 /**
  * Created by Jordan on 16/01/2018.
  */

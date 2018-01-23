@@ -2,12 +2,8 @@ package com.share.locker.common;
 
 import android.util.Log;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.share.locker.util.JsonUtil;
 import com.share.locker.util.LogUtil;
-
-import org.json.JSONObject;
 
 import java.util.Map;
 

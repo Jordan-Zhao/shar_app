@@ -130,6 +130,7 @@
 
     <!--我发布的宝贝-->
     <LinearLayout
+        android:id="@+id/mine_publish_item_list_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"
