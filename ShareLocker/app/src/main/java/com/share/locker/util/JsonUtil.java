@@ -3,6 +3,7 @@ package com.share.locker.util;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.share.locker.common.dto.ItemDTO;
+import com.share.locker.common.dto.ItemDetailDTO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import java.util.List;
 public class JsonUtil {
     /**
      * json 转 map
+     *
      * @param jsonStr
      * @return
      */
@@ -25,18 +27,31 @@ public class JsonUtil {
     }
 
     /**
-     * json 转 list
+     * json 转 Object
+     *
      * @param jsonStr
-     * @param tClass list中的类
      * @return
      */
-    public static List json2List(String jsonStr,Class  tClass){
+    public static Object json2Object(String jsonStr,Class c) {
         Gson gson = new Gson();
-        return gson.fromJson(jsonStr,new TypeToken<List<ItemDTO>>() {}.getType());
+        return gson.fromJson(jsonStr, c);
+    }
+
+    /**
+     * json 转 list
+     *
+     * @param jsonStr
+     * @param tClass  list中的类
+     * @return
+     */
+    public static List json2List(String jsonStr, Class tClass) {
+        Gson gson = new Gson();
+        return gson.fromJson(jsonStr, new TypeToken<List<ItemDTO>>() {
+        }.getType());
     }
 
 
-    public static void main(String[] ar) throws  Exception{
+    public static void main(String[] ar) throws Exception {
         /*System.out.println("zzzzzzzzz");
 
         String json = "[{\"configCode\":\"OPERATION_BANNER\",\"content\":\"" +
@@ -58,8 +73,8 @@ public class JsonUtil {
 
         JSONObject jsonObject = new JSONObject(json);*/
 
-        ///////////////
-        List<ItemDTO> list = new ArrayList<>();
+        /////////////////////////////////////////////////////////
+        /*List<ItemDTO> list = new ArrayList<>();
         ItemDTO itemDTO = new ItemDTO();
         itemDTO.setItemId(111L);
         itemDTO.setTitle("HHHHHHHHH");
@@ -74,8 +89,10 @@ System.out.println(s);
 
          List<ItemDTO> retList = gson.fromJson(s,new TypeToken<List<ItemDTO>>() {}.getType());
 
-        System.out.println(retList.size());
-        ////
+        System.out.println(retList.size());*/
+
+
+        /////////////////////////////////////////////////////////
        /* net.sf.json.JSONArray jsonArray = net.sf.json.JSONArray.fromObject(list);
         String s = jsonArray.toString();
         System.out.println(s);
@@ -84,6 +101,18 @@ System.out.println(s);
 System.out.println(obj2);*/
 
 
+        /////////////////////////////////////////////////////////
+        ItemDetailDTO detailDTO = new ItemDetailDTO();
+        detailDTO.setOwnnerNick("aaaaaaaaa");
+        List<String> urlList = new ArrayList<>();
+        urlList.add("http1111");
+        detailDTO.setImgList(urlList);
+
+        Gson gson = new Gson();
+        String s = gson.toJson(detailDTO);
+
+        ItemDetailDTO detailDTO1 = gson.fromJson(s,ItemDetailDTO.class);
+        System.out.println(detailDTO1.getImgList().size());
     }
 
 }

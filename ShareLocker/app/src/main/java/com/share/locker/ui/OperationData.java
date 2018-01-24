@@ -1,13 +1,10 @@
 package com.share.locker.ui;
 
-import com.bumptech.glide.Glide;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 首页使用的数据对象
@@ -19,17 +16,17 @@ public class OperationData {
 
     private String leftImgUrl;
     private String leftTxt;
-    private int leftItemId;
+    private Long leftItemId;
 
     private String rightImgUrl1;
     private String rightTitle1;
     private String rightTxt1;
-    private int rightItemId1;
+    private Long rightItemId1;
 
     private String rightImgUrl2;
     private String rightTitle2;
     private String rightTxt2;
-    private int rightItemId2;
+    private Long rightItemId2;
 
     private List<OperationData.HotItemData> hotItemDataList;
 
@@ -58,19 +55,19 @@ public class OperationData {
             JSONObject leftJsonObj = new JSONObject(centerJsonObj.getString("left"));
             leftImgUrl = leftJsonObj.getString("img_url");
             leftTxt = leftJsonObj.getString("text");
-            leftItemId = leftJsonObj.getInt("link_item_id");
+            leftItemId = leftJsonObj.getLong("link_item_id");
             //right1
             JSONObject rightJsonObj1 = new JSONObject(centerJsonObj.getString("right1"));
             rightImgUrl1 = rightJsonObj1.getString("img_url");
             rightTitle1 = rightJsonObj1.getString("title");
             rightTxt1 = rightJsonObj1.getString("text");
-            rightItemId1 = rightJsonObj1.getInt("link_item_id");
+            rightItemId1 = rightJsonObj1.getLong("link_item_id");
             //right2
             JSONObject rightJsonObj2 = new JSONObject(centerJsonObj.getString("right2"));
             rightImgUrl2 = rightJsonObj2.getString("img_url");
             rightTitle2 = rightJsonObj2.getString("title");
             rightTxt2 = rightJsonObj2.getString("text");
-            rightItemId2 = rightJsonObj2.getInt("link_item_id");
+            rightItemId2 = rightJsonObj2.getLong("link_item_id");
 
             //Hot items
             hotItemDataList = new ArrayList<>();
@@ -123,12 +120,28 @@ public class OperationData {
         this.leftTxt = leftTxt;
     }
 
-    public int getLeftItemId() {
+    public Long getLeftItemId() {
         return leftItemId;
     }
 
-    public void setLeftItemId(int leftItemId) {
+    public Long getRightItemId1() {
+        return rightItemId1;
+    }
+
+    public Long getRightItemId2() {
+        return rightItemId2;
+    }
+
+    public void setLeftItemId(Long leftItemId) {
         this.leftItemId = leftItemId;
+    }
+
+    public void setRightItemId1(Long rightItemId1) {
+        this.rightItemId1 = rightItemId1;
+    }
+
+    public void setRightItemId2(Long rightItemId2) {
+        this.rightItemId2 = rightItemId2;
     }
 
     public String getRightImgUrl1() {
@@ -155,13 +168,6 @@ public class OperationData {
         this.rightTxt1 = rightTxt1;
     }
 
-    public int getRightItemId1() {
-        return rightItemId1;
-    }
-
-    public void setRightItemId1(int rightItemId1) {
-        this.rightItemId1 = rightItemId1;
-    }
 
     public String getRightImgUrl2() {
         return rightImgUrl2;
@@ -187,13 +193,6 @@ public class OperationData {
         this.rightTxt2 = rightTxt2;
     }
 
-    public int getRightItemId2() {
-        return rightItemId2;
-    }
-
-    public void setRightItemId2(int rightItemId2) {
-        this.rightItemId2 = rightItemId2;
-    }
 
 class BannerData {
     private String imgUrl;

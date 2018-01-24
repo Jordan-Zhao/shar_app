@@ -67,13 +67,14 @@ public class LoginActivity extends BaseActivity {
         paramMap.put("password", password);
         LockerHttpUtil.postJson(URL_LOGIN, paramMap, new HttpCallback() {
             @Override
-            public void processSuccess(String successData) {
+            public void processSuccess(final String successData) {    //successData是userId
                 //登录成功，跳转到main activity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         //把userName和password存入SharedRef
-                        BizUtil.saveValueInPref(Constants.SHARED_REF_KEY_LOGIN_info, userName + ";" + password, LoginActivity.this);
+                        BizUtil.saveValueInPref(Constants.SHARED_REF_KEY_LOGIN_info, userName + ";" + password +";"+successData,
+                                LoginActivity.this);
 
                         //登录成功后，返回到上一个页面
                         backToLastPage();

@@ -2,6 +2,7 @@ package com.share.locker.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.share.locker.ItemDetailActivity;
 import com.share.locker.R;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -65,11 +67,33 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     @Override
     public HomeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_HEADER) {
-            return new HomeViewHolder(VIEW_TYPE_HEADER, headView);
+            HomeViewHolder viewHolder = new HomeViewHolder(VIEW_TYPE_HEADER, headView);
+            //点击后，跳转到详情页
+            setItemClickListener(viewHolder.getOptLeftLayout(),operationData.getLeftItemId());
+            setItemClickListener(viewHolder.getOptRightLayout1(),operationData.getRightItemId1());
+            setItemClickListener(viewHolder.getOptRightLayout2(),operationData.getRightItemId2());
+            return viewHolder;
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_list_item, parent, false);
-            return new HomeViewHolder(VIEW_TYPE_NORMAL, view);
+            HomeViewHolder viewHolder = new HomeViewHolder(VIEW_TYPE_NORMAL, view);
+            return viewHolder;
         }
+    }
+
+    private void  setItemClickListener(View view, final Long itemId){
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(mainActivity, ItemDetailActivity.class);
+                        intent.putExtra("itemId",itemId);
+                        mainActivity.startActivity(intent);
+                    }
+                });
+            }
+        });
     }
 
     /**
@@ -187,10 +211,13 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         private LinearLayout optLeftLayout;
         private ImageView optLeftImg;
         private TextView optLeftTxt;
-        private LinearLayout optWrightLayout1;
+
+        private LinearLayout optRightLayout1;
         private ImageView optRightImg1;
         private TextView optRightTitle1;
         private TextView optRightTxt1;
+
+        private LinearLayout optRightLayout2;
         private ImageView optRightImg2;
         private TextView optRightTitle2;
         private TextView optRightTxt2;
@@ -206,13 +233,17 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             this.view = view;
             if (viewType == VIEW_TYPE_HEADER) {
                 banner = view.findViewById(R.id.banner_home);
+
                 optLeftLayout = view.findViewById(R.id.opt_left);
                 optLeftImg = view.findViewById(R.id.opt_left_img);
                 optLeftTxt = view.findViewById(R.id.opt_left_txt);
-                optWrightLayout1 = view.findViewById(R.id.opt_right1);
+
+                optRightLayout1 = view.findViewById(R.id.opt_right1);
                 optRightImg1 = view.findViewById(R.id.opt_right_img1);
                 optRightTitle1 = view.findViewById(R.id.opt_right_title1);
                 optRightTxt1 = view.findViewById(R.id.opt_right_txt1);
+
+                optRightLayout2 = view.findViewById(R.id.opt_right2);
                 optRightImg2 = view.findViewById(R.id.opt_right_img2);
                 optRightTitle2 = view.findViewById(R.id.opt_right_title2);
                 optRightTxt2 = view.findViewById(R.id.opt_right_txt2);
@@ -265,13 +296,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
             this.optLeftTxt = optLeftTxt;
         }
 
-        public LinearLayout getOptWrightLayout1() {
-            return optWrightLayout1;
-        }
 
-        public void setOptWrightLayout1(LinearLayout optWrightLayout1) {
-            this.optWrightLayout1 = optWrightLayout1;
-        }
 
         public ImageView getOptRightImg1() {
             return optRightImg1;
@@ -303,6 +328,22 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
 
         public void setOptRightImg2(ImageView optRightImg2) {
             this.optRightImg2 = optRightImg2;
+        }
+
+        public LinearLayout getOptRightLayout1() {
+            return optRightLayout1;
+        }
+
+        public void setOptRightLayout1(LinearLayout optRightLayout1) {
+            this.optRightLayout1 = optRightLayout1;
+        }
+
+        public LinearLayout getOptRightLayout2() {
+            return optRightLayout2;
+        }
+
+        public void setOptRightLayout2(LinearLayout optRightLayout2) {
+            this.optRightLayout2 = optRightLayout2;
         }
 
         public TextView getOptRightTitle2() {

@@ -1,25 +1,19 @@
 package com.share.locker.ui;
 
 import android.app.Activity;
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.share.locker.MinePublishItemListActivity;
 import com.share.locker.R;
 import com.share.locker.common.dto.ItemDTO;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-import com.youth.banner.Transformer;
-import com.youth.banner.listener.OnBannerListener;
-import com.youth.banner.loader.ImageLoader;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,11 +21,13 @@ import java.util.List;
  * Created by Jordan on 18/01/2018.
  */
 
-public class MinePublishItemRecyclerAdapter extends RecyclerView.Adapter<MinePublishItemRecyclerAdapter.ItemViewHolder> {
+public class MinePublishItemRecyclerAdapter extends RecyclerView.Adapter<MinePublishItemRecyclerAdapter.ItemViewHolder>{
+    public static final String CLICK_CODE_ITEM_VIEW = "CLICK_CODE_ITEM_VIEW";   //点击整个itemView
     private List<ItemDTO> itemList;
-    private Activity activity;
+    private MinePublishItemListActivity activity;
+    private AdapterView.OnItemClickListener itemClickListener;
 
-    public MinePublishItemRecyclerAdapter(Activity activity, List<ItemDTO> itemList) {
+    public MinePublishItemRecyclerAdapter(MinePublishItemListActivity activity, List<ItemDTO> itemList) {
         this.itemList = itemList;
         this.activity = activity;
     }
@@ -46,7 +42,16 @@ public class MinePublishItemRecyclerAdapter extends RecyclerView.Adapter<MinePub
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.mine_publish_list_item, parent, false);
-        return new ItemViewHolder(view);
+        ItemViewHolder holder = new ItemViewHolder(view);
+        view.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //转给activity里的listenr
+                Integer position = (Integer)view.getTag();
+                activity.onClickRecyclerItemView(CLICK_CODE_ITEM_VIEW,itemList.get(position));
+            }
+        });
+        return holder;
     }
 
     /**
@@ -64,6 +69,7 @@ public class MinePublishItemRecyclerAdapter extends RecyclerView.Adapter<MinePub
         holder.getDepositTxt().setText(String.valueOf(itemDTO.getDeposit()));
         holder.getPriceTxt().setText(itemDTO.getPriceStr());
         holder.getCommentTxt().setText(String.valueOf(itemDTO.getComment()));
+        holder.getView().setTag(position);  //使用position作为tag，点击时，可以取到position
     }
 
     @Override

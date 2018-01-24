@@ -1,5 +1,6 @@
 package com.share.locker;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +11,7 @@ import com.share.locker.common.dto.ItemDTO;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 import com.share.locker.ui.MinePublishItemRecyclerAdapter;
+import com.share.locker.ui.RecyclerItemViewClickListener;
 import com.share.locker.util.JsonUtil;
 
 import org.xutils.view.annotation.ContentView;
@@ -21,7 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 @ContentView(R.layout.activity_mine_publish_item_list)
-public class MinePublishItemListActivity extends BaseActivity {
+public class MinePublishItemListActivity extends BaseActivity  implements RecyclerItemViewClickListener {
     private static final String URL_GET_PUBLISHED_ITEM_LIST = Constants.URL_BASE + "getMyPublishItems.json";
 
     private View view;
@@ -63,6 +65,20 @@ public class MinePublishItemListActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    /**
+     * itemView的点击事件
+     */
+    @Override
+    public void onClickRecyclerItemView(String eventCode,Object data){
+        if(eventCode.equals(MinePublishItemRecyclerAdapter.CLICK_CODE_ITEM_VIEW)){
+            //点击整个itemView,跳转到detail页
+            ItemDTO itemDTO = (ItemDTO)data;
+            Intent intent = new Intent(this,ItemDetailActivity.class);
+            intent.putExtra("itemId",itemDTO.getItemId());
+            startActivity(intent);
+        }
     }
 
     private void showDataOnUi() {

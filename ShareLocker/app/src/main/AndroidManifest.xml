@@ -46,7 +46,8 @@
         <activity
             android:name=".PublishItemActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".MinePublishItemListActivity"></activity>
+        <activity android:name=".MinePublishItemListActivity" />
+        <activity android:name=".ItemDetailActivity"></activity>
     </application>
 
 </manifest>

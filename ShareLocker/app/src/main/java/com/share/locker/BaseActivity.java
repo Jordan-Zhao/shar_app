@@ -12,6 +12,7 @@ import com.share.locker.common.GlobalManager;
 public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        GlobalManager.currentContext = this;
         super.onCreate(savedInstanceState);
     }
 

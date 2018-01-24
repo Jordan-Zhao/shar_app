@@ -5,6 +5,7 @@ package com.share.locker.common;
  */
 
 public class LoginUserVO {
+    private Long userId;
     private String userName;
     private String password;
 
@@ -22,5 +23,13 @@ public class LoginUserVO {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 }

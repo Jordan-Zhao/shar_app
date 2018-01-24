@@ -28,6 +28,7 @@ public class BizUtil {
             String[] loginInfoArr = loginInfo.split(";");
             loginUserVO.setUserName(loginInfoArr[0]);
             loginUserVO.setPassword(loginInfoArr[1]);
+            loginUserVO.setUserId(Long.parseLong(loginInfoArr[2]));
         }
         return loginUserVO;
     }
