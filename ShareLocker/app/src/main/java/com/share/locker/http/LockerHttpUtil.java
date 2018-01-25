@@ -1,28 +1,19 @@
 package com.share.locker.http;
 
-import android.net.Uri;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.share.locker.common.BizUtil;
-import com.share.locker.common.Constants;
 import com.share.locker.common.GlobalManager;
-import com.share.locker.common.LoginUserVO;
-import com.share.locker.util.LogUtil;
+import com.share.locker.vo.LoginUserVO;
+import com.share.locker.common.LogUtil;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.common.util.KeyValue;
-import org.xutils.ex.HttpException;
 import org.xutils.http.RequestParams;
-import org.xutils.view.annotation.Event;
 import org.xutils.x;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.net.URI;
 import java.util.List;
 import java.util.Map;
 

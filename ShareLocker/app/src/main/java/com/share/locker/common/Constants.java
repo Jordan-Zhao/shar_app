@@ -1,9 +1,9 @@
 package com.share.locker.common;
 
+import com.share.locker.ui.component.SpinnerItemData;
+
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Jordan on 16/01/2018.
@@ -35,6 +35,35 @@ public class Constants {
     public final static int INTENT_REQUEST_CODE_LOGIN = 1;
     public final static int INTENT_REQUEST_CODE_PUBLISH_ITEM = 2;
     //========end======Intent request code===========
+
+    //========从外部activity回到MainActivity时，通过这个编码告知mainActivity显示那个Fragment
+    public enum MainIntentToWhereCode{
+        TO_MINE_FRAG(1,"登录完成后，返回到 我的 Fragment");
+
+        private int code;
+        private String description;
+
+        MainIntentToWhereCode(int code,String description){
+            this.code = code;
+            this.description = description;
+        }
+        public int getCode() {
+            return code;
+        }
+
+        public void setCode(int code) {
+            this.code = code;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+    }
+    public final static String INTENT_KEY_MAIN_TO_WHERE = "INTENT_KEY_MAIN_TO_WHERE";
 
     /**
      * 最小租赁时间单元，给下拉框使用
@@ -74,4 +103,11 @@ public class Constants {
             this.sizeCode = sizeCode;
         }
     }
+
+
+    public static final int FRAG_INDEX_HOME = 0;
+    public static final int FRAG_INDEX_CART = 1;
+    public static final int FRAG_INDEX_PUBLISH = 2;
+    public static final int FRAG_INDEX_MESSAGE = 3;
+    public static final int FRAG_INDEX_MINE = 4;
 }

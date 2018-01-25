@@ -1,5 +1,7 @@
 package com.share.locker.common;
 
+import com.share.locker.vo.SelectableLockerVO;
+
 /**
  * Created by Jordan on 22/01/2018.
  */

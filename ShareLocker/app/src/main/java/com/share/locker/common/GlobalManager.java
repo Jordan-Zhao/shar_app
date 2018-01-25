@@ -1,7 +1,8 @@
 package com.share.locker.common;
 
-import android.app.Activity;
 import android.content.Context;
+
+import com.share.locker.ui.component.ResumeRefreshManager;
 
 /**
  * Created by Jordan on 16/01/2018.
@@ -9,4 +10,6 @@ import android.content.Context;
 
 public class GlobalManager {
     public static Context currentContext;
+
+    public static ResumeRefreshManager resumeManager;
 }

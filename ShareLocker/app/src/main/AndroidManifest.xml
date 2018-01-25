@@ -2,22 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.share.locker">
 
-    <!-- 存储，运行时权限 -->
+    <!-- 存储，运行时权限。涉及的功能：Matisse； -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!-- 网络 -->
+    <!-- 网络。涉及的功能：xutil; -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <!-- To auto-complete the email text field in the login form with the user's emails -->
+    <!-- TODO 登录使用？ （To auto-complete the email text field in the login form with the user's emails ） -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:name=".LockerApplication"
+        android:name=".ui.init.LockerApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,10 +25,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <!-- main, 5个fragment -->
+        <!-- main, FragmentTabHost包含5个fragment -->
         <activity
-            android:name=".MainActivity"
-            android:launchMode="singleInstance"
+            android:name=".ui.main.MainActivity"
+            android:launchMode="singleTask"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,15 +39,27 @@
 
         <!-- login -->
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.mine.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <!-- 发布宝贝 -->
         <activity
-            android:name=".PublishItemActivity"
+            android:name=".ui.item.PublishItemActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".MinePublishItemListActivity" />
-        <activity android:name=".ItemDetailActivity"></activity>
+
+        <!-- 我发布的宝贝列表 -->
+        <activity
+            android:name=".ui.mine.MinePublishItemListActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!-- 宝贝详情 -->
+        <activity
+            android:name=".ui.item.ItemDetailActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!--宝贝发布成功，提示页面-->
+        <activity android:name=".ui.item.PublishItemSuccessActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
     </application>
 
 </manifest>

@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
 
+import com.share.locker.vo.LoginUserVO;
+
 import java.io.File;
 
 /**
@@ -15,7 +17,7 @@ import java.io.File;
 public class BizUtil {
 
     /**
-     * 获取已登录的用户信息，userName；password。
+     * 获取已登录的用户信息，userName；password;userId
      *
      * @param context
      * @return 如果没有登录，则返回null.
