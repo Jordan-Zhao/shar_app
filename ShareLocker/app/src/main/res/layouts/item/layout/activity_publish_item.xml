@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/grey"
-            android:padding="10dp"
+            android:padding="5dp"
             android:gravity="center_vertical">
 
             <Button
@@ -40,7 +40,10 @@
             android:layout_width="match_parent"
             android:layout_height="120dp"
             android:orientation="horizontal"
-            android:padding="10dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:paddingBottom="0dp"
             android:gravity="center_vertical">
             <!--添加照片按钮-->
             <LinearLayout
@@ -86,14 +89,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="标题(必填)"
-                android:textSize="6pt" />
+                android:textSize="8pt" />
 
             <EditText
                 android:id="@+id/publish_title"
                 android:layout_width="0dp"
-                android:layout_height="60dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
-                android:background="@mipmap/card_9"
+                android:background="@drawable/edit_shape"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
         </LinearLayout>
@@ -114,13 +117,13 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="价格(必填)"
-                android:textSize="6pt" />
+                android:textSize="8pt" />
 
             <EditText
                 android:id="@+id/publish_price_time_txt"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
-                android:background="@mipmap/card_9"
+                android:background="@drawable/edit_shape"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
 
@@ -137,7 +140,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@mipmap/card_9"
+                android:background="@drawable/edit_shape"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp" />
 
@@ -146,7 +149,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="元"
-                android:textSize="6pt" />
+                android:textSize="8pt" />
         </LinearLayout>
 
         <include layout="@layout/split_line" />
@@ -165,14 +168,14 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="押金(必填)"
-                android:textSize="6pt" />
+                android:textSize="8pt" />
 
             <EditText
                 android:id="@+id/publish_deposit_txt"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@mipmap/card_9"
+                android:background="@drawable/edit_shape"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
 
@@ -181,7 +184,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="元"
-                android:textSize="6pt" />
+                android:textSize="8pt" />
         </LinearLayout>
 
         <include layout="@layout/split_line" />
@@ -200,7 +203,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="柜门尺寸(必填)"
-                android:textSize="6pt" />
+                android:textSize="8pt" />
 
             <Spinner
                 android:id="@+id/publish_locker_size_selector"
@@ -208,7 +211,8 @@
                 android:layout_height="match_parent"
                 android:entries="@array/locker_size"
                 android:gravity="center"
-                android:textSize="6pt"></Spinner>
+                android:textSize="8pt"
+                android:background="@drawable/edit_shape"></Spinner>
         </LinearLayout>
         <!--箱柜-->
         <LinearLayout
@@ -224,7 +228,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="附近可选箱柜"
-                android:textSize="6pt" />
+                android:textSize="8pt" />
 
             <Spinner
                 android:id="@+id/publish_machine_selector"
@@ -232,7 +236,8 @@
                 android:minWidth="150dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:textSize="6pt"></Spinner>
+                android:textSize="8pt"
+                android:background="@drawable/edit_shape"></Spinner>
         </LinearLayout>
 
         <include layout="@layout/split_line" />
@@ -251,14 +256,14 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="描述"
-                android:textSize="6pt"/>
+                android:textSize="8pt"/>
 
             <EditText
                 android:id="@+id/publish_description_txt"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_weight="1"
-                android:background="@mipmap/card_9"
+                android:background="@drawable/edit_shape"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"/>
         </LinearLayout>
@@ -288,6 +293,7 @@
             android:layout_marginTop="16dp"
             android:background="@color/btn_action"
             android:text="发布"
+            android:textSize="8pt"
             android:textColor="@color/white"
             android:textStyle="bold" />
     </LinearLayout>

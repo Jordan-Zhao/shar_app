@@ -1,7 +1,8 @@
 package com.share.locker.common;
 
-import android.content.Context;
+import android.app.Activity;
 
+import com.share.locker.ui.component.DialogManager;
 import com.share.locker.ui.component.ResumeRefreshManager;
 
 /**
@@ -9,7 +10,10 @@ import com.share.locker.ui.component.ResumeRefreshManager;
  */
 
 public class GlobalManager {
-    public static Context currentContext;
-
     public static ResumeRefreshManager resumeManager;
+    public static DialogManager dialogManager;
+
+    public static Activity currentActivity;
+
+
 }

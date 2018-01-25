@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.share.locker.common.BizUtil;
 import com.share.locker.common.GlobalManager;
-import com.share.locker.vo.LoginUserVO;
 import com.share.locker.common.LogUtil;
+import com.share.locker.vo.LoginUserVO;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
@@ -25,51 +25,13 @@ public class LockerHttpUtil {
     private final static String TAG_LOG = "LockerHttpUtil";
 
     /**
-     * 发送http GET请求，服务端返回json,转交给httpCallBack处理
-     *
-     * @param url
-     */
-    public static void getJson(String url, final HttpCallback httpCallback) {
-//        LockerHttpRequestParams params = new LockerHttpRequestParams();
-        RequestParams params = new RequestParams(url);
-//        params.wd = "xUtils";
-        addLoginUserToRequestParams(params);
-        Callback.Cancelable cancelable = x.http().get(params,
-                new Callback.CommonCallback<String>() {
-                    @Override
-                    public void onSuccess(String resultJson) {
-                        LockerHttpResponseData responseData = convertResponseJson(resultJson);
-                        if (responseData.isSuccess()) {
-                            httpCallback.processSuccess(responseData.getData());
-                        } else {
-                            httpCallback.processFail(responseData.getData());
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
-                        Log.e("http error", ex.toString());
-                    }
-
-                    @Override
-                    public void onCancelled(CancelledException cex) {
-                        Log.e("http cancelled", cex.toString());
-                    }
-
-                    @Override
-                    public void onFinished() {
-                        Log.e("http finished", "finished");
-                    }
-                });
-    }
-
-    /**
      * post请求，服务端返回json,转交给httpCallBack处理
      *
      * @param url
      * @param httpCallback
      */
     public static void postJson(String url, Map<String, String> paramMap, final HttpCallback httpCallback) {
+        GlobalManager.dialogManager.showLoopDialog();
         RequestParams params = new RequestParams(url);
         if(paramMap != null && paramMap.keySet() != null){
             for(String key : paramMap.keySet()){
@@ -80,6 +42,7 @@ public class LockerHttpUtil {
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String resultJson) {
+                GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
                 LockerHttpResponseData responseData = convertResponseJson(resultJson);
                 if (responseData.isSuccess()) {
                     httpCallback.processSuccess(responseData.getData());
@@ -91,16 +54,20 @@ public class LockerHttpUtil {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.e("http error", ex.toString());
+                GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
+                GlobalManager.dialogManager.showErrorDialogInUiThread("网络请求出错");
             }
 
             @Override
             public void onCancelled(Callback.CancelledException cex) {
                 Log.e("http cancelled", cex.toString());
+                GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
             }
 
             @Override
             public void onFinished() {
                 Log.e("http finished", "finished");
+                GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
             }
         });
     }
@@ -108,6 +75,7 @@ public class LockerHttpUtil {
     //上传文件
     public static void postFileJson(String url, Map<String, String> paramMap, List<File> fileList,
                                      final HttpCallback httpCallback) {
+        GlobalManager.dialogManager.showLoopDialog();
         RequestParams params = new RequestParams(url);
         if(paramMap != null && paramMap.keySet() != null){
             for(String key : paramMap.keySet()){
@@ -126,6 +94,7 @@ public class LockerHttpUtil {
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String resultJson) {
+                GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
                 LockerHttpResponseData responseData = convertResponseJson(resultJson);
                 if (responseData.isSuccess()) {
                     httpCallback.processSuccess(responseData.getData());
@@ -137,16 +106,20 @@ public class LockerHttpUtil {
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.e("http error", ex.toString());
+                GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
+                GlobalManager.dialogManager.showErrorDialogInUiThread("网络请求出错");
             }
 
             @Override
             public void onCancelled(CancelledException cex) {
                 Log.e("http cancelled", cex.toString());
+                GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
             }
 
             @Override
             public void onFinished() {
                 Log.e("http finished", "finished");
+                GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
             }
         });
     }
@@ -167,7 +140,7 @@ public class LockerHttpUtil {
     }
 
     private static void addLoginUserToRequestParams(RequestParams params){
-        LoginUserVO loginUserVO = BizUtil.getLoginUser(GlobalManager.currentContext);
+        LoginUserVO loginUserVO = BizUtil.getLoginUser(GlobalManager.currentActivity);
         if(loginUserVO != null){
             List<KeyValue> paramList = params.getStringParams();
             if(paramList != null) {
@@ -209,5 +182,46 @@ public class LockerHttpUtil {
             this.data = data;
         }
     }
+
+
+    /**
+     * 发送http GET请求，服务端返回json,转交给httpCallBack处理
+     *
+     * @param url
+     */
+    /*public static void getJson(String url, final HttpCallback httpCallback) {
+//        LockerHttpRequestParams params = new LockerHttpRequestParams();
+        RequestParams params = new RequestParams(url);
+//        params.wd = "xUtils";
+        addLoginUserToRequestParams(params);
+        Callback.Cancelable cancelable = x.http().get(params,
+                new Callback.CommonCallback<String>() {
+                    @Override
+                    public void onSuccess(String resultJson) {
+                        LockerHttpResponseData responseData = convertResponseJson(resultJson);
+                        if (responseData.isSuccess()) {
+                            httpCallback.processSuccess(responseData.getData());
+                        } else {
+                            httpCallback.processFail(responseData.getData());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+                        Log.e("http error", ex.toString());
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+                        Log.e("http cancelled", cex.toString());
+                    }
+
+                    @Override
+                    public void onFinished() {
+                        Log.e("http finished", "finished");
+                    }
+                });
+    }*/
+
 
 }

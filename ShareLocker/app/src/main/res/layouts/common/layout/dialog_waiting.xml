@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center">
+
+    <org.quanqi.circularprogress.CircularProgressView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="50dp"
+        app:angleAnimationDurationMillis="@integer/circular_default_angleAnimationDurationMillis"
+        app:borderWidth="@dimen/circular_default_border_width"
+        app:colorSequence="@array/circular_default_color_sequence"
+        app:sweepAnimationDurationMillis="@integer/circular_default_sweepAnimationDuration" />
+
+</LinearLayout><!--<pl.droidsonroids.gif.GifImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:src="@drawable/dialog_waiting"
+    android:background="@drawable/dialog_waiting"></pl.droidsonroids.gif.GifImageView>-->
+
+    <!--<ProgressBar xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="9dp"
+        android:layout_marginTop="24dp"
+        android:indeterminate="true" />-->
+
+

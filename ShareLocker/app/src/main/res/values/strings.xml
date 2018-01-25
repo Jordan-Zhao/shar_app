@@ -38,5 +38,12 @@
         <item>大柜(50mm*50mm*50mm)</item>
     </string-array>
 
+    <!-- ================ 弹框start==========-->
+    <string name="dialog_default_title">Here\'s a message!</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="LOADING">Loading...</string>
+    <!-- ================ 弹框end==========-->
+
 
 </resources>

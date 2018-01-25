@@ -10,25 +10,29 @@ import android.view.ViewGroup;
 
 import com.share.locker.R;
 import com.share.locker.common.Constants;
+import com.share.locker.common.GlobalManager;
+import com.share.locker.common.JsonUtil;
+import com.share.locker.dto.OperationSettingDTO;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 import com.share.locker.ui.component.BaseFragment;
-import com.share.locker.ui.home.HomeRecyclerViewAdapter;
-import com.share.locker.ui.home.OperationData;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.HashMap;
+
 
 /**
+ * 首页Fragment
  * Created by ruolan on 2015/11/29.
  */
 @ContentView(R.layout.fragment_home)
 public class TabHomeFragment extends BaseFragment {
     private final String TAG_LOG = "TabHomeFragment";
 
-    private final String URL_GET_OPERATION_DATA = Constants.URL_BASE + "getOperationData.json";
+    private final String URL_GET_OPERATION_DATA = Constants.URL_BASE + "/home/getOperationData.json";
 
     private View view;
 
@@ -51,7 +55,7 @@ public class TabHomeFragment extends BaseFragment {
 
     //加载banner和operation数据，然后显示
     private void loadOperationData() {
-        LockerHttpUtil.getJson(URL_GET_OPERATION_DATA,
+        LockerHttpUtil.postJson(URL_GET_OPERATION_DATA,new HashMap<String, String>(),
                 new HttpCallback() {
                     @Override
                     public void processSuccess(final String successData) {
@@ -67,20 +71,21 @@ public class TabHomeFragment extends BaseFragment {
 
                     @Override
                     public void processFail(String failData) {
-                        //TODO 弹框提示系统异常
+                        GlobalManager.dialogManager.showErrorDialog("服务端处理失败："+failData);
                     }
                 });
     }
 
     //运营数据加载完成后，显示到UI
     private void showOperationDataOnUi(String operationDataJson) {
+        OperationSettingDTO operationSettingDTO = (OperationSettingDTO)JsonUtil.json2Object(operationDataJson,OperationSettingDTO.class);
+
         //layout
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         hotItemRclView.setLayoutManager(layoutManager);
 
         //list 数据 和 adapter
-        OperationData operationData = new OperationData(operationDataJson);
-        homeRecyclerViewAdapter = new HomeRecyclerViewAdapter(getActivity(), operationData);
+        homeRecyclerViewAdapter = new HomeRecyclerViewAdapter(getActivity(), operationSettingDTO);
         hotItemRclView.setAdapter(homeRecyclerViewAdapter);
 
         //创建head view

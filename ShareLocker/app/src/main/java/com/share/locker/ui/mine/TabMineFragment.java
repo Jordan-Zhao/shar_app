@@ -41,7 +41,7 @@ import java.util.Map;
 @ContentView(R.layout.fragment_mine)
 public class TabMineFragment extends BaseFragment {
     private final String TAG_LOG = "TabMineFragment";
-    private final String URL_GET_USER_INFO = Constants.URL_BASE + "getMineData.json";
+    private final String URL_GET_USER_INFO = Constants.URL_BASE + "mine/getMineData.json";
 
     private View view;
 

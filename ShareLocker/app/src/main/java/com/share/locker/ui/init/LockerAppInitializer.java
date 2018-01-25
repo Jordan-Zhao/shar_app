@@ -5,6 +5,9 @@ import android.content.pm.PackageManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+import com.share.locker.common.GlobalManager;
+import com.share.locker.ui.component.DialogManager;
+import com.share.locker.ui.component.ResumeRefreshManager;
 import com.share.locker.ui.main.MainActivity;
 import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
@@ -28,6 +31,10 @@ public class LockerAppInitializer {
     }
 
     public void init() {
+        //初始化全局管理类对象
+        GlobalManager.resumeManager = new ResumeRefreshManager();
+        GlobalManager.dialogManager = new DialogManager();
+
         //申请权限
         //写存储卡
         if (ContextCompat.checkSelfPermission(mainActivity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -56,7 +63,7 @@ public class LockerAppInitializer {
 
                         @Override
                         public void processFail(String failData) {
-                            //TODO 弹框提示系统异常
+                            GlobalManager.dialogManager.showErrorDialogInUiThread("服务端处理失败："+failData);
                         }
                     });
         } else {

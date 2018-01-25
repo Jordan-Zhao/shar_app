@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.google.gson.reflect.TypeToken;
 import com.share.locker.R;
 import com.share.locker.common.Constants;
 import com.share.locker.dto.ItemDTO;
@@ -26,7 +27,7 @@ import java.util.Map;
 
 @ContentView(R.layout.activity_mine_publish_item_list)
 public class MinePublishItemListActivity extends BaseActivity implements RecyclerItemViewClickListener {
-    private static final String URL_GET_PUBLISHED_ITEM_LIST = Constants.URL_BASE + "getMyPublishItems.json";
+    private static final String URL_GET_PUBLISHED_ITEM_LIST = Constants.URL_BASE + "mine/getMyPublishItems.json";
 
     private View view;
 
@@ -56,7 +57,7 @@ public class MinePublishItemListActivity extends BaseActivity implements Recycle
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                itemDTOList = JsonUtil.json2List(successData, ItemDTO.class);
+                                itemDTOList = JsonUtil.json2List(successData, new TypeToken<List<ItemDTO>>() {});
                                 showDataOnUi();
                             }
                         });

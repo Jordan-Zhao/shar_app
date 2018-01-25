@@ -9,10 +9,11 @@
     <include layout="@layout/split_line" />
 
     <!--banner-->
+    <!--图片大小：360*150-->
     <com.youth.banner.Banner
         android:id="@+id/banner_home"
         android:layout_width="match_parent"
-        android:layout_height="200dp" /><!--TODO 图片尺寸应该多大？-->
+        android:layout_height="150dp" /><!--TODO 图片尺寸应该多大？-->
 
     <!--分割线-->
     <include layout="@layout/split_line" />
@@ -32,6 +33,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+            <!--图片大小：112*130-->
             <ImageView
                 android:id="@+id/opt_left_img"
                 android:layout_width="match_parent"
@@ -42,7 +44,8 @@
                 android:id="@+id/opt_left_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="带妹子去兜风吧~" />
+                android:text="带妹子去兜风吧~"
+                android:textSize="6pt"/>
         </LinearLayout>
 
         <!--right-->
@@ -58,18 +61,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
-
+                <!--图片大小：75*75-->
                 <ImageView
                     android:id="@+id/opt_right_img1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_weight="7"
                     android:src="@mipmap/item_right2"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
+                    android:layout_weight="23"
                     android:orientation="vertical"
                     android:paddingLeft="5dp">
 
@@ -99,13 +102,13 @@
                     android:id="@+id/opt_right_img2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="4"
+                    android:layout_weight="7"
                     android:src="@mipmap/item_right1"/>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="5"
+                    android:layout_weight="23"
                     android:orientation="vertical"
                     android:paddingLeft="5dp">
 

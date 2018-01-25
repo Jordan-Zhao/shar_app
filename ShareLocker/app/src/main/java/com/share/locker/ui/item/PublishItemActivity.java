@@ -16,6 +16,8 @@ import android.widget.Spinner;
 import com.share.locker.R;
 import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
+import com.share.locker.common.GlobalManager;
+import com.share.locker.common.StringUtil;
 import com.share.locker.ui.component.BaseActivity;
 import com.share.locker.ui.main.MainActivity;
 import com.share.locker.vo.SelectableLockerVO;
@@ -46,7 +48,7 @@ import java.util.Map;
 public class PublishItemActivity extends BaseActivity {
     private static final String TAG_LOG = "PublishItemActivity";
     private static final int REQUEST_CODE_ADD_PHOTO = 21;//定义请求码常量
-    private static final String URL_PUBLISH_ITEM = Constants.URL_BASE+"publishItem.json";
+    private static final String URL_PUBLISH_ITEM = Constants.URL_BASE+"item/publishItem.json";
 
     @ViewInject(R.id.publish_back_btn)
     private Button backBtn;
@@ -129,7 +131,7 @@ public class PublishItemActivity extends BaseActivity {
                 .capture(true)
                 .captureStrategy(
                         new CaptureStrategy(true, "com.zhihu.matisse.sample.fileprovider"))
-                .maxSelectable(9)
+                .maxSelectable(5)
                 .addFilter(new GifSizeFilter(320, 320, 5 * Filter.K * Filter.K))
                 .gridExpectedSize(
                         getResources().getDimensionPixelSize(R.dimen.grid_expected_size))
@@ -153,6 +155,7 @@ public class PublishItemActivity extends BaseActivity {
                     itemData.setImgUri(photoUrlList.get(i));
                     itemDataArr[i] = itemData;
                 }
+                //TODO 图片是否可以压缩后再显示？
                 PublishPhotoListAdapter listAdapter = new PublishPhotoListAdapter(this, itemDataArr);
                 photoListView.setAdapter(listAdapter);
             }
@@ -162,41 +165,66 @@ public class PublishItemActivity extends BaseActivity {
     //提交表单 的按钮
     @Event(value = R.id.publish_submit_btn, type = View.OnClickListener.class)
     private void onClickSubmitBtn(View view) {
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("title",titleTxt.getText().toString());
-        paramMap.put("priceTime",priceTimeTxt.getText().toString());
-        paramMap.put("priceTimeUnit",getPriceTimeUnitCode(priceTimeUnitSelector.getSelectedItemPosition()));
-        paramMap.put("price",priceTxt.getText().toString());
-        paramMap.put("deposit",depositTxt.getText().toString());
-        paramMap.put("lockerSize",getLockerSizeCode(lockerSizeSelector.getSelectedItemPosition()));
-        paramMap.put("lockerId",String.valueOf(getSelectedLockerId(machineSelector.getSelectedItemPosition())));
-        paramMap.put("description",descriptionTxt.getText().toString());
-        paramMap.put("publishStatus",String.valueOf(publishStatusCBox.isChecked()));
-        List<File> imgList = new ArrayList<>();
-        for(Uri uri : photoUrlList){
-            imgList.add(BizUtil.convertUriToFile(uri,this));
+        if(checkInputData()) {
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("title", titleTxt.getText().toString());
+            paramMap.put("priceTime", priceTimeTxt.getText().toString());
+            paramMap.put("priceTimeUnit", getPriceTimeUnitCode(priceTimeUnitSelector.getSelectedItemPosition()));
+            paramMap.put("price", priceTxt.getText().toString());
+            paramMap.put("deposit", depositTxt.getText().toString());
+            paramMap.put("lockerSize", getLockerSizeCode(lockerSizeSelector.getSelectedItemPosition()));
+            paramMap.put("lockerId", String.valueOf(getSelectedLockerId(machineSelector.getSelectedItemPosition())));
+            paramMap.put("description", descriptionTxt.getText().toString());
+            paramMap.put("publishStatus", String.valueOf(publishStatusCBox.isChecked()));
+            List<File> imgList = new ArrayList<>();
+            for (Uri uri : photoUrlList) {
+                imgList.add(BizUtil.convertUriToFile(uri, this));
+            }
+            LockerHttpUtil.postFileJson(URL_PUBLISH_ITEM, paramMap, imgList,
+                    new HttpCallback() {
+                        @Override
+                        public void processSuccess(final String successData) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Intent successIntent = new Intent(PublishItemActivity.this, PublishItemSuccessActivity.class);
+                                    successIntent.putExtra("itemId", successData);
+                                    successIntent.putExtra("itemTitle", titleTxt.getText().toString());//返回给main，显示已发布成功
+                                    startActivity(successIntent);
+                                    finish(); //销毁activity
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void processFail(String failData) {
+
+                        }
+                    });
         }
-        LockerHttpUtil.postFileJson(URL_PUBLISH_ITEM, paramMap, imgList,
-                new HttpCallback() {
-                    @Override
-                    public void processSuccess(final String successData) {
-                        runOnUiThread(new Runnable() {
-                              @Override
-                              public void run() {
-                                  Intent successIntent = new Intent(PublishItemActivity.this, PublishItemSuccessActivity.class);
-                                  successIntent.putExtra("itemId",successData);
-                                  successIntent.putExtra("itemTitle",titleTxt.getText().toString());//返回给main，显示已发布成功
-                                  startActivity(successIntent);
-                                  finish(); //销毁activity
-                              }
-                          });
-                    }
+    }
 
-                    @Override
-                    public void processFail(String failData) {
-
-                    }
-                });
+    private boolean checkInputData(){
+        if(photoUrlList == null || photoUrlList.size() < 1){
+            GlobalManager.dialogManager.showTipDialog("请至少选择一张照片");
+            return false;
+        }
+        String title = titleTxt.getText().toString();
+        if(title == null || title.length() < 1 || title.length() > 100){
+            GlobalManager.dialogManager.showTipDialog("请输入标题");
+            return false;
+        }
+        String priceTimeStr = priceTimeTxt.getText().toString();
+        String priceStr = priceTxt.getText().toString();
+        if(!StringUtil.isFloat(priceTimeStr) || !StringUtil.isFloat(priceStr)){
+            GlobalManager.dialogManager.showTipDialog("请输入正确的价格");
+            return false;
+        }
+        if(!StringUtil.isFloat(depositTxt.getText().toString())){
+            GlobalManager.dialogManager.showTipDialog("请输入正确的押金");
+            return false;
+        }
+        return true;
     }
 
     private String[] getMachineNameArr(SelectableLockerVO[] machineVOArr){

@@ -32,7 +32,7 @@ import java.util.Map;
 @ContentView(R.layout.activity_login)
 public class LoginActivity extends BaseActivity {
     private final String TAG_LOG = "LoginActivity";
-    private final String URL_LOGIN = Constants.URL_BASE + "login.json";
+    private final String URL_LOGIN = Constants.URL_BASE + "mine/login.json";
     private View view;
 
     @ViewInject(R.id.login_email_phone_txt)

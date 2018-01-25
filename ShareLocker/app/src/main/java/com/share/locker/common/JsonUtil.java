@@ -2,8 +2,6 @@ package com.share.locker.common;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.share.locker.dto.ItemDTO;
-import com.share.locker.dto.ItemDetailDTO;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,13 +39,12 @@ public class JsonUtil {
      * json 转 list
      *
      * @param jsonStr
-     * @param tClass  list中的类
+     * @param typeToken  list中的类构建的TypeToken
      * @return
      */
-    public static List json2List(String jsonStr, Class tClass) {
+    public static List json2List(String jsonStr, TypeToken typeToken) {
         Gson gson = new Gson();
-        return gson.fromJson(jsonStr, new TypeToken<List<ItemDTO>>() {
-        }.getType());
+        return gson.fromJson(jsonStr, typeToken.getType());
     }
 
 
@@ -102,7 +99,7 @@ System.out.println(obj2);*/
 
 
         /////////////////////////////////////////////////////////
-        ItemDetailDTO detailDTO = new ItemDetailDTO();
+        /*ItemDetailDTO detailDTO = new ItemDetailDTO();
         detailDTO.setOwnnerNick("aaaaaaaaa");
         List<String> urlList = new ArrayList<>();
         urlList.add("http1111");
@@ -112,7 +109,21 @@ System.out.println(obj2);*/
         String s = gson.toJson(detailDTO);
 
         ItemDetailDTO detailDTO1 = gson.fromJson(s,ItemDetailDTO.class);
-        System.out.println(detailDTO1.getImgList().size());
+        System.out.println(detailDTO1.getImgList().size());*/
+
+        ///////////////////////////////////////////////////
+       /* Gson gson = new Gson();
+        OperationData operationData = new OperationData();
+        operationData.setLeftImgUrl("httpdkksdksk111111111");
+        HotItemDTO hotItemDTO = new HotItemDTO();
+        hotItemDTO.setImgUrl("httttttttttt2222222");
+        List<HotItemDTO> hotItemDTOList = new ArrayList<>();
+        hotItemDTOList.add(hotItemDTO);
+        operationData.setHotItemDTOList(hotItemDTOList);
+
+        String json = gson.toJson(operationData);
+        OperationData obj = gson.fromJson(json, new TypeToken<OperationData>() {}.getType());
+        obj.getClass();*/
     }
 
 }

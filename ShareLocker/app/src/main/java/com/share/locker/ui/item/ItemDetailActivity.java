@@ -1,21 +1,24 @@
 package com.share.locker.ui.item;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.share.locker.R;
 import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
-import com.share.locker.vo.LoginUserVO;
+import com.share.locker.common.GlobalManager;
+import com.share.locker.common.JsonUtil;
 import com.share.locker.dto.ItemDetailDTO;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
-import com.share.locker.common.JsonUtil;
+import com.share.locker.ui.component.BaseActivity;
+import com.share.locker.vo.LoginUserVO;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -26,12 +29,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 @ContentView(R.layout.activity_item_detail)
-public class ItemDetailActivity extends AppCompatActivity {
-    private static final String URL_GET_ITEM_DETAIL = Constants.URL_BASE + "getItemDetail.json";
-    private static final String URL_RENT = Constants.URL_BASE + "rent.json";
-    private static final String URL_ITEM_ON_LINE = Constants.URL_BASE + "onLineItem.json";
-    private static final String URL_ITEM_OFF_LINE = Constants.URL_BASE + "offLineItem.json";
-    private static final String URL_ITEM_DELETE = Constants.URL_BASE + "deleteItem.json";
+public class ItemDetailActivity extends BaseActivity {
+    private static final String URL_GET_ITEM_DETAIL = Constants.URL_BASE + "item/getItemDetail.json";
+    private static final String URL_RENT = Constants.URL_BASE + "order/rent.json";
+    private static final String URL_ITEM_ON_LINE = Constants.URL_BASE + "item/onLineItem.json";
+    private static final String URL_ITEM_OFF_LINE = Constants.URL_BASE + "item/offLineItem.json";
+    private static final String URL_ITEM_DELETE = Constants.URL_BASE + "item/deleteItem.json";
 
     @ViewInject(R.id.detail_title_txt)
     private TextView titleTxt;
@@ -47,14 +50,14 @@ public class ItemDetailActivity extends AppCompatActivity {
     @ViewInject(R.id.detail_description_txt)
     private TextView descriptionTxt;
 
-    @ViewInject(R.id.detail_img_list)
-    private ListView imgListView;
-
     @ViewInject(R.id.detail_renter_opt_layout)
     private LinearLayout renterOptLayout;
 
     @ViewInject(R.id.detail_owner_opt_layout)
     private LinearLayout ownerOptLayout;
+
+    @ViewInject(R.id.detail_img_list_layout)
+    private LinearLayout imgListLayout;
 
     private Long itemId;
 
@@ -78,18 +81,13 @@ public class ItemDetailActivity extends AppCompatActivity {
                 new HttpCallback() {
                     @Override
                     public void processSuccess(final String successData) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //TODO 提示
-                                Toast.makeText(ItemDetailActivity.this,successData,1000*1000*10).show();
-                            }
-                        });
+                        GlobalManager.dialogManager.showTipDialogInUiThread(
+                                "下单完成，请尽快去取件。您的订单号是"+successData);
                     }
 
                     @Override
                     public void processFail(String failData) {
-                        //TODO 提示租用失败
+                        GlobalManager.dialogManager.showErrorDialogInUiThread(failData);
                     }
                 });
     }
@@ -104,18 +102,12 @@ public class ItemDetailActivity extends AppCompatActivity {
                 new HttpCallback() {
                     @Override
                     public void processSuccess(final String successData) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //TODO 提示
-                                Toast.makeText(ItemDetailActivity.this,"上架成功",1000*1000*10).show();
-                            }
-                        });
+                        GlobalManager.dialogManager.showTipDialogInUiThread(successData);
                     }
 
                     @Override
                     public void processFail(String failData) {
-                        //TODO 提示
+                        GlobalManager.dialogManager.showErrorDialogInUiThread(failData);
                     }
                 });
     }
@@ -130,18 +122,12 @@ public class ItemDetailActivity extends AppCompatActivity {
                 new HttpCallback() {
                     @Override
                     public void processSuccess(final String successData) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //TODO 提示
-                                Toast.makeText(ItemDetailActivity.this,"下架成功",1000*1000*10).show();
-                            }
-                        });
+                        GlobalManager.dialogManager.showTipDialogInUiThread(successData);
                     }
 
                     @Override
                     public void processFail(String failData) {
-                        //TODO 提示
+                        GlobalManager.dialogManager.showErrorDialogInUiThread(failData);
                     }
                 });
     }
@@ -156,18 +142,12 @@ public class ItemDetailActivity extends AppCompatActivity {
                 new HttpCallback() {
                     @Override
                     public void processSuccess(final String successData) {
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                //TODO 提示
-                                Toast.makeText(ItemDetailActivity.this,"删除成功",1000*1000*10).show();
-                            }
-                        });
+                        GlobalManager.dialogManager.showTipDialogInUiThread(successData);
                     }
 
                     @Override
                     public void processFail(String failData) {
-                        //TODO 提示
+                        GlobalManager.dialogManager.showErrorDialogInUiThread(failData);
                     }
                 });
     }
@@ -204,13 +184,24 @@ public class ItemDetailActivity extends AppCompatActivity {
         machineTxt.setText(detailDTO.getMachineName());
         commentTxt.setText(String.valueOf(detailDTO.getComment()));
         descriptionTxt.setText(detailDTO.getDescription());
+        //渲染图片
+        for(String imgUrl : detailDTO.getImgList()) {
+            ImageView imageView = new ImageView(this);
+
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            layoutParams.setMargins(10,10,10,10);
+            imageView.setLayoutParams(layoutParams);
+            Glide.with(this).load(imgUrl).into(imageView);
+            imgListLayout.addView(imageView);
+        }
+        /*
         //图片
         String[] urlArr = new String[detailDTO.getImgList().size()];
         for(int i=0;i<urlArr.length;i++){
             urlArr[i] = detailDTO.getImgList().get(i);
         }
         DetailImgListAdapter imgListAdapter = new DetailImgListAdapter(this, urlArr);
-        imgListView.setAdapter(imgListAdapter);
+        imgListView.setAdapter(imgListAdapter);*/
 
 
         Long userId = detailDTO.getUserId();

@@ -12,13 +12,13 @@ import com.share.locker.common.GlobalManager;
 public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        GlobalManager.currentContext = this;
         super.onCreate(savedInstanceState);
+        GlobalManager.currentActivity = this;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        GlobalManager.currentContext = this;
+        GlobalManager.currentActivity = this;
     }
 }

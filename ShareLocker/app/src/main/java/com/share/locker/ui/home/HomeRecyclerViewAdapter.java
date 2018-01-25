@@ -12,8 +12,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.share.locker.ui.item.ItemDetailActivity;
 import com.share.locker.R;
+import com.share.locker.dto.BannerDTO;
+import com.share.locker.dto.HotItemDTO;
+import com.share.locker.dto.OperationSettingDTO;
+import com.share.locker.ui.item.ItemDetailActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 import com.youth.banner.Transformer;
@@ -32,13 +35,13 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
     public static final int VIEW_TYPE_HEADER = 0;  //说明是带有Header的
     public static final int VIEW_TYPE_NORMAL = 1;  //说明是不带有header和footer的
 
-    private OperationData operationData;
+    private OperationSettingDTO operationSettingDTO;
     private Activity mainActivity;
     private View headView;
 
-    public HomeRecyclerViewAdapter(Activity mainActivity, OperationData operationData) {
+    public HomeRecyclerViewAdapter(Activity mainActivity, OperationSettingDTO operationSettingDTO) {
         this.mainActivity = mainActivity;
-        this.operationData = operationData;
+        this.operationSettingDTO = operationSettingDTO;
     }
 
     /**
@@ -67,13 +70,29 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         if (viewType == VIEW_TYPE_HEADER) {
             HomeViewHolder viewHolder = new HomeViewHolder(VIEW_TYPE_HEADER, headView);
             //点击后，跳转到详情页
-            setItemClickListener(viewHolder.getOptLeftLayout(),operationData.getLeftItemId());
-            setItemClickListener(viewHolder.getOptRightLayout1(),operationData.getRightItemId1());
-            setItemClickListener(viewHolder.getOptRightLayout2(),operationData.getRightItemId2());
+            viewHolder.getBanner().setOnBannerListener(new OnBannerListener() {
+                        //轮播图的监听方法
+                        @Override
+                        public void OnBannerClick(int position) {
+                            Long itemId = operationSettingDTO.getBannerDTOList().get(position).getItemId();
+                            jumpToItemDetailView(itemId);
+                        }
+                    });
+            setItemClickListener(viewHolder.getOptLeftLayout(),operationSettingDTO.getLeftItemId());
+            setItemClickListener(viewHolder.getOptRightLayout1(),operationSettingDTO.getRightItemId1());
+            setItemClickListener(viewHolder.getOptRightLayout2(),operationSettingDTO.getRightItemId2());
             return viewHolder;
         } else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.home_list_item, parent, false);
             HomeViewHolder viewHolder = new HomeViewHolder(VIEW_TYPE_NORMAL, view);
+            viewHolder.getView().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int position = (Integer)view.getTag();
+                    Long itemId = operationSettingDTO.getHotItemDTOList().get(position - 1).getItemId();
+                    jumpToItemDetailView(itemId);
+                }
+            });
             return viewHolder;
         }
     }
@@ -85,9 +104,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 mainActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(mainActivity, ItemDetailActivity.class);
-                        intent.putExtra("itemId",itemId);
-                        mainActivity.startActivity(intent);
+                        jumpToItemDetailView(itemId);
                     }
                 });
             }
@@ -107,14 +124,15 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         } else if (getItemViewType(position) == VIEW_TYPE_NORMAL) {
             showListItemData(holder, position);
         }
+        holder.getView().setTag(position);  //使用position作为Tag
     }
 
     @Override
     public int getItemCount() {
         if (headView == null) {
-            return operationData.getHotItemDataList().size();
+            return operationSettingDTO.getHotItemDTOList().size();
         } else {
-            return operationData.getHotItemDataList().size() + 1;
+            return operationSettingDTO.getHotItemDTOList().size() + 1;
         }
     }
 
@@ -132,8 +150,8 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 });
         //设置图片网址或地址的集合`
         List<String> imgUrlList = new ArrayList<>();
-        for (OperationData.BannerData bannerData : operationData.getBannerDataList()) {
-            imgUrlList.add(bannerData.getImgUrl());
+        for (BannerDTO bannerDTO : operationSettingDTO.getBannerDTOList()) {
+            imgUrlList.add(bannerDTO.getImgUrl());
         }
         banner.setImages(imgUrlList);
         //设置轮播的动画效果，内含多种特效，可点入方法内查找后内逐一体验
@@ -146,45 +164,38 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         banner.isAutoPlay(true);
         //设置指示器的位置，小点点，左中右。
         banner.setIndicatorGravity(BannerConfig.CENTER)
-                //以上内容都可写成链式布局，这是轮播图的监听。比较重要。方法在下面。
-                .setOnBannerListener(new OnBannerListener() {
-                    //轮播图的监听方法
-                    @Override
-                    public void OnBannerClick(int position) {
-//                                    Log.i("tag", "你点了第"+position+"张轮播图");
-                    }
-                })
                 //必须最后调用的方法，启动轮播图。
                 .start();
     }
 
     private void showOperationData(HomeViewHolder headViewHolder) {
         //left
-        Glide.with(mainActivity).load(operationData.getLeftImgUrl()).into(headViewHolder.getOptLeftImg());
-        headViewHolder.getOptLeftTxt().setText(operationData.getLeftTxt());
+        Glide.with(mainActivity).load(operationSettingDTO.getLeftImgUrl()).into(headViewHolder.getOptLeftImg());
+        headViewHolder.getOptLeftTxt().setText(operationSettingDTO.getLeftTxt());
         headViewHolder.getOptLeftTxt().getPaint().setFakeBoldText(true);
 
         //right1
-        Glide.with(mainActivity).load(operationData.getRightImgUrl1()).into(headViewHolder.getOptRightImg1());
-        headViewHolder.getOptRightTitle1().setText(operationData.getRightTitle1());
+        Glide.with(mainActivity).load(operationSettingDTO.getRightImgUrl1()).into(headViewHolder.getOptRightImg1());
+        headViewHolder.getOptRightTitle1().setText(operationSettingDTO.getRightTitle1());
         headViewHolder.getOptRightTitle1().getPaint().setFakeBoldText(true);
-        headViewHolder.getOptRightTxt1().setText(operationData.getRightTxt1());
+        headViewHolder.getOptRightTxt1().setText(operationSettingDTO.getRightTxt1());
 
         //right2
-        Glide.with(mainActivity).load(operationData.getRightImgUrl2()).into(headViewHolder.getOptRightImg2());
-        headViewHolder.getOptRightTitle2().setText(operationData.getRightTitle2());
+        Glide.with(mainActivity).load(operationSettingDTO.getRightImgUrl2()).into(headViewHolder.getOptRightImg2());
+        headViewHolder.getOptRightTitle2().setText(operationSettingDTO.getRightTitle2());
         headViewHolder.getOptRightTitle2().getPaint().setFakeBoldText(true);
-        headViewHolder.getOptRightTxt2().setText(operationData.getRightTxt2());
+        headViewHolder.getOptRightTxt2().setText(operationSettingDTO.getRightTxt2());
     }
 
     private void showListItemData(HomeViewHolder listItemViewHolder, int position) {
-        OperationData.HotItemData hotItemData = operationData.getHotItemDataList().get(position - 1);
-        Glide.with(mainActivity).load(hotItemData.getImgUrl()).into(listItemViewHolder.getImgView());
-        listItemViewHolder.getTitleTxt().setText(hotItemData.getTitle());
+        HotItemDTO hotItemDTO = operationSettingDTO.getHotItemDTOList().get(position - 1);
+        Glide.with(mainActivity).load(hotItemDTO.getImgUrl()).into(listItemViewHolder.getImgView());
+        listItemViewHolder.getTitleTxt().setText(hotItemDTO.getTitle());
+        listItemViewHolder.getTitleTxt().setText(hotItemDTO.getTitle());
         listItemViewHolder.getTitleTxt().getPaint().setFakeBoldText(true);
-        listItemViewHolder.getDepositTxt().setText(String.valueOf(hotItemData.getDeposit()));
-        listItemViewHolder.getPriceTxt().setText(hotItemData.getPriceTxt());
-        listItemViewHolder.getCommentTxt().setText(String.valueOf(hotItemData.getCommentCount()));
+        listItemViewHolder.getDepositTxt().setText("押金"+String.valueOf(hotItemDTO.getDeposit())+"元");
+        listItemViewHolder.getPriceTxt().setText(hotItemDTO.getPriceTxt());
+        listItemViewHolder.getCommentTxt().setText("评价"+String.valueOf(hotItemDTO.getCommentCount()));
     }
 
     public View getHeadView() {
@@ -197,6 +208,11 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         notifyItemInserted(0);
     }
 
+    private void jumpToItemDetailView(Long itemId){
+        Intent intent = new Intent(mainActivity,ItemDetailActivity.class);
+        intent.putExtra("itemId",itemId);
+        mainActivity.startActivity(intent);
+    }
     /**
      * view Holder，viewType不同，属性值也不同
      */

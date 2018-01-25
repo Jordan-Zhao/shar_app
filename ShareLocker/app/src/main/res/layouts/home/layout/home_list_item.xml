@@ -8,8 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp">
 
         <ImageView
             android:id="@+id/list_item_img_view"
@@ -27,22 +27,26 @@
             <TextView
                 android:id="@+id/list_item_title"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="8pt"/>
 
             <TextView
                 android:id="@+id/list_item_deposit"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="5pt"/>
 
             <TextView
                 android:id="@+id/list_item_price"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="5pt"/>
 
             <TextView
                 android:id="@+id/list_item_comment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:textSize="5pt"/>
         </LinearLayout>
 
     </LinearLayout>
