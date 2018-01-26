@@ -1,12 +1,14 @@
 package com.share.locker.dto;
 
+import java.io.Serializable;
+
 /**
  * server 与app的传输对象。
  * 宝贝列表展示用的item
  * @author Jordan
  *
  */
-public class ItemDTO {
+public class ItemDTO  implements Serializable {
 	private Long itemId;
 	private String smallImgUrl;
 	private String title;

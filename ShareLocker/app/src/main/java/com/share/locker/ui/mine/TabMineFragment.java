@@ -1,6 +1,5 @@
 package com.share.locker.ui.mine;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,18 +12,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.share.locker.common.GlobalManager;
-import com.share.locker.ui.main.MainActivity;
 import com.share.locker.R;
 import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
-import com.share.locker.ui.component.BaseFragment;
-import com.share.locker.vo.LoginUserVO;
+import com.share.locker.common.GlobalManager;
+import com.share.locker.common.JsonUtil;
+import com.share.locker.dto.UserDTO;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
-import com.share.locker.vo.ResumeRefreshVO;
+import com.share.locker.ui.component.BaseFragment;
+import com.share.locker.vo.LoginUserVO;
 
-import org.json.JSONObject;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -42,6 +40,7 @@ import java.util.Map;
 public class TabMineFragment extends BaseFragment {
     private final String TAG_LOG = "TabMineFragment";
     private final String URL_GET_USER_INFO = Constants.URL_BASE + "mine/getMineData.json";
+    private final String KEY_USER_DTO = "KEY_USER_DTO";
 
     private View view;
 
@@ -49,8 +48,8 @@ public class TabMineFragment extends BaseFragment {
     private ImageView mineIconImg;
     @ViewInject(R.id.mine_nick_txt)
     private TextView mineNickTxt;
-    @ViewInject(R.id.mine_email_txt)
-    private TextView mineEmailTxt;
+    //    @ViewInject(R.id.mine_email_txt)
+//    private TextView mineEmailTxt;
     @ViewInject(R.id.mine_phone_txt)
     private TextView minePhoneTxt;
     @ViewInject(R.id.mine_login_btn)
@@ -66,31 +65,50 @@ public class TabMineFragment extends BaseFragment {
     @ViewInject(R.id.mine_loginout_btn)
     private Button loginOutBtn;
 
+    @ViewInject(R.id.mine_register_btn)
+    private Button registerBtn;
+
     @ViewInject(R.id.mine_publish_item_list_layout)
     private LinearLayout publicItemListLayout;
+
+    private UserDTO userDTO;//页面使用的数据
+
+    @Nullable
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        loadMineData();
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater,container,savedInstanceState);
-
+        super.onCreateView(inflater, container, savedInstanceState);
         //xutil 渲染fragment
         view = x.view().inject(this, inflater, container);
 
-        loadMineData();
-
+        if (userDTO == null && savedInstanceState != null && savedInstanceState.getSerializable(KEY_USER_DTO) != null) {
+            //Fragment被回收
+            userDTO = (UserDTO) savedInstanceState.getSerializable(KEY_USER_DTO);
+        }
+        showDataOnUi();
         return view;
     }
 
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
-        if(GlobalManager.resumeManager.isNeedRefresh(Constants.FRAG_INDEX_MINE)){
+
+        showUiByLoginStatus();
+
+        if (GlobalManager.resumeManager.isNeedRefresh(Constants.FRAG_INDEX_MINE)) {
             loadMineData();
         }
     }
+
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         GlobalManager.resumeManager.clearResumeData(Constants.FRAG_INDEX_MINE);
     }
@@ -99,7 +117,13 @@ public class TabMineFragment extends BaseFragment {
     @Event(value = R.id.mine_login_btn, type = View.OnClickListener.class)
     private void onClickLoginBtn(View view) {
         Intent intent = new Intent(getContext(), LoginActivity.class);
-        intent.putExtra(Constants.KEY_LOGINED_JUMP,Constants.LOGINED_JUMP_TO_MINE);
+        startActivity(intent);
+    }
+
+    //注册按钮
+    @Event(value = R.id.mine_register_btn, type = View.OnClickListener.class)
+    private void onClickRegisterBtn(View view) {
+        Intent intent = new Intent(getContext(), RegisterActivity.class);
         startActivity(intent);
     }
 
@@ -109,79 +133,57 @@ public class TabMineFragment extends BaseFragment {
         //清理sharedRef数据
         BizUtil.removeValueFromPref(Constants.SHARED_REF_KEY_LOGIN_info, getActivity());
 
-        showUnLoginUi();
+        showUiByLoginStatus();
     }
 
     //加载用户数据，public可调用
     private void loadMineData() {
-        //从sharedRef取用户账号和密码信息，如果存在，则请求用户数据，不存在，则显示登录按钮
         LoginUserVO loginUserVO = BizUtil.getLoginUser(getActivity());
-        if (loginUserVO == null) {
-            //显示登录按钮
-            showUnLoginUi();
-        } else {
-            showLogin(loginUserVO);
-        }
-    }
-
-    //用户未登录过，显示未登录时的页面
-    private void showUnLoginUi() {
-        loginedLayout.setVisibility(View.GONE);
-        unloginLayout.setVisibility(View.VISIBLE);
-        logoutLayout.setVisibility(View.GONE);
-    }
-
-    //用户登录过，根据用户名和密码加载数据，然后显示
-    private void showLogin(LoginUserVO loginUserVO) {
-        //从服务端加载数据
-        Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("userName", loginUserVO.getUserName());
-        paramMap.put("password", loginUserVO.getPassword());
-        LockerHttpUtil.postJson(URL_GET_USER_INFO, paramMap, new HttpCallback() {
-            @Override
-            public void processSuccess(final String successData) {
-                //登录成功，服务端回返回用户基本信息，UI去显示用户信息
-                getActivity().runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
-                                                    showUserData(successData);
+        if (loginUserVO != null) {
+            //用户登录过，根据用户名和密码加载数据，然后显示
+            Map<String, String> paramMap = new HashMap<>();
+            paramMap.put("userName", loginUserVO.getUserName());
+            paramMap.put("password", loginUserVO.getPassword());
+            LockerHttpUtil.postJson(URL_GET_USER_INFO, paramMap, new HttpCallback() {
+                @Override
+                public void processSuccess(final String successData) {
+                    //登录成功，服务端回返回用户基本信息，UI去显示用户信息
+                    getActivity().runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        userDTO = (UserDTO) JsonUtil.json2Object(successData, UserDTO.class);
+                                                        showDataOnUi();
+                                                    }
                                                 }
-                                            }
-                );
-            }
+                    );
+                }
 
-            @Override
-            public void processFail(String failData) {
-                //TODO 提示
-            }
-        });
-    }
-
-    //加载到user数据后，显示到UI
-    private void showUserData(String userDataJson) {
-        try {
-            JSONObject userJsonObj = new JSONObject(userDataJson);
-            String userIconUrl = userJsonObj.getString("user_icon_url");
-            String nick = userJsonObj.getString("nick");
-            String email = userJsonObj.getString("email");
-            String phoneNuber = userJsonObj.getString("phone_number");
-
-            Glide.with(this).load(userIconUrl).into(mineIconImg);
-            mineNickTxt.setText(nick);
-            mineEmailTxt.setText("邮箱：" + email);
-            minePhoneTxt.setText("电话：" + phoneNuber);
-
-            showLoginedUi();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
+                @Override
+                public void processFail(String failData) {
+                    GlobalManager.dialogManager.showErrorDialogInUiThread(failData);
+                }
+            });
         }
     }
 
-    //显示登录后的UI
-    private void showLoginedUi() {
-        loginedLayout.setVisibility(View.VISIBLE);
-        unloginLayout.setVisibility(View.GONE);
-        logoutLayout.setVisibility(View.VISIBLE);
+    /**
+     * 销毁前保存数据，避免下次显示时去请求服务器
+     *
+     * @param savedBundle
+     */
+    @Override
+    public void onSaveInstanceState(Bundle savedBundle) {
+        super.onSaveInstanceState(savedBundle);
+
+        savedBundle.putSerializable(KEY_USER_DTO, userDTO);
+    }
+
+    private void showDataOnUi() {
+        if (userDTO != null) {
+            Glide.with(TabMineFragment.this).load(userDTO.getIconUrl()).into(mineIconImg);
+            mineNickTxt.setText(userDTO.getNick());
+            minePhoneTxt.setText("注册手机号：" + userDTO.getPhoneStr());
+        }
     }
 
     //我发布的宝贝 点击
@@ -192,4 +194,21 @@ public class TabMineFragment extends BaseFragment {
         startActivity(intent);
     }
 
+    /**
+     * 根据登录状态显示UI
+     */
+    private void showUiByLoginStatus() {
+        LoginUserVO loginUserVO = BizUtil.getLoginUser(getActivity());
+        if (loginUserVO == null) {
+            //未登录
+            unloginLayout.setVisibility(View.VISIBLE);
+            loginedLayout.setVisibility(View.GONE);
+            logoutLayout.setVisibility(View.GONE);
+        } else {
+            //已登录
+            loginedLayout.setVisibility(View.VISIBLE);
+            logoutLayout.setVisibility(View.VISIBLE);
+            unloginLayout.setVisibility(View.GONE);
+        }
+    }
 }

@@ -71,14 +71,14 @@ public class MainActivity extends BaseActivity {
         super.onResume();
 
         //当从外面activity回调回来时，判断intent，显示不同的fragment
-        Intent intent = getIntent();
-        int toWhereCode = intent.getIntExtra(Constants.INTENT_KEY_MAIN_TO_WHERE,-1);
-        if(toWhereCode == Constants.MainIntentToWhereCode.TO_MINE_FRAG.getCode()){
-            if(fragTabhost.getCurrentTab() != Constants.FRAG_INDEX_MINE) {
-                //切换到发布宝贝完成的fragment
-                fragTabhost.setCurrentTab(Constants.FRAG_INDEX_MINE);
-            }
-        }
+//        Intent intent = getIntent();
+//        int toWhereCode = intent.getIntExtra(Constants.INTENT_KEY_MAIN_TO_WHERE,-1);
+//        if(toWhereCode == Constants.MainIntentToWhereCode.TO_MINE_FRAG.getCode()){
+//            if(fragTabhost.getCurrentTab() != Constants.FRAG_INDEX_MINE) {
+//                //切换到发布宝贝完成的fragment
+//                fragTabhost.setCurrentTab(Constants.FRAG_INDEX_MINE);
+//            }
+//        }
     }
 
     /**
@@ -148,7 +148,7 @@ public class MainActivity extends BaseActivity {
                 if(BizUtil.getLoginUser(MainActivity.this) == null){
                     //未登录，跳转到登录页面
                     Intent loginIntent = new Intent(MainActivity.this,LoginActivity.class);
-                    loginIntent.putExtra(Constants.KEY_LOGINED_JUMP,Constants.LOGINED_JUMP_TO_PUBLISH_ITEM);    //登录后跳转到的页面
+                    loginIntent.putExtra(Constants.INTENT_KEY_JUMP_TO,MainActivity.class);
                     startActivity(loginIntent);
                 }
                 else{

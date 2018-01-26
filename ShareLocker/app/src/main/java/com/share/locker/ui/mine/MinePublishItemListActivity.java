@@ -85,11 +85,13 @@ public class MinePublishItemListActivity extends BaseActivity implements Recycle
     }
 
     private void showDataOnUi() {
-        //layout
-        LinearLayoutManager layoutManager = new LinearLayoutManager(MinePublishItemListActivity.this);
-        itemListView.setLayoutManager(layoutManager);
-        //list 数据 和 adapter
-        itemRecyclerAdapter = new MinePublishItemRecyclerAdapter(this, itemDTOList);
-        itemListView.setAdapter(itemRecyclerAdapter);
+        if(itemDTOList != null) {
+            //layout
+            LinearLayoutManager layoutManager = new LinearLayoutManager(MinePublishItemListActivity.this);
+            itemListView.setLayoutManager(layoutManager);
+            //list 数据 和 adapter
+            itemRecyclerAdapter = new MinePublishItemRecyclerAdapter(this, itemDTOList);
+            itemListView.setAdapter(itemRecyclerAdapter);
+        }
     }
 }

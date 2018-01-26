@@ -27,9 +27,18 @@ public class Constants {
     public final static String HTTP_RESULT_JSON_TYPE_OBJECT = "HTTP_RESULT_JSON_TYPE_OBJECT";	//http 请求返回的json：Object
     public final static String HTTP_RESULT_JSON_TYPE_ARRAY = "HTTP_RESULT_JSON_TYPE_ARRAY";	//http 请求返回的json：ARRAY
 
+    public final static String INTENT_KEY_JUMP_TO = "INTENT_KEY_JUMP_TO";   //处理完成Intent后，应该跳转到的页面
+/*
+    public final static String KEY_BACK_MAIN_PAGE = "KEY_MAIN_JUMP_TO";   //发起登录Intent里的key
+
     public final static String KEY_LOGINED_JUMP = "KEY_LOGINED_JUMP";   //发起登录Intent里的key
     public final static String LOGINED_JUMP_TO_MINE = "LOGINED_JUMP_TO_MINE";   //登录后跳转到Mine页面
     public final static String LOGINED_JUMP_TO_PUBLISH_ITEM = "LOGINED_JUMP_TO_PUBLISH_ITEM";   //登录后跳转到“发布宝贝”页面，显示发布完成
+
+    public final static String KEY_REGISTER_JUMP = "KEY_REGISTER_JUMP";   //发起注册Intent里的key
+    public final static String REGISTERED_TO_MINE = "REGISTERED_TO_MINE";   //注册后跳转到Mine页面*/
+
+//public final static String INTENT_KEY_MAIN_TO_WHERE = "INTENT_KEY_MAIN_TO_WHERE";
 
     //========start======Intent request code===========
     public final static int INTENT_REQUEST_CODE_LOGIN = 1;
@@ -63,7 +72,6 @@ public class Constants {
             this.description = description;
         }
     }
-    public final static String INTENT_KEY_MAIN_TO_WHERE = "INTENT_KEY_MAIN_TO_WHERE";
 
     /**
      * 最小租赁时间单元，给下拉框使用
@@ -110,4 +118,7 @@ public class Constants {
     public static final int FRAG_INDEX_PUBLISH = 2;
     public static final int FRAG_INDEX_MESSAGE = 3;
     public static final int FRAG_INDEX_MINE = 4;
+
+    public static final String TMP_FILE_PATH = "/data/data/com.share.locker.sharelocker/files/";    //临时文件路径
+    public static final int UPLOAD_IMAGE_WIDTH = 1080;  //上传的图片宽度，高度按照这个宽度等比例缩放
 }

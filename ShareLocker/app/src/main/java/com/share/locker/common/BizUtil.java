@@ -86,7 +86,6 @@ public class BizUtil {
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
         if (cursor.moveToFirst()) {
-            ;
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             filePath = cursor.getString(column_index);
         }

@@ -1,5 +1,6 @@
 package com.share.locker.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -8,7 +9,7 @@ import java.util.List;
  * @author Jordan
  *
  */
-public class ItemDetailDTO{
+public class ItemDetailDTO implements Serializable {
 	private Long itemId;
 	private Long userId;
 	private String ownnerNick;

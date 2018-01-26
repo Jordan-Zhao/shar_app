@@ -14,6 +14,13 @@ import com.share.locker.ui.component.BaseFragment;
  * Created by ruolan on 2015/11/29.
  */
 public class TabCartFragment extends BaseFragment {
+
+    @Nullable
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

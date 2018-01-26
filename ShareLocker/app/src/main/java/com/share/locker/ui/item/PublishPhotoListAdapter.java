@@ -1,12 +1,14 @@
 package com.share.locker.ui.item;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
+import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
 import com.share.locker.R;
 import com.share.locker.ui.item.PublishPhotoListItemData;
@@ -43,7 +45,10 @@ public class PublishPhotoListAdapter extends ArrayAdapter<PublishPhotoListItemDa
         }
 
         //渲染缩略图
-        Glide.with(context).load(getItem(position).getImgUri()).into(itemViewHolder.smallPhotoImg);
+        Glide.with(context).load(getItem(position).getImgUri()).fitCenter()
+                .into(itemViewHolder.smallPhotoImg);
+
+
         return convertView;
     }
 

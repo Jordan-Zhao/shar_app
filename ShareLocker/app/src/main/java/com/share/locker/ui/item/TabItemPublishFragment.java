@@ -26,6 +26,11 @@ import org.xutils.x;
 @ContentView(R.layout.fragment_item_publish)
 public class TabItemPublishFragment extends BaseFragment {
 
+    @Nullable
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override

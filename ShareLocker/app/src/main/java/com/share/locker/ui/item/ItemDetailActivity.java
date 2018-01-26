@@ -1,11 +1,11 @@
 package com.share.locker.ui.item;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -18,6 +18,7 @@ import com.share.locker.dto.ItemDetailDTO;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 import com.share.locker.ui.component.BaseActivity;
+import com.share.locker.ui.mine.LoginActivity;
 import com.share.locker.vo.LoginUserVO;
 
 import org.xutils.view.annotation.ContentView;
@@ -60,6 +61,7 @@ public class ItemDetailActivity extends BaseActivity {
     private LinearLayout imgListLayout;
 
     private Long itemId;
+    private ItemDetailDTO detailDTO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,22 +69,49 @@ public class ItemDetailActivity extends BaseActivity {
         //xutil注入
         x.view().inject(this);
 
-        itemId = getIntent().getLongExtra("itemId",0L);
+        itemId = getIntent().getLongExtra("itemId", 0L);
         loadItemDetail(itemId);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showUiByUserRole();
+    }
+
+    //根据用户身份，显示页面
+    private void showUiByUserRole() {
+        if (detailDTO != null) {
+            LoginUserVO loginUserVO = BizUtil.getLoginUser(this);
+            if (loginUserVO == null || !loginUserVO.getUserId().equals(detailDTO.getUserId())) {
+                //未登录，或者不是本人
+                renterOptLayout.setVisibility(View.VISIBLE);
+                ownerOptLayout.setVisibility(View.GONE);
+            } else {
+                //已登录，并且是本人
+                renterOptLayout.setVisibility(View.GONE);
+                ownerOptLayout.setVisibility(View.VISIBLE);
+            }
+        }
+    }
+
 
     //“立即租用”按钮
     @Event(value = R.id.detail_rent_btn, type = View.OnClickListener.class)
     private void onClickRentBtn(View view) {
+        if (needLogin()) {
+            return;
+        }
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("itemId",String.valueOf(itemId));
+        paramMap.put("itemId", String.valueOf(itemId));
         //服务端请求，租用
         LockerHttpUtil.postJson(URL_RENT, paramMap,
                 new HttpCallback() {
                     @Override
                     public void processSuccess(final String successData) {
+                        //TODO 跳转到租用成功页面，显示取件二维码
                         GlobalManager.dialogManager.showTipDialogInUiThread(
-                                "下单完成，请尽快去取件。您的订单号是"+successData);
+                                "下单完成，请尽快去取件。您的订单号是" + successData);
                     }
 
                     @Override
@@ -96,7 +125,7 @@ public class ItemDetailActivity extends BaseActivity {
     @Event(value = R.id.detail_on_line_btn, type = View.OnClickListener.class)
     private void onClickOnlineBtn(View view) {
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("itemId",String.valueOf(itemId));
+        paramMap.put("itemId", String.valueOf(itemId));
         //服务端请求，租用
         LockerHttpUtil.postJson(URL_ITEM_ON_LINE, paramMap,
                 new HttpCallback() {
@@ -116,7 +145,7 @@ public class ItemDetailActivity extends BaseActivity {
     @Event(value = R.id.detail_off_line_btn, type = View.OnClickListener.class)
     private void onClickOfflineBtn(View view) {
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("itemId",String.valueOf(itemId));
+        paramMap.put("itemId", String.valueOf(itemId));
         //服务端请求，租用
         LockerHttpUtil.postJson(URL_ITEM_OFF_LINE, paramMap,
                 new HttpCallback() {
@@ -136,7 +165,7 @@ public class ItemDetailActivity extends BaseActivity {
     @Event(value = R.id.detail_delete_btn, type = View.OnClickListener.class)
     private void onClickDeleteBtn(View view) {
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("itemId",String.valueOf(itemId));
+        paramMap.put("itemId", String.valueOf(itemId));
         //服务端请求，租用
         LockerHttpUtil.postJson(URL_ITEM_DELETE, paramMap,
                 new HttpCallback() {
@@ -152,10 +181,20 @@ public class ItemDetailActivity extends BaseActivity {
                 });
     }
 
+    private boolean needLogin() {
+        LoginUserVO loginUserVO = BizUtil.getLoginUser(this);
+        if (loginUserVO == null) {
+            Intent intent = new Intent(ItemDetailActivity.this, LoginActivity.class);
+            startActivity(intent);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
-    private void loadItemDetail(Long itemId){
+    private void loadItemDetail(Long itemId) {
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("itemId",String.valueOf(itemId));
+        paramMap.put("itemId", String.valueOf(itemId));
         LockerHttpUtil.postJson(URL_GET_ITEM_DETAIL, paramMap,
                 new HttpCallback() {
                     @Override
@@ -163,7 +202,7 @@ public class ItemDetailActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ItemDetailDTO detailDTO = (ItemDetailDTO)JsonUtil.json2Object(successData,ItemDetailDTO.class);
+                                detailDTO = (ItemDetailDTO) JsonUtil.json2Object(successData, ItemDetailDTO.class);
                                 showItemDetailOnUi(detailDTO);
                             }
                         });
@@ -176,43 +215,24 @@ public class ItemDetailActivity extends BaseActivity {
                 });
     }
 
-    private void showItemDetailOnUi(ItemDetailDTO detailDTO){
+    private void showItemDetailOnUi(ItemDetailDTO detailDTO) {
         titleTxt.setText(detailDTO.getTitle());
         titleTxt.getPaint().setFakeBoldText(true);
         priceTxt.setText(detailDTO.getPriceStr());
-        depositTxt.setText("押金"+detailDTO.getDeposit()+"元");
+        depositTxt.setText("押金" + detailDTO.getDeposit() + "元");
         machineTxt.setText(detailDTO.getMachineName());
         commentTxt.setText(String.valueOf(detailDTO.getComment()));
         descriptionTxt.setText(detailDTO.getDescription());
         //渲染图片
-        for(String imgUrl : detailDTO.getImgList()) {
+        for (String imgUrl : detailDTO.getImgList()) {
             ImageView imageView = new ImageView(this);
 
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            layoutParams.setMargins(10,10,10,10);
+            layoutParams.setMargins(10, 10, 10, 10);
             imageView.setLayoutParams(layoutParams);
             Glide.with(this).load(imgUrl).into(imageView);
             imgListLayout.addView(imageView);
         }
-        /*
-        //图片
-        String[] urlArr = new String[detailDTO.getImgList().size()];
-        for(int i=0;i<urlArr.length;i++){
-            urlArr[i] = detailDTO.getImgList().get(i);
-        }
-        DetailImgListAdapter imgListAdapter = new DetailImgListAdapter(this, urlArr);
-        imgListView.setAdapter(imgListAdapter);*/
-
-
-        Long userId = detailDTO.getUserId();
-        LoginUserVO loginUserVO = BizUtil.getLoginUser(this);
-        //本人
-        if(userId.equals(loginUserVO.getUserId())){
-            renterOptLayout.setVisibility(View.GONE);
-            ownerOptLayout.setVisibility(View.VISIBLE);
-        }else{  //
-            renterOptLayout.setVisibility(View.VISIBLE);
-            ownerOptLayout.setVisibility(View.GONE);
-        }
+        showUiByUserRole();
     }
 }

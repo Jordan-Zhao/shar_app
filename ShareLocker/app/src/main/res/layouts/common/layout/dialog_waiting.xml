@@ -10,7 +10,7 @@
     <org.quanqi.circularprogress.CircularProgressView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_margin="50dp"
+        android:layout_margin="20dp"
         app:angleAnimationDurationMillis="@integer/circular_default_angleAnimationDurationMillis"
         app:borderWidth="@dimen/circular_default_border_width"
         app:colorSequence="@array/circular_default_color_sequence"

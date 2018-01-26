@@ -1,6 +1,8 @@
 package com.share.locker.dto;
 
-public class HotItemDTO {
+import java.io.Serializable;
+
+public class HotItemDTO  implements Serializable {
 	 private Long itemId;
      private String imgUrl;
      private String title;

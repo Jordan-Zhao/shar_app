@@ -59,9 +59,11 @@
             android:name=".ui.item.ItemDetailActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
-        <!--宝贝发布成功，提示页面-->
-        <activity android:name=".ui.item.PublishItemSuccessActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
+        <!-- 宝贝发布成功，提示页面 -->
+        <activity
+            android:name=".ui.item.PublishItemSuccessActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity android:name=".ui.mine.RegisterActivity"></activity>
     </application>
 
 </manifest>

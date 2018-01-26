@@ -1,6 +1,8 @@
 package com.share.locker.dto;
 
-public class BannerDTO {
+import java.io.Serializable;
+
+public class BannerDTO  implements Serializable {
 	 private String imgUrl;
      private Long itemId;
 

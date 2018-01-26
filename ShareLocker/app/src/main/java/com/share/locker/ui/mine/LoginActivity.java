@@ -9,6 +9,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.share.locker.common.GlobalManager;
+import com.share.locker.common.StringUtil;
 import com.share.locker.ui.item.PublishItemActivity;
 import com.share.locker.R;
 import com.share.locker.common.BizUtil;
@@ -20,6 +21,7 @@ import com.share.locker.ui.main.MainActivity;
 import com.share.locker.vo.ResumeRefreshVO;
 
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
@@ -44,6 +46,12 @@ public class LoginActivity extends BaseActivity {
     @ViewInject(R.id.login_btn)
     private Button loginBtn;
 
+    @ViewInject(R.id.login_register_txt)
+    private TextView registerTxt;
+
+    @ViewInject(R.id.login_forget_password_txt)
+    private TextView forgetPwdTxt;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,19 +60,21 @@ public class LoginActivity extends BaseActivity {
         //xutil注入
         x.view().inject(this);
 
-        loginBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                processLoginClick();
-            }
-        });
     }
 
-    private void processLoginClick() {
+    @Event(value=R.id.login_btn,type = View.OnClickListener.class)
+    private void onClickLoginBtn(View view) {
         final String userName = emailPhoneTxt.getText().toString();
         final String password = passwordTxt.getText().toString();
 
-        //TODO 条件判断
+        if(!StringUtil.isPhoneNumber(userName)){
+            GlobalManager.dialogManager.showTipDialog("请输入正确的手机号");
+            return;
+        }
+        if(StringUtil.isEmpty(password)){
+            GlobalManager.dialogManager.showTipDialog("请输入密码");
+            return;
+        }
 
         //post请求，服务端
         Map<String, String> paramMap = new HashMap<>();
@@ -72,13 +82,14 @@ public class LoginActivity extends BaseActivity {
         paramMap.put("password", password);
         LockerHttpUtil.postJson(URL_LOGIN, paramMap, new HttpCallback() {
             @Override
-            public void processSuccess(final String successData) {    //successData是userId
+            public void processSuccess(final String userId) {
                 //登录成功，跳转到main activity
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         //把userName和password存入SharedRef
-                        BizUtil.saveValueInPref(Constants.SHARED_REF_KEY_LOGIN_info, userName + ";" + password +";"+successData,
+                        BizUtil.saveValueInPref(Constants.SHARED_REF_KEY_LOGIN_info,
+                                userName.trim() + ";" + password.trim() +";"+userId,
                                 LoginActivity.this);
 
                         //登录成功后，使mine页面下次显示时更新数据
@@ -92,9 +103,21 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void processFail(String failData) {
-                //TODO 失败，给出失败原因提示
+                GlobalManager.dialogManager.showErrorDialogInUiThread(failData);
             }
         });
+    }
+
+    @Event(value=R.id.login_register_txt,type = View.OnClickListener.class)
+    private void onClickRegisterTxt(View view) {
+        Intent toIntent = new Intent(LoginActivity.this,RegisterActivity.class);
+        /*Intent fromIntent = getIntent();
+        String jumpTo = fromIntent.getStringExtra(Constants.KEY_LOGINED_JUMP);
+        if(!StringUtil.isEmpty(jumpTo)){
+            toIntent.putExtra(Constants.KEY_REGISTER_JUMP,jumpTo);
+        }*/
+        startActivity(toIntent);
+        finish();
     }
 
     /**
@@ -102,19 +125,11 @@ public class LoginActivity extends BaseActivity {
      */
     private void toNextPage(){
         Intent inIntent = getIntent();
-        String jumpTo = inIntent.getStringExtra(Constants.KEY_LOGINED_JUMP);
-        if(Constants.LOGINED_JUMP_TO_MINE.equals(jumpTo)) {
-            //跳转到mine fragment
-            Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-            mainIntent.putExtra(Constants.INTENT_KEY_MAIN_TO_WHERE,Constants.MainIntentToWhereCode.TO_MINE_FRAG.getCode());
-            startActivity(mainIntent);
-            finish(); //销毁activity
-        }else if(Constants.LOGINED_JUMP_TO_PUBLISH_ITEM.equals(jumpTo)){
-            //跳转到发布宝贝的activity
-            Intent publishItemIntent = new Intent(this,PublishItemActivity.class);
-            startActivity(publishItemIntent);
-            finish();   //销毁activity
+        if(toActivityClass != null){
+            Intent intent = new Intent(LoginActivity.this, toActivityClass);
+            startActivity(intent);
         }
+        finish(); //销毁activity
     }
 }
 

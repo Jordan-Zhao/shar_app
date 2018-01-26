@@ -1,12 +1,13 @@
 package com.share.locker.dto;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * 首页使用的数据对象 Created by Jordan on 19/01/2018.
  */
 
-public class OperationSettingDTO {
+public class OperationSettingDTO implements Serializable {
 	private List<BannerDTO> bannerDTOList;
 
 	private String leftImgUrl;

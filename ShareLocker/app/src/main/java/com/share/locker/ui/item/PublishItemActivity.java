@@ -2,6 +2,7 @@ package com.share.locker.ui.item;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,10 +14,13 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
+import com.bumptech.glide.DrawableTypeRequest;
+import com.bumptech.glide.Glide;
 import com.share.locker.R;
 import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
 import com.share.locker.common.GlobalManager;
+import com.share.locker.common.ImageUtil;
 import com.share.locker.common.StringUtil;
 import com.share.locker.ui.component.BaseActivity;
 import com.share.locker.ui.main.MainActivity;
@@ -151,11 +155,10 @@ public class PublishItemActivity extends BaseActivity {
             if (photoUrlList != null && photoUrlList.size() > 0) {
                 PublishPhotoListItemData[] itemDataArr = new PublishPhotoListItemData[photoUrlList.size()];
                 for (int i = 0; i < photoUrlList.size(); i++) {
-                    PublishPhotoListItemData itemData = new PublishPhotoListItemData();
+                    final PublishPhotoListItemData itemData = new PublishPhotoListItemData();
                     itemData.setImgUri(photoUrlList.get(i));
                     itemDataArr[i] = itemData;
                 }
-                //TODO 图片是否可以压缩后再显示？
                 PublishPhotoListAdapter listAdapter = new PublishPhotoListAdapter(this, itemDataArr);
                 photoListView.setAdapter(listAdapter);
             }
@@ -176,11 +179,8 @@ public class PublishItemActivity extends BaseActivity {
             paramMap.put("lockerId", String.valueOf(getSelectedLockerId(machineSelector.getSelectedItemPosition())));
             paramMap.put("description", descriptionTxt.getText().toString());
             paramMap.put("publishStatus", String.valueOf(publishStatusCBox.isChecked()));
-            List<File> imgList = new ArrayList<>();
-            for (Uri uri : photoUrlList) {
-                imgList.add(BizUtil.convertUriToFile(uri, this));
-            }
-            LockerHttpUtil.postFileJson(URL_PUBLISH_ITEM, paramMap, imgList,
+            List<Uri> imgList = new ArrayList<>();
+            LockerHttpUtil.postFileJson(URL_PUBLISH_ITEM, paramMap, photoUrlList,
                     new HttpCallback() {
                         @Override
                         public void processSuccess(final String successData) {

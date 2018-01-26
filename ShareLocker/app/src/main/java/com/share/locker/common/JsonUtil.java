@@ -43,6 +43,9 @@ public class JsonUtil {
      * @return
      */
     public static List json2List(String jsonStr, TypeToken typeToken) {
+        if(StringUtil.isEmpty(jsonStr)){
+            return null;
+        }
         Gson gson = new Gson();
         return gson.fromJson(jsonStr, typeToken.getType());
     }
