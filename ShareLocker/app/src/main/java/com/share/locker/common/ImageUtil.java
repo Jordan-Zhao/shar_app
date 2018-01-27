@@ -11,6 +11,11 @@ import android.provider.MediaStore;
 
 import com.bumptech.glide.DrawableTypeRequest;
 import com.bumptech.glide.Glide;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -71,6 +76,45 @@ public class ImageUtil {
             return null;
         }
     }
+
+    /**
+     * 生成二维码
+     * @param str
+     * @return
+     */
+    public static Bitmap encodeAsBitmap(String str,int width,int height){
+        Bitmap bitmap = null;
+        BitMatrix result = null;
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            result = multiFormatWriter.encode(str, BarcodeFormat.QR_CODE,width,height);
+            // 使用 ZXing Android Embedded 要写的代码
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            bitmap = barcodeEncoder.createBitmap(result);
+        } catch (WriterException e){
+            e.printStackTrace();
+        } catch (IllegalArgumentException iae){ // ?
+            return null;
+        }
+
+        // 如果不使用 ZXing Android Embedded 的话，要写的代码
+
+//        int w = result.getWidth();
+//        int h = result.getHeight();
+//        int[] pixels = new int[w * h];
+//        for (int y = 0; y < h; y++) {
+//            int offset = y * w;
+//            for (int x = 0; x < w; x++) {
+//                pixels[offset + x] = result.get(x, y) ? BLACK : WHITE;
+//            }
+//        }
+//        bitmap = Bitmap.createBitmap(w,h,Bitmap.Config.ARGB_8888);
+//        bitmap.setPixels(pixels,0,100,0,0,w,h);
+
+        return bitmap;
+    }
+
+    //////////////////////////////////////////////////////////
 
     /**
      * 批量删除零食图片文件

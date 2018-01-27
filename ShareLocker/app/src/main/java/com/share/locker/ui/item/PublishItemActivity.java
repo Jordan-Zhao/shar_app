@@ -2,7 +2,6 @@ package com.share.locker.ui.item;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -14,17 +13,15 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.bumptech.glide.DrawableTypeRequest;
-import com.bumptech.glide.Glide;
+import com.google.gson.reflect.TypeToken;
 import com.share.locker.R;
-import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
 import com.share.locker.common.GlobalManager;
-import com.share.locker.common.ImageUtil;
+import com.share.locker.common.JsonUtil;
 import com.share.locker.common.StringUtil;
+import com.share.locker.dto.ItemDTO;
+import com.share.locker.dto.ValidLockerDTO;
 import com.share.locker.ui.component.BaseActivity;
-import com.share.locker.ui.main.MainActivity;
-import com.share.locker.vo.SelectableLockerVO;
 import com.share.locker.common.MockUtil;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
@@ -42,7 +39,6 @@ import org.xutils.x;
 import com.share.locker.ui.component.GifSizeFilter;
 import com.zhihu.matisse.internal.entity.CaptureStrategy;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +49,7 @@ public class PublishItemActivity extends BaseActivity {
     private static final String TAG_LOG = "PublishItemActivity";
     private static final int REQUEST_CODE_ADD_PHOTO = 21;//定义请求码常量
     private static final String URL_PUBLISH_ITEM = Constants.URL_BASE+"item/publishItem.json";
+    private static final String URL_GET_VALID_LOCKER = Constants.URL_BASE+"locker/getValidLocker.json";
 
     @ViewInject(R.id.publish_back_btn)
     private Button backBtn;
@@ -91,7 +88,7 @@ public class PublishItemActivity extends BaseActivity {
     private Button submitBtn;
 
     private List<Uri> photoUrlList; //选择的图片URI
-    private SelectableLockerVO[] selectableLockerVOArr;   //绑定的箱柜selector的数据源
+    private List<ValidLockerDTO> validLockerDTOList;   //绑定的箱柜selector的数据源
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,11 +104,32 @@ public class PublishItemActivity extends BaseActivity {
         //柜门尺寸改变后，结合当前位置，重新加载可选择的箱柜列表
         lockerSizeSelector.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                selectableLockerVOArr = MockUtil.getMatchedMachine(i);  //TODO 应该去服务端取数据
-                ArrayAdapter<String> machineSelectorAdapter = new ArrayAdapter<String>(PublishItemActivity.this,
-                        android.R.layout.simple_spinner_item, getMachineNameArr(selectableLockerVOArr));
-                machineSelector.setAdapter(machineSelectorAdapter);
+            public void onItemSelected(AdapterView<?> adapterView, View view, final int i, long l) {
+                //去服务端取可用的locker
+                Map<String, String> paramMap = new HashMap<>();
+                paramMap.put("lockerSize",getLockerSizeCode(lockerSizeSelector.getSelectedItemPosition()));
+                paramMap.put("latitude","10805");//TODO 通过GPS获取用户所在的纬度
+                paramMap.put("longitude","598");//经度
+                LockerHttpUtil.postJson(URL_GET_VALID_LOCKER, paramMap,
+                        new HttpCallback() {
+                            @Override
+                            public void processSuccess(final String successData) {
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        validLockerDTOList = JsonUtil.json2List(successData,new TypeToken<List<ValidLockerDTO>>() {});
+                                        ArrayAdapter<String> machineSelectorAdapter = new ArrayAdapter<String>(PublishItemActivity.this,
+                                                android.R.layout.simple_spinner_item, getMachineNameArr(validLockerDTOList));
+                                        machineSelector.setAdapter(machineSelectorAdapter);
+                                    }
+                                });
+                            }
+
+                            @Override
+                            public void processFail(String failData) {
+
+                            }
+                        });
             }
 
             @Override
@@ -188,7 +206,11 @@ public class PublishItemActivity extends BaseActivity {
                                 @Override
                                 public void run() {
                                     Intent successIntent = new Intent(PublishItemActivity.this, PublishItemSuccessActivity.class);
-                                    successIntent.putExtra("itemId", successData);
+                                    Map<String,String> resultMap = JsonUtil.json2Map(successData);
+                                    successIntent.putExtra("itemId", Long.parseLong(resultMap.get("itemId")));
+                                    successIntent.putExtra("qrcode",resultMap.get("qrcode"));
+                                    successIntent.putExtra("lockerId",Long.parseLong(resultMap.get("lockerId")));
+                                    successIntent.putExtra("machineName",resultMap.get("machineName"));
                                     successIntent.putExtra("itemTitle", titleTxt.getText().toString());//返回给main，显示已发布成功
                                     startActivity(successIntent);
                                     finish(); //销毁activity
@@ -227,10 +249,10 @@ public class PublishItemActivity extends BaseActivity {
         return true;
     }
 
-    private String[] getMachineNameArr(SelectableLockerVO[] machineVOArr){
-        String[] resultArr = new String[machineVOArr.length];
-        for(int i=0;i<machineVOArr.length;i++){
-            resultArr[i] = machineVOArr[i].getMachineName();
+    private String[] getMachineNameArr(List<ValidLockerDTO> lockerDTOList){
+        String[] resultArr = new String[lockerDTOList.size()];
+        for(int i=0;i<lockerDTOList.size();i++){
+            resultArr[i] = lockerDTOList.get(i).getMachineName();
         }
         return resultArr;
     }
@@ -250,8 +272,8 @@ public class PublishItemActivity extends BaseActivity {
         map.put(2,"MAX");
         return map.get(selectedPosition);
     }
-    private Integer getSelectedLockerId(int selectedPosition){
-        return selectableLockerVOArr[selectedPosition].getLockerId();
+    private Long getSelectedLockerId(int selectedPosition){
+        return validLockerDTOList.get(selectedPosition).getLockerId();
     }
 
 }

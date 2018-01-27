@@ -59,7 +59,7 @@ public class LockerHttpUtil {
             public void onError(Throwable ex, boolean isOnCallback) {
                 Log.e("http error", ex.toString());
                 GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
-                GlobalManager.dialogManager.showErrorDialogInUiThread("网络请求出错");
+                GlobalManager.dialogManager.showErrorDialogInUiThread("网络请求出错"+ex.toString());
             }
 
             @Override
@@ -120,7 +120,7 @@ public class LockerHttpUtil {
                         Log.e("http error", ex.toString());
                         ImageUtil.deleteTmpImages(uploadFileList);
                         GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
-                        GlobalManager.dialogManager.showErrorDialogInUiThread("网络请求出错");
+                        GlobalManager.dialogManager.showErrorDialogInUiThread("网络请求出错"+ ex.toString());
                     }
 
                     @Override

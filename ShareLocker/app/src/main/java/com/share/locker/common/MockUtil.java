@@ -1,14 +1,12 @@
 package com.share.locker.common;
 
-import com.share.locker.vo.SelectableLockerVO;
-
 /**
  * Created by Jordan on 22/01/2018.
  */
 
 public class MockUtil {
     //暂时MOCK,应该根据lockerSize和“我的位置”去服务端取数据
-    public static SelectableLockerVO[] getMatchedMachine(int i){
+   /* public static SelectableLockerVO[] getMatchedMachine(int i){
         SelectableLockerVO[] arr = new SelectableLockerVO[2];
         SelectableLockerVO vo1 = new SelectableLockerVO();
         vo1.setLockerId(1);
@@ -32,5 +30,5 @@ public class MockUtil {
             arr[1] = vo1;
         }
         return arr;
-    }
+    }*/
 }

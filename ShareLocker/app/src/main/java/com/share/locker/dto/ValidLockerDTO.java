@@ -1,21 +1,19 @@
-package com.share.locker.vo;
-
-import android.content.Intent;
+package com.share.locker.dto;
 
 /**
  * 可选择的locker
  * Created by Jordan on 22/01/2018.
  */
 
-public class SelectableLockerVO {
-    private Integer lockerId;
+public class ValidLockerDTO {
+    private Long lockerId;
     private String machineName;
 
-    public Integer getLockerId() {
+    public Long getLockerId() {
         return lockerId;
     }
 
-    public void setLockerId(Integer lockerId) {
+    public void setLockerId(Long lockerId) {
         this.lockerId = lockerId;
     }
 

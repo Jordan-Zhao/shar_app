@@ -33,7 +33,7 @@
             android:hint="我要搜索"/>
     </LinearLayout>
 
-    <!--最热宝贝-->
+    <!--运营位和最热宝贝-->
     <android.support.v7.widget.RecyclerView
         android:id="@+id/hot_item_list"
         android:layout_width="match_parent"
