@@ -8,6 +8,7 @@ import com.share.locker.common.Constants;
 import com.share.locker.common.GlobalManager;
 import com.share.locker.common.ImageUtil;
 import com.share.locker.common.LogUtil;
+import com.share.locker.common.MockUtil;
 import com.share.locker.vo.LoginUserVO;
 
 import org.json.JSONObject;
@@ -46,6 +47,7 @@ public class LockerHttpUtil {
         x.http().post(params, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String resultJson) {
+                resultJson = filterResponseData(resultJson);
                 GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
                 LockerHttpResponseData responseData = convertResponseJson(resultJson);
                 if (responseData.isSuccess()) {
@@ -105,6 +107,7 @@ public class LockerHttpUtil {
                 x.http().post(params, new Callback.CommonCallback<String>() {
                     @Override
                     public void onSuccess(String resultJson) {
+                        resultJson = filterResponseData(resultJson);
                         ImageUtil.deleteTmpImages(uploadFileList);
                         GlobalManager.dialogManager.removeCurrentLoopDialogInUiThread();
                         LockerHttpResponseData responseData = convertResponseJson(resultJson);
@@ -177,6 +180,16 @@ public class LockerHttpUtil {
                 }
             }
         }
+    }
+
+    //TODO MOCK 替换服务器ip
+    private static String filterResponseData(String responseData){
+        int idx1 = responseData.indexOf("http://");
+        int idx2 = responseData.indexOf(":8080");
+        if(idx1 > -1 && idx2 > -1) {
+            return responseData.replaceAll(responseData.substring(idx1+7,idx2),Constants.URL_IP);
+        }
+        return responseData;
     }
 
     static class LockerHttpResponseData{

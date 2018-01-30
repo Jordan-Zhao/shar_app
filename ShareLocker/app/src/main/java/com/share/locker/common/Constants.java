@@ -17,7 +17,8 @@ public class Constants {
 
     public final static String PASSWORD_MD5_KEY = "passworkMD5Key";
 
-    public final static String URL_BASE = "http://192.168.0.104:8080/locker/";
+    public final static String URL_IP = "192.168.0.103";
+    public final static String URL_BASE = "http://"+URL_IP+":8080/locker/";
 //public final static String URL_BASE = "http://192.168.2.195:8080/locker/";
 
     public final static String OPERATION_BANNER = "OPERATION_BANNER";	//banner图片配置code
