@@ -3,7 +3,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/mine_layout">
 
     <!--我的基本信息系-->
     <!--登录后显示-->

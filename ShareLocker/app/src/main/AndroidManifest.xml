@@ -63,7 +63,9 @@
         <activity
             android:name=".ui.item.PublishItemSuccessActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.mine.RegisterActivity"></activity>
+        <activity android:name=".ui.mine.RegisterActivity" />
+        <activity android:name=".ui.item.ItemRentSuccessActivity" />
+        <activity android:name=".ui.item.PayActivity"></activity>
     </application>
 
 </manifest>

@@ -15,6 +15,7 @@ import com.share.locker.common.Constants;
 import com.share.locker.common.GlobalManager;
 import com.share.locker.common.JsonUtil;
 import com.share.locker.dto.ItemDetailDTO;
+import com.share.locker.dto.OrderDTO;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 import com.share.locker.ui.component.BaseActivity;
@@ -109,9 +110,12 @@ public class ItemDetailActivity extends BaseActivity {
                 new HttpCallback() {
                     @Override
                     public void processSuccess(final String successData) {
-                        //TODO 跳转到租用成功页面，显示取件二维码
-                        GlobalManager.dialogManager.showTipDialogInUiThread(
-                                "下单完成，请尽快去取件。您的订单号是" + successData);
+                        //跳转到支付页面
+                        OrderDTO orderDTO = (OrderDTO)JsonUtil.json2Object(successData,OrderDTO.class);
+                        Intent successIntent = new Intent(ItemDetailActivity.this, PayActivity.class);
+                        successIntent.putExtra("orderDTO",orderDTO);
+                        startActivity(successIntent);
+                        finish(); //销毁activity
                     }
 
                     @Override

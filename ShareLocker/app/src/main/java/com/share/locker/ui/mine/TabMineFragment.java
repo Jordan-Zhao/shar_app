@@ -21,6 +21,7 @@ import com.share.locker.dto.UserDTO;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 import com.share.locker.ui.component.BaseFragment;
+import com.share.locker.ui.component.ClickManager;
 import com.share.locker.vo.LoginUserVO;
 
 import org.xutils.view.annotation.ContentView;
@@ -40,6 +41,7 @@ import java.util.Map;
 public class TabMineFragment extends BaseFragment {
     private final String TAG_LOG = "TabMineFragment";
     private final String URL_GET_USER_INFO = Constants.URL_BASE + "mine/getMineData.json";
+    private final String URL_GET_RANDOM_USER = Constants.URL_BASE + "mine/getRandomUser.json";
     private final String KEY_USER_DTO = "KEY_USER_DTO";
 
     private View view;
@@ -209,6 +211,43 @@ public class TabMineFragment extends BaseFragment {
             loginedLayout.setVisibility(View.VISIBLE);
             logoutLayout.setVisibility(View.VISIBLE);
             unloginLayout.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * TODO 这个方法只是测试用
+     * @param view
+     */
+    @Event(value = R.id.mine_layout,type = View.OnClickListener.class)
+    private void onClickLayout(View view){
+        if(ClickManager.isTriggered("MINE_LAYOUT",2)){
+            //触发2次连续点击，去服务端随机取另外一个用户
+            Map<String, String> paramMap = new HashMap<>();
+            LockerHttpUtil.postJson(URL_GET_RANDOM_USER, paramMap, new HttpCallback() {
+                @Override
+                public void processSuccess(final String successData) {
+                    getActivity().runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        String[] userData =  successData.split("-");
+
+                                                        //把userName和password存入SharedRef
+                                                        BizUtil.saveValueInPref(Constants.SHARED_REF_KEY_LOGIN_info,
+                                                                userData[0].trim() + ";" + userData[1].trim() +";"+userData[2],
+                                                                getActivity());
+
+                                                        //加载用户信息
+                                                        loadMineData();
+                                                    }
+                                                }
+                    );
+                }
+
+                @Override
+                public void processFail(String failData) {
+                    GlobalManager.dialogManager.showErrorDialogInUiThread(failData);
+                }
+            });
         }
     }
 }
