@@ -15,6 +15,8 @@ public class ItemDTO  implements Serializable {
 	private Float deposit;
 	private String priceStr;
 	private Integer comment;
+	private String status;
+
 	public Long getItemId() {
 		return itemId;
 	}
@@ -51,6 +53,12 @@ public class ItemDTO  implements Serializable {
 	public void setComment(Integer comment) {
 		this.comment = comment;
 	}
-	
-	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 }

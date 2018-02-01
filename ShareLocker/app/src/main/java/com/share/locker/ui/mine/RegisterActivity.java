@@ -1,7 +1,5 @@
 package com.share.locker.ui.mine;
 
-import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -14,8 +12,6 @@ import com.share.locker.common.StringUtil;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 import com.share.locker.ui.component.BaseActivity;
-import com.share.locker.ui.item.PublishItemActivity;
-import com.share.locker.ui.main.MainActivity;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;

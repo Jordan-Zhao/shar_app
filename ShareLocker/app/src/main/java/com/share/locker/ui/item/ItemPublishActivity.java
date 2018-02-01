@@ -19,10 +19,8 @@ import com.share.locker.common.Constants;
 import com.share.locker.common.GlobalManager;
 import com.share.locker.common.JsonUtil;
 import com.share.locker.common.StringUtil;
-import com.share.locker.dto.ItemDTO;
 import com.share.locker.dto.ValidLockerDTO;
 import com.share.locker.ui.component.BaseActivity;
-import com.share.locker.common.MockUtil;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 import com.share.locker.ui.component.HorizontalListView;
@@ -44,9 +42,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@ContentView(R.layout.activity_publish_item)
-public class PublishItemActivity extends BaseActivity {
-    private static final String TAG_LOG = "PublishItemActivity";
+@ContentView(R.layout.activity_item_publish)
+public class ItemPublishActivity extends BaseActivity {
+    private static final String TAG_LOG = "ItemPublishActivity";
     private static final int REQUEST_CODE_ADD_PHOTO = 21;//定义请求码常量
     private static final String URL_PUBLISH_ITEM = Constants.URL_BASE+"item/publishItem.json";
     private static final String URL_GET_VALID_LOCKER = Constants.URL_BASE+"locker/getValidLocker.json";
@@ -118,7 +116,7 @@ public class PublishItemActivity extends BaseActivity {
                                     @Override
                                     public void run() {
                                         validLockerDTOList = JsonUtil.json2List(successData,new TypeToken<List<ValidLockerDTO>>() {});
-                                        ArrayAdapter<String> machineSelectorAdapter = new ArrayAdapter<String>(PublishItemActivity.this,
+                                        ArrayAdapter<String> machineSelectorAdapter = new ArrayAdapter<String>(ItemPublishActivity.this,
                                                 android.R.layout.simple_spinner_item, getMachineNameArr(validLockerDTOList));
                                         machineSelector.setAdapter(machineSelectorAdapter);
                                     }
@@ -147,7 +145,7 @@ public class PublishItemActivity extends BaseActivity {
     //添加照片按钮
     @Event(value = R.id.publish_add_photo_layout, type = View.OnClickListener.class)
     private void onClickAddPhotoBtn(View view) {
-        Matisse.from(PublishItemActivity.this)
+        Matisse.from(ItemPublishActivity.this)
                 .choose(MimeType.allOf())
                 .countable(true)
                 .capture(true)
@@ -205,13 +203,8 @@ public class PublishItemActivity extends BaseActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Intent successIntent = new Intent(PublishItemActivity.this, PublishItemSuccessActivity.class);
-                                    Map<String,String> resultMap = JsonUtil.json2Map(successData);
-                                    successIntent.putExtra("itemId", Long.parseLong(resultMap.get("itemId")));
-                                    successIntent.putExtra("qrcode",resultMap.get("qrcode"));
-                                    successIntent.putExtra("lockerId",Long.parseLong(resultMap.get("lockerId")));
-                                    successIntent.putExtra("machineName",resultMap.get("machineName"));
-                                    successIntent.putExtra("itemTitle", titleTxt.getText().toString());//返回给main，显示已发布成功
+                                    Intent successIntent = new Intent(ItemPublishActivity.this, ItemPutLockerActivity.class);
+                                    successIntent.putExtra("itemId", Long.parseLong(successData));
                                     startActivity(successIntent);
                                     finish(); //销毁activity
                                 }

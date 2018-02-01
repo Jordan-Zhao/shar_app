@@ -112,7 +112,7 @@ public class ItemDetailActivity extends BaseActivity {
                     public void processSuccess(final String successData) {
                         //跳转到支付页面
                         OrderDTO orderDTO = (OrderDTO)JsonUtil.json2Object(successData,OrderDTO.class);
-                        Intent successIntent = new Intent(ItemDetailActivity.this, PayActivity.class);
+                        Intent successIntent = new Intent(ItemDetailActivity.this, PayDepositActivity.class);
                         successIntent.putExtra("orderDTO",orderDTO);
                         startActivity(successIntent);
                         finish(); //销毁activity

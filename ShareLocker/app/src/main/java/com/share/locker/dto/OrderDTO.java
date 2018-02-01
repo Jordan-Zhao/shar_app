@@ -12,10 +12,17 @@ import java.util.Date;
 public class OrderDTO implements Serializable{
 	private Long orderId;
 	private Long itemId;
+	private String itemSmallImgUrl;
 	private Float deposit;
 	private String title;
 	private Date createTime;
 	private String status;
+	private String priceStr;
+
+	private String lockerId;
+	private String machineName;
+	private String takeQrcode;
+
 	public Long getOrderId() {
 		return orderId;
 	}
@@ -52,6 +59,44 @@ public class OrderDTO implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	
-	
+
+	public String getLockerId() {
+		return lockerId;
+	}
+
+	public void setLockerId(String lockerId) {
+		this.lockerId = lockerId;
+	}
+
+	public String getMachineName() {
+		return machineName;
+	}
+
+	public void setMachineName(String machineName) {
+		this.machineName = machineName;
+	}
+
+	public String getTakeQrcode() {
+		return takeQrcode;
+	}
+
+	public void setTakeQrcode(String takeQrcode) {
+		this.takeQrcode = takeQrcode;
+	}
+
+	public String getItemSmallImgUrl() {
+		return itemSmallImgUrl;
+	}
+
+	public void setItemSmallImgUrl(String itemSmallImgUrl) {
+		this.itemSmallImgUrl = itemSmallImgUrl;
+	}
+
+	public String getPriceStr() {
+		return priceStr;
+	}
+
+	public void setPriceStr(String priceStr) {
+		this.priceStr = priceStr;
+	}
 }

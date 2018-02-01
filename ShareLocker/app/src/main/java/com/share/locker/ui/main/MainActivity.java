@@ -13,13 +13,11 @@ import android.widget.TextView;
 import com.share.locker.R;
 import com.share.locker.common.BizUtil;
 import com.share.locker.common.Constants;
-import com.share.locker.common.GlobalManager;
 import com.share.locker.ui.cart.TabCartFragment;
 import com.share.locker.ui.component.BaseActivity;
-import com.share.locker.ui.component.ResumeRefreshManager;
 import com.share.locker.ui.home.TabHomeFragment;
 import com.share.locker.ui.init.LockerAppInitializer;
-import com.share.locker.ui.item.PublishItemActivity;
+import com.share.locker.ui.item.ItemPublishActivity;
 import com.share.locker.ui.item.TabItemPublishFragment;
 import com.share.locker.ui.message.TabMessageFragment;
 import com.share.locker.ui.mine.LoginActivity;
@@ -153,7 +151,7 @@ public class MainActivity extends BaseActivity {
                 }
                 else{
                     //如果已登录，跳转到发布宝贝页面
-                    Intent intent = new Intent(MainActivity.this,PublishItemActivity.class);
+                    Intent intent = new Intent(MainActivity.this,ItemPublishActivity.class);
                     startActivity(intent);
                 }
             }

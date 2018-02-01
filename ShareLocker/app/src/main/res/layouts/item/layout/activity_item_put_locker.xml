@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.share.locker.ui.item.PublishItemSuccessActivity">
+    tools:context="com.share.locker.ui.item.ItemPutLockerActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="宝贝发布成功"
+                android:text="存件"
                 android:textSize="10pt"
                 android:textStyle="bold" />
         </LinearLayout>

@@ -196,6 +196,14 @@ public class TabMineFragment extends BaseFragment {
         startActivity(intent);
     }
 
+    //我 租用 的宝贝 点击
+    @Event(value = R.id.mine_rent_order_layout, type = View.OnClickListener.class)
+    private void onClickRentItemLayout(View view) {
+        //打开租用的 item list activity
+        Intent intent = new Intent(getContext(), MineRentItemListActivity.class);
+        startActivity(intent);
+    }
+
     /**
      * 根据登录状态显示UI
      */

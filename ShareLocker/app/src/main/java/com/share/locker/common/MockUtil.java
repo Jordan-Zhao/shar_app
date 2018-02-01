@@ -5,6 +5,17 @@ package com.share.locker.common;
  */
 
 public class MockUtil {
+    /**
+     * 机柜判断lockerId是否自己的柜门
+     */
+    public static boolean isContainLocker(Long lockerId){
+        return true;
+    }
+
+    public static void openLocker(Long lockerId){
+
+    }
+
     //暂时MOCK,应该根据lockerSize和“我的位置”去服务端取数据
    /* public static SelectableLockerVO[] getMatchedMachine(int i){
         SelectableLockerVO[] arr = new SelectableLockerVO[2];

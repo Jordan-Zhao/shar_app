@@ -46,7 +46,7 @@
 
         <!-- 发布宝贝 -->
         <activity
-            android:name=".ui.item.PublishItemActivity"
+            android:name=".ui.item.ItemPublishActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <!-- 我发布的宝贝列表 -->
@@ -61,11 +61,35 @@
 
         <!-- 宝贝发布成功，提示页面 -->
         <activity
-            android:name=".ui.item.PublishItemSuccessActivity"
+            android:name=".ui.item.ItemPutLockerActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity android:name=".ui.mine.RegisterActivity" />
-        <activity android:name=".ui.item.ItemRentSuccessActivity" />
-        <activity android:name=".ui.item.PayActivity"></activity>
+
+        <!-- 注册 -->
+        <activity
+            android:name=".ui.mine.RegisterActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!-- 支付押金 -->
+        <activity
+            android:name=".ui.item.PayDepositActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!-- 支付押金成功 -->
+        <activity
+            android:name=".ui.item.PayDepositSuccessActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!--我的租用记录-->
+        <activity android:name=".ui.mine.MineRentItemListActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"  />
+
+        <!--支付租金-->
+        <activity android:name=".ui.item.OrderPayFeeActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+
+        <!--归还宝贝-->
+        <activity android:name=".ui.item.OrderReturnLockerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
     </application>
 
 </manifest>

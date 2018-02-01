@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.share.locker.ui.item.PayDepositActivity">
+    tools:context="com.share.locker.ui.item.OrderPayFeeActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="支付押金"
+                android:text="支付租金"
                 android:textSize="10pt"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -43,7 +43,7 @@
                 android:textSize="8pt"
                 android:layout_marginRight="5dp"/>
             <TextView
-                android:id="@+id/pay_order_id_txt"
+                android:id="@+id/pay_fee_order_id_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
@@ -62,12 +62,11 @@
                 android:textSize="8pt"
                 android:layout_marginRight="5dp"/>
             <TextView
-                android:id="@+id/pay_item_title_txt"
+                android:id="@+id/pay_fee_item_title_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"/>
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,11 +76,47 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="         押金"
+                android:text="         价格"
                 android:textSize="8pt"
                 android:layout_marginRight="5dp"/>
             <TextView
-                android:id="@+id/pay_deposit_txt"
+                android:id="@+id/pay_fee_price_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="租用时间"
+                android:textSize="8pt"
+                android:layout_marginRight="5dp"/>
+            <TextView
+                android:id="@+id/pay_fee_time_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="         租金"
+                android:textSize="8pt"
+                android:layout_marginRight="5dp"/>
+            <TextView
+                android:id="@+id/pay_fee_txt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"/>
@@ -99,18 +134,18 @@
                 android:textSize="8pt"
                 android:layout_marginRight="5dp"/>
             <RadioGroup
-                android:id="@+id/pay_way_group"
+                android:id="@+id/pay_fee_way_group"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2">
                 <RadioButton
-                    android:id="@+id/pay_way_alipay"
+                    android:id="@+id/pay_fee_way_alipay"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="支付宝"
                     />
                 <RadioButton
-                    android:id="@+id/pay_way_wechat"
+                    android:id="@+id/pay_fee_way_wechat"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="微信"
@@ -119,7 +154,7 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/pay_btn"
+            android:id="@+id/pay_fee_btn"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

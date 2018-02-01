@@ -92,4 +92,81 @@ public class BizUtil {
         cursor.close();
         return new File(filePath);
     }
+
+    /**
+     * 转换金额到页面显示
+     * @return
+     */
+    public static String getMoneyStr(Float money){
+        int moneyInt = Math.round(money);
+        if(money.equals(moneyInt)){
+            return String.valueOf(moneyInt);
+        }else{
+            return String.valueOf(money);
+        }
+    }
+
+    /**
+     * 根据code获取物品展示状态
+     * @param code
+     * @return
+     */
+    public static String getItemStatusByCode(String code){
+        if(Constants.ItemStatus.CREATED.getCode().equals(code)
+                || Constants.ItemStatus.GENERATED_PUT_QRCODE.getCode().equals(code)){
+            return "等待存件";
+        }
+        if(Constants.ItemStatus.ONLINE.getCode().equals(code)){
+            return "等待租用";
+        }
+        if(Constants.ItemStatus.LOCKED.getCode().equals(code)){
+            return "下单中";
+        }
+        if(Constants.ItemStatus.USING.getCode().equals(code)){
+            return "租用中";
+        }
+        if(Constants.ItemStatus.DELETED.getCode().equals(code)){
+            return "已删除";
+        }
+        if(Constants.ItemStatus.EXCEPTION.getCode().equals(code)){
+            return "人工处理中";
+        }
+        return "";
+    }
+
+    /**
+     * 根据code获取订单展示状态
+     * @param code
+     * @return
+     */
+    public static String getOrderStatusByCode(String code){
+        if(Constants.OrderStatus.CREATED.getCode().equals(code)){
+            return "等待支付租金";
+        }
+        if(Constants.OrderStatus.PAID_DEPOSIT.getCode().equals(code)
+                ||Constants.OrderStatus.GENERATED_TAKE_QRCODE.getCode().equals(code)){
+            return "等待取件";
+        }
+        if(Constants.OrderStatus.USING.getCode().equals(code)){
+            return "租用中";
+        }
+        if(Constants.OrderStatus.PAID_FEE.getCode().equals(code)
+                || Constants.OrderStatus.GENERATED_RETURN_QRCODE.getCode().equals(code)){
+            return "等待还件";
+        }
+        if(Constants.OrderStatus.RETURNED.getCode().equals(code)
+                || Constants.OrderStatus.CHECKED_QUALITY.getCode().equals(code)){
+            return "退还押金中";
+        }
+        if(Constants.OrderStatus.REFUNDED_DEPOSIT.getCode().equals(code)){
+            return "押金已退还";
+        }
+        if(Constants.OrderStatus.EXCEPTION.getCode().equals(code)){
+            return "人工处理中";
+        }
+        if(Constants.OrderStatus.APPLY_FOR_REFUND_DEPOSIT.getCode().equals(code)){
+            return "申请退还押金中";
+        }
+        return "";
+    }
 }

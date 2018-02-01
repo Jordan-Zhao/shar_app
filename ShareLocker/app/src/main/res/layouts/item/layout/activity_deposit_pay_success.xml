@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context="com.share.locker.ui.item.PublishItemSuccessActivity">
+    tools:context="com.share.locker.ui.item.ItemPutLockerActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,13 +26,13 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:text="下单成功"
+                android:text="押金支付成功"
                 android:textSize="10pt"
                 android:textStyle="bold" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/order_success_title_txt"
+            android:id="@+id/pay_deposit_success_title_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -40,7 +40,7 @@
             android:textSize="14pt" />
 
         <TextView
-            android:id="@+id/order_success_tip_txt"
+            android:id="@+id/pay_deposit_success_tip_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -49,12 +49,12 @@
             android:layout_marginRight="10dp"/>
 
         <ImageView
-            android:id="@+id/order_success_qr_img"
+            android:id="@+id/pay_deposit_success_qr_img"
             android:layout_width="300dp"
             android:layout_height="300dp" />
 
         <TextView
-            android:id="@+id/order_success_qr_txt"
+            android:id="@+id/pay_deposit_success_qr_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"

@@ -16,6 +16,8 @@ import com.share.locker.ui.component.BaseActivity;
 import com.share.locker.ui.item.ItemDetailActivity;
 import com.share.locker.ui.component.RecyclerItemViewClickListener;
 import com.share.locker.common.JsonUtil;
+import com.share.locker.ui.item.ItemPublishActivity;
+import com.share.locker.ui.item.ItemPutLockerActivity;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -81,7 +83,17 @@ public class MinePublishItemListActivity extends BaseActivity implements Recycle
             Intent intent = new Intent(this,ItemDetailActivity.class);
             intent.putExtra("itemId",itemDTO.getItemId());
             startActivity(intent);
+        }else if(eventCode.equals(MinePublishItemRecyclerAdapter.CLICK_CODE_PUT_BTN)){
+            //点击存件btn
+            ItemDTO itemDTO = (ItemDTO) data;
+            Intent intent = new Intent(MinePublishItemListActivity.this, ItemPutLockerActivity.class);
+            intent.putExtra("itemId", itemDTO.getItemId());
+            startActivity(intent);
+        }else if(eventCode.equals(MinePublishItemRecyclerAdapter.CLICK_CODE_GET_BACK_BTN)){
+            //点击取件btn
+            //TODO 取回宝贝流程
         }
+
     }
 
     private void showDataOnUi() {
