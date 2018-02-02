@@ -16,8 +16,10 @@ import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 import com.share.locker.ui.component.BaseActivity;
 import com.share.locker.ui.component.RecyclerItemViewClickListener;
-import com.share.locker.ui.item.OrderPayFeeActivity;
-import com.share.locker.ui.item.OrderReturnLockerActivity;
+import com.share.locker.ui.order.OrderPayDepositActivity;
+import com.share.locker.ui.order.OrderPayFeeActivity;
+import com.share.locker.ui.order.OrderReturnLockerActivity;
+import com.share.locker.ui.order.OrderTakeItemActivity;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
@@ -77,12 +79,22 @@ public class MineRentItemListActivity extends BaseActivity implements RecyclerIt
      */
     @Override
     public void onClickRecyclerItemView(String eventCode,Object data){
+        OrderDTO orderDTO = (OrderDTO)data;
         if(eventCode.equals(MineRentItemRecyclerAdapter.CLICK_CODE_ITEM_VIEW)){
             //点击整个itemView,跳转到order detail页
             //TODO
+        }else if(eventCode.equals(MineRentItemRecyclerAdapter.CLICK_CODE_PAY_DEPOSIT_BTN)){
+            //点击支付押金
+            Intent intent = new Intent(MineRentItemListActivity.this, OrderPayDepositActivity.class);
+            intent.putExtra("orderId", orderDTO.getOrderId());
+            startActivity(intent);
+        }else if(eventCode.equals(MineRentItemRecyclerAdapter.CLICK_CODE_TAKE_BTN)){
+            //点击取件btn
+            Intent intent = new Intent(MineRentItemListActivity.this, OrderTakeItemActivity.class);
+            intent.putExtra("orderId", orderDTO.getOrderId());
+            startActivity(intent);
         }else if(eventCode.equals(MineRentItemRecyclerAdapter.CLICK_CODE_RETURN_BTN)){
             //点击还件btn
-            OrderDTO orderDTO = (OrderDTO)data;
             if(Constants.OrderStatus.USING.getCode().equals(orderDTO.getStatus())){
                 //租用中，跳转到支付租金页面
                 Intent intent = new Intent(MineRentItemListActivity.this, OrderPayFeeActivity.class);
@@ -94,9 +106,6 @@ public class MineRentItemListActivity extends BaseActivity implements RecyclerIt
                 intent.putExtra("orderId", orderDTO.getOrderId());
                 startActivity(intent);
             }
-        }else if(eventCode.equals(MinePublishItemRecyclerAdapter.CLICK_CODE_GET_BACK_BTN)){
-            //点击取件btn
-            //TODO 取回宝贝流程
         }
 
     }

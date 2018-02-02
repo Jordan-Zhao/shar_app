@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.share.locker.ui.main.MainActivity">
+    tools:context="com.share.locker.ui.main.MainActivity"
+    android:background="@color/white">
 
     <!--
         用来存放标签所对应的内容,用来显示我们的fragment
@@ -15,17 +16,16 @@
         android:id="@+id/frame_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/white">
+        android:layout_weight="1">
     </FrameLayout>
+
+    <include layout="@layout/split_line"/>
 
     <android.support.v4.app.FragmentTabHost
         android:id="@+id/frag_tabhost"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey"
         >
-
         <FrameLayout
             android:id="@+id/tab_content"
             android:layout_width="0dp"

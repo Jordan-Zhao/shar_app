@@ -33,17 +33,20 @@ public class ItemPutLockerActivity extends BaseActivity {
     private static final String URL_CLOSE_LOCKER_AFTER_PUT = Constants.URL_BASE+"item/closeLockerAfterPut.json";
 
     private View view;
-    @ViewInject(R.id.publish_success_title_txt)
+    @ViewInject(R.id.item_put_title_txt)
     private TextView titleTxt;
 
-    @ViewInject(R.id.publish_success_qr_img)
+    @ViewInject(R.id.item_put_machine_name_txt)
+    private TextView machineNameTxt;
+
+    @ViewInject(R.id.item_put_qr_img)
     private ImageView qrImg;
 
-    @ViewInject(R.id.publish_success_qr_txt)
+    @ViewInject(R.id.item_put_qr_txt)
     private TextView qrTxt;
 
-    @ViewInject(R.id.publish_success_tip_txt)
-    private TextView tipTxt;
+    @ViewInject(R.id.item_put_qrcode_expire_time_txt)
+    private TextView qrcodeExpireTxt;
 
     private Long itemId;
     private ItemPutLockerDTO putLockerDTO;
@@ -85,17 +88,19 @@ public class ItemPutLockerActivity extends BaseActivity {
 
     private void showPublishSuccessOnUi(){
         if(putLockerDTO.getRemainTime() < 1){
-            tipTxt.setText("验证码已过期，请重新发布宝贝");
+            titleTxt.setText(putLockerDTO.getItemTitle());
+            titleTxt.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+
+            machineNameTxt.setText(putLockerDTO.getMachineName());
+            qrcodeExpireTxt.setText("验证码已过期，请重新发布宝贝");
         }else {
             titleTxt.setText(putLockerDTO.getItemTitle());
             titleTxt.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 
-            tipTxt.setText("请尽快去共享柜[" + putLockerDTO.getMachineName()
-                    + "]，使用以下二维码存件(" +
-                    "还剩余" + putLockerDTO.getRemainTime() + "分钟)：");
-
+            machineNameTxt.setText(putLockerDTO.getMachineName());
+            qrcodeExpireTxt.setText("【"+putLockerDTO.getRemainTime()+"分钟后过期】");
             //生成二维码并显示
-            qrImg.setImageDrawable(new BitmapDrawable(ImageUtil.encodeAsBitmap(putLockerDTO.getQrcode(), 300, 300)));
+            qrImg.setImageDrawable(new BitmapDrawable(ImageUtil.encodeAsBitmap(putLockerDTO.getQrcode(), 250, 250)));
             qrTxt.setText(putLockerDTO.getQrcode());
         }
     }

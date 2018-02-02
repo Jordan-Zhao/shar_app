@@ -1,4 +1,4 @@
-package com.share.locker.ui.item;
+package com.share.locker.ui.order;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -11,8 +11,9 @@ import com.share.locker.R;
 import com.share.locker.common.Constants;
 import com.share.locker.common.GlobalManager;
 import com.share.locker.common.JsonUtil;
-import com.share.locker.common.MockUtil;
+import com.share.locker.dto.ItemPutLockerDTO;
 import com.share.locker.dto.OrderDTO;
+import com.share.locker.dto.OrderPayDepositDTO;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 import com.share.locker.ui.component.BaseActivity;
@@ -27,11 +28,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@ContentView(R.layout.activity_pay)
-public class PayDepositActivity extends BaseActivity {
+@ContentView(R.layout.activity_order_pay_deposit)
+public class OrderPayDepositActivity extends BaseActivity {
+    private final String URL_GET_PAY_DEPOSIT_DATA = Constants.URL_BASE+"order/getPayDepositData.json";
     private final String URL_DEPOSIT_PAY_FINISHED = Constants.URL_BASE+"trade/depositPayFinished.json";
 
-    private OrderDTO orderDTO;
+    private OrderPayDepositDTO payDepositDTO;
 
     @ViewInject(R.id.pay_order_id_txt)
     private TextView orderIdTxt;
@@ -48,11 +50,9 @@ public class PayDepositActivity extends BaseActivity {
 
         x.view().inject(this);
 
-        orderDTO = (OrderDTO)getIntent().getSerializableExtra("orderDTO");
-        orderIdTxt.setText(String.valueOf(orderDTO.getOrderId()));
-        itemTitleTxt.setText(orderDTO.getTitle());
-        depositTxt.setText(String.valueOf(orderDTO.getDeposit()));
-        payWayRadioGp.check(R.id.pay_way_alipay);
+        Long orderId = getIntent().getLongExtra("orderId",-1);
+
+        loadData(orderId);
     }
 
     @Event(value = R.id.pay_btn,type = View.OnClickListener.class)
@@ -64,8 +64,8 @@ public class PayDepositActivity extends BaseActivity {
             return;
         }
         Map<String, String> paramMap = new HashMap<>();
-        paramMap.put("orderId",String.valueOf(orderDTO.getOrderId()));
-        paramMap.put("fee",String.valueOf(orderDTO.getDeposit()));
+        paramMap.put("orderId",String.valueOf(payDepositDTO.getOrderId()));
+        paramMap.put("fee",String.valueOf(payDepositDTO.getDeposit()));
 
         if(payWayRadioGp.getCheckedRadioButtonId() == R.id.pay_way_alipay){
             paramMap.put("payWay", Constants.PayWay.ALIPAY.getCode());
@@ -81,9 +81,8 @@ public class PayDepositActivity extends BaseActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Intent successIntent = new Intent(PayDepositActivity.this, PayDepositSuccessActivity.class);
-                                OrderDTO orderDTO = (OrderDTO)JsonUtil.json2Object(successData,OrderDTO.class);
-                                successIntent.putExtra("orderDTO",orderDTO);
+                                Intent successIntent = new Intent(OrderPayDepositActivity.this, OrderTakeItemActivity.class);
+                                successIntent.putExtra("orderId",payDepositDTO.getOrderId());
                                 startActivity(successIntent);
                                 finish(); //销毁activity
                             }
@@ -95,5 +94,35 @@ public class PayDepositActivity extends BaseActivity {
                         GlobalManager.dialogManager.showErrorDialog(failData);
                     }
                 });
+    }
+
+    private void loadData(Long orderId){
+        Map<String,String> paramMap = new HashMap<>();
+        paramMap.put("orderId",String.valueOf(orderId));
+        LockerHttpUtil.postJson(URL_GET_PAY_DEPOSIT_DATA, paramMap,
+                new HttpCallback() {
+                    @Override
+                    public void processSuccess(final String successData) {
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                payDepositDTO = (OrderPayDepositDTO)JsonUtil.json2Object(successData,OrderPayDepositDTO.class);
+                                showDataOnUi();
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void processFail(String failData) {
+                        GlobalManager.dialogManager.showTipDialog(failData);
+                    }
+                });
+    }
+
+    private void showDataOnUi(){
+        orderIdTxt.setText(String.valueOf(payDepositDTO.getOrderId()));
+        itemTitleTxt.setText(payDepositDTO.getTitle());
+        depositTxt.setText(String.valueOf(payDepositDTO.getDeposit()));
+        payWayRadioGp.check(R.id.pay_way_alipay);
     }
 }

@@ -20,6 +20,7 @@ import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
 import com.share.locker.ui.component.BaseActivity;
 import com.share.locker.ui.mine.LoginActivity;
+import com.share.locker.ui.order.OrderPayDepositActivity;
 import com.share.locker.vo.LoginUserVO;
 
 import org.xutils.view.annotation.ContentView;
@@ -111,9 +112,9 @@ public class ItemDetailActivity extends BaseActivity {
                     @Override
                     public void processSuccess(final String successData) {
                         //跳转到支付页面
-                        OrderDTO orderDTO = (OrderDTO)JsonUtil.json2Object(successData,OrderDTO.class);
-                        Intent successIntent = new Intent(ItemDetailActivity.this, PayDepositActivity.class);
-                        successIntent.putExtra("orderDTO",orderDTO);
+                        Long orderId = Long.parseLong(successData);
+                        Intent successIntent = new Intent(ItemDetailActivity.this, OrderPayDepositActivity.class);
+                        successIntent.putExtra("orderId",orderId);
                         startActivity(successIntent);
                         finish(); //销毁activity
                     }

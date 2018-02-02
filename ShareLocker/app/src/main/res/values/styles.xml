@@ -30,4 +30,39 @@
         <item name="android:textColor">@color/button_text_color</item>
     </style>
     <!-- ================ 弹框end==========-->
+
+
+    <!-- ================ 按钮start==========-->
+    <style name="locker_button_small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/shape_button_color</item>
+        <item name="android:textSize">8pt</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="locker_button_long">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginRight">5dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:background">@drawable/shape_button_color</item>
+        <item name="android:textSize">10pt</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!-- ================ 按钮end==========-->
+
+
+    <!-- ================ activity title start==========-->
+    <style name="locker_activity_title_txt">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/shape_button_color</item>
+        <item name="android:textSize">8pt</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!-- ================ activity title end==========-->
 </resources>

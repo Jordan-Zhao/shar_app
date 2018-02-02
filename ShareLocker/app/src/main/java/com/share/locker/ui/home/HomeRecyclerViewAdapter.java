@@ -193,9 +193,9 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         listItemViewHolder.getTitleTxt().setText(hotItemDTO.getTitle());
         listItemViewHolder.getTitleTxt().setText(hotItemDTO.getTitle());
         listItemViewHolder.getTitleTxt().getPaint().setFakeBoldText(true);
-        listItemViewHolder.getDepositTxt().setText("押金"+String.valueOf(hotItemDTO.getDeposit())+"元");
+        listItemViewHolder.getDepositTxt().setText(String.valueOf(hotItemDTO.getDeposit())+"元");
         listItemViewHolder.getPriceTxt().setText(hotItemDTO.getPriceTxt());
-        listItemViewHolder.getCommentTxt().setText("评价"+String.valueOf(hotItemDTO.getCommentCount()));
+        listItemViewHolder.getCommentTxt().setText(String.valueOf(hotItemDTO.getCommentCount()));
     }
 
     public View getHeadView() {

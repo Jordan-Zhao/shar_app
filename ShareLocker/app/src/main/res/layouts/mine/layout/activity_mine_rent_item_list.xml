@@ -4,35 +4,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.share.locker.ui.mine.MinePublishItemListActivity"
-    android:orientation="vertical">
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.share.locker.ui.mine.MinePublishItemListActivity">
     <!--title-->
-    <LinearLayout
+    <com.share.locker.ui.component.ActivityTitleView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/grey"
-        android:padding="10dp"
-        android:gravity="center_vertical">
-
-        <Button
-            android:id="@+id/mine_rent_back_btn"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:background="@mipmap/back" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="我租用的宝贝"
-            android:textSize="10pt" />
-    </LinearLayout>
+        app:title="我租用的宝贝" />
 
     <!--list列表-->
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/mine_rent_list_view"
             android:layout_width="match_parent"

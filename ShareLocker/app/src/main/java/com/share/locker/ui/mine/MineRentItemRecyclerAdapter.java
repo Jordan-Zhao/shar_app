@@ -26,6 +26,8 @@ import java.util.List;
 
 public class MineRentItemRecyclerAdapter extends RecyclerView.Adapter<MineRentItemRecyclerAdapter.ItemViewHolder>{
     public static final String CLICK_CODE_ITEM_VIEW = "CLICK_CODE_ITEM_VIEW";   //点击整个itemView
+    public static final String CLICK_CODE_PAY_DEPOSIT_BTN = "CLICK_CODE_PAY_DEPOSIT_BTN";   //点击支付押金按钮
+    public static final String CLICK_CODE_TAKE_BTN = "CLICK_CODE_TAKE_BTN";   //点击取件按钮
     public static final String CLICK_CODE_RETURN_BTN = "CLICK_CODE_RETURN_BTN";   //点击还件按钮
 
     private List<OrderDTO> itemList;
@@ -74,11 +76,45 @@ public class MineRentItemRecyclerAdapter extends RecyclerView.Adapter<MineRentIt
         Glide.with(activity).load(orderDTO.getItemSmallImgUrl()).into(holder.getImgView());
         holder.getTitleTxt().setText(orderDTO.getTitle());
         holder.getTitleTxt().getPaint().setFakeBoldText(true);
-        holder.getDepositTxt().setText("押金:"+BizUtil.getMoneyStr(orderDTO.getDeposit())+"元");
-        holder.getPriceTxt().setText("价格:"+orderDTO.getPriceStr());
+        holder.getDepositTxt().setText(BizUtil.getMoneyStr(orderDTO.getDeposit())+"元");
+        holder.getPriceTxt().setText(orderDTO.getPriceStr());
         holder.getStatusTxt().setText(BizUtil.getOrderStatusByCode(orderDTO.getStatus()));
-        holder.getCreateTimeTxt().setText("租用开始时间:"+ DateUtil.formatDate(orderDTO.getCreateTime()));
+        holder.getCreateTimeTxt().setText(DateUtil.formatDate(orderDTO.getCreateTime()));
 
+        //根据订单状态，显示不同的操作按钮
+        String statusCode = orderDTO.getStatus();
+        if(Constants.OrderStatus.CREATED.getCode().equals(statusCode)){
+            holder.getPayDepositBtn().setVisibility(View.VISIBLE);
+            holder.getTakeBtn().setVisibility(View.GONE);
+            holder.getReturnBtn().setVisibility(View.GONE);
+        }
+        if(Constants.OrderStatus.PAID_DEPOSIT.getCode().equals(statusCode)
+                ||Constants.OrderStatus.GENERATED_TAKE_QRCODE.getCode().equals(statusCode)){
+            holder.getPayDepositBtn().setVisibility(View.GONE);
+            holder.getTakeBtn().setVisibility(View.VISIBLE);
+            holder.getReturnBtn().setVisibility(View.GONE);
+        }
+        if(Constants.OrderStatus.USING.getCode().equals(statusCode)
+                ||Constants.OrderStatus.PAID_FEE.getCode().equals(statusCode)
+                || Constants.OrderStatus.GENERATED_RETURN_QRCODE.getCode().equals(statusCode)){
+            holder.getPayDepositBtn().setVisibility(View.GONE);
+            holder.getTakeBtn().setVisibility(View.GONE);
+            holder.getReturnBtn().setVisibility(View.VISIBLE);
+        }
+
+        //订单操作按钮事件
+        holder.getPayDepositBtn().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onClickRecyclerItemView(CLICK_CODE_PAY_DEPOSIT_BTN,itemList.get(position));
+            }
+        });
+        holder.getTakeBtn().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                activity.onClickRecyclerItemView(CLICK_CODE_TAKE_BTN,itemList.get(position));
+            }
+        });
         holder.getReturnBtn().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,7 +141,10 @@ public class MineRentItemRecyclerAdapter extends RecyclerView.Adapter<MineRentIt
         private TextView priceTxt;
         private TextView statusTxt;
         private TextView createTimeTxt;
-        private Button returnBtn;
+
+        private TextView payDepositBtn;
+        private TextView takeBtn;
+        private TextView returnBtn;
 
         public ItemViewHolder(View view) {
             super(view);
@@ -116,6 +155,9 @@ public class MineRentItemRecyclerAdapter extends RecyclerView.Adapter<MineRentIt
             priceTxt = view.findViewById(R.id.mine_rent_item_price);
             statusTxt = view.findViewById(R.id.mine_rent_item_status);
             createTimeTxt = view.findViewById(R.id.mine_rent_item_create_time);
+
+            payDepositBtn = view.findViewById(R.id.mine_rent_item_pay_deposit_btn);
+            takeBtn = view.findViewById(R.id.mine_rent_item_take_btn);
             returnBtn = view.findViewById(R.id.mine_rent_item_return_btn);
         }
 
@@ -176,12 +218,28 @@ public class MineRentItemRecyclerAdapter extends RecyclerView.Adapter<MineRentIt
             this.createTimeTxt = createTimeTxt;
         }
 
-        public Button getReturnBtn() {
+        public TextView getReturnBtn() {
             return returnBtn;
         }
 
-        public void setReturnBtn(Button returnBtn) {
+        public void setReturnBtn(TextView returnBtn) {
             this.returnBtn = returnBtn;
+        }
+
+        public TextView getPayDepositBtn() {
+            return payDepositBtn;
+        }
+
+        public void setPayDepositBtn(TextView payDepositBtn) {
+            this.payDepositBtn = payDepositBtn;
+        }
+
+        public TextView getTakeBtn() {
+            return takeBtn;
+        }
+
+        public void setTakeBtn(TextView takeBtn) {
+            this.takeBtn = takeBtn;
         }
     }
 }

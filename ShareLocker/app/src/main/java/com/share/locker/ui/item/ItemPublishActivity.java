@@ -49,9 +49,6 @@ public class ItemPublishActivity extends BaseActivity {
     private static final String URL_PUBLISH_ITEM = Constants.URL_BASE+"item/publishItem.json";
     private static final String URL_GET_VALID_LOCKER = Constants.URL_BASE+"locker/getValidLocker.json";
 
-    @ViewInject(R.id.publish_back_btn)
-    private Button backBtn;
-
     @ViewInject(R.id.publish_add_photo_layout)
     private LinearLayout addPhotoLayout;
     @ViewInject(R.id.publish_photo_list)
@@ -96,6 +93,8 @@ public class ItemPublishActivity extends BaseActivity {
         x.view().inject(this);
 
         addEventListener();
+
+        titleTxt.clearFocus();
     }
 
     private void addEventListener() {
@@ -133,13 +132,6 @@ public class ItemPublishActivity extends BaseActivity {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
-    }
-
-    //返回按钮
-    @Event(value = R.id.publish_back_btn, type = View.OnClickListener.class)
-    private void onClickBackBtn(View view) {
-        //返回到main activity
-        finish();
     }
 
     //添加照片按钮

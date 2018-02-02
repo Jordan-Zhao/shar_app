@@ -1,4 +1,4 @@
-package com.share.locker.ui.item;
+package com.share.locker.ui.order;
 
 import android.graphics.Paint;
 import android.graphics.drawable.BitmapDrawable;
@@ -34,13 +34,15 @@ public class OrderReturnLockerActivity extends BaseActivity {
     private final String URL_CLOSE_LOCKER_AFTER_RETURN = Constants.URL_BASE + "order/closeLockerAfterReturn.json";
     private final String URL_CHECK_QUALITY = Constants.URL_BASE + "order/checkQuality.json";
 
-    @ViewInject(R.id.return_locker_title_txt)
+    @ViewInject(R.id.item_return_locker_title_txt)
     private TextView titleTxt;
-    @ViewInject(R.id.return_locker_tip_txt)
-    private TextView tipTxt;
-    @ViewInject(R.id.return_locker_qr_img)
+    @ViewInject(R.id.item_return_locker_machine_name_txt)
+    private TextView machineNameTxt;
+    @ViewInject(R.id.item_return_locker_qrcode_expire_time_txt)
+    private  TextView qrExpireTimeTxt;
+    @ViewInject(R.id.item_return_locker_qr_img)
     private ImageView qrImg;
-    @ViewInject(R.id.return_locker_qr_txt)
+    @ViewInject(R.id.item_return_locker_qr_txt)
     private TextView qrTxt;
 
     private Long orderId;
@@ -91,14 +93,17 @@ public class OrderReturnLockerActivity extends BaseActivity {
 
     private void showDataOnUi() {
         if (returnLockerDTO.getRemainTime() < 1) {
-            tipTxt.setText("换件验证码已过期，系统将重新计算租金");
+            titleTxt.setText(returnLockerDTO.getItemTitle());
+            titleTxt.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+            machineNameTxt.setText(returnLockerDTO.getMachineName());
+            qrExpireTimeTxt.setText("换件验证码已过期，请支付逾期租金");
         } else {
             titleTxt.setText(returnLockerDTO.getItemTitle());
             titleTxt.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
 
-            tipTxt.setText("请尽快去共享柜[" + returnLockerDTO.getMachineName()
-                    + "]，使用以下二维码还件(" +
-                    "还剩余" + returnLockerDTO.getRemainTime() + "分钟)：");
+            machineNameTxt.setText(returnLockerDTO.getMachineName());
+
+            qrExpireTimeTxt.setText("【"+returnLockerDTO.getRemainTime() + "分钟后过期】");
 
             //生成二维码并显示
             qrImg.setImageDrawable(new BitmapDrawable(ImageUtil.encodeAsBitmap(returnLockerDTO.getQrcode(), 300, 300)));

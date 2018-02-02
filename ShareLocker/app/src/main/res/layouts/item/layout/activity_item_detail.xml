@@ -3,61 +3,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@color/white"
     tools:context="com.share.locker.ui.item.ItemDetailActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         android:orientation="vertical">
 
-        <!--title-->
+        <!--head-->
         <LinearLayout
             android:id="@+id/mine_logined_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
             android:layout_marginTop="10dp"
-            android:background="@color/white"
-            android:orientation="vertical"
-            android:padding="5dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/detail_title_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="10pt" />
+                android:textSize="10pt"
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingTop="5dp">
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/detail_price_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
+                    android:textColor="@color/red"
                     android:textSize="8pt" />
 
                 <TextView
                     android:id="@+id/detail_deposit_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
                     android:textSize="8pt" />
 
                 <TextView
                     android:id="@+id/detail_machine_txt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginLeft="15dp"
                     android:textSize="8pt" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
                     android:src="@mipmap/heart" />
 
                 <TextView
@@ -72,29 +75,25 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
                 android:orientation="vertical">
                 <!--描述-->
                 <TextView
                     android:id="@+id/detail_description_txt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:textSize="7pt" />
-
-                <include layout="@layout/split_line" />
 
                 <!--图片 -->
                 <LinearLayout
                     android:id="@+id/detail_img_list_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/white"
                     android:orientation="vertical"></LinearLayout>
             </LinearLayout>
         </ScrollView>
@@ -107,19 +106,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/detail_rent_btn"
-            style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@color/btn_action"
-            android:padding="5dp"
             android:text="立即租用"
-            android:textColor="@color/white"
-            android:textSize="10pt"
-            android:textStyle="bold" />
+            style="@style/locker_button_small"/>
     </LinearLayout>
 
     <LinearLayout
@@ -127,9 +120,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="5dp"
         android:orientation="horizontal"
         android:visibility="gone">
+
+        <Button
+            android:id="@+id/detail_edit_btn"
+            style="@style/locker_button_small"
+            android:text="编辑"/>
 
         <Button
             android:id="@+id/detail_on_line_btn"
@@ -142,7 +140,8 @@
             android:text="上架"
             android:textColor="@color/white"
             android:textSize="10pt"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/detail_off_line_btn"
@@ -155,20 +154,8 @@
             android:text="下架"
             android:textColor="@color/white"
             android:textSize="10pt"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/detail_edit_btn"
-            style="?android:textAppearanceSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:background="@color/btn_action"
-            android:padding="5dp"
-            android:text="编辑"
-            android:textColor="@color/white"
-            android:textSize="10pt"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/detail_delete_btn"
@@ -181,6 +168,7 @@
             android:text="删除"
             android:textColor="@color/white"
             android:textSize="10pt"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:visibility="gone" />
     </LinearLayout>
 </FrameLayout>

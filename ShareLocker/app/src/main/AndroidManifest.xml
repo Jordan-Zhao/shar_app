@@ -71,12 +71,12 @@
 
         <!-- 支付押金 -->
         <activity
-            android:name=".ui.item.PayDepositActivity"
+            android:name=".ui.order.OrderPayDepositActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <!-- 支付押金成功 -->
         <activity
-            android:name=".ui.item.PayDepositSuccessActivity"
+            android:name=".ui.order.OrderTakeItemActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <!--我的租用记录-->
@@ -84,12 +84,12 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"  />
 
         <!--支付租金-->
-        <activity android:name=".ui.item.OrderPayFeeActivity"
+        <activity android:name=".ui.order.OrderPayFeeActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
 
         <!--归还宝贝-->
-        <activity android:name=".ui.item.OrderReturnLockerActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" ></activity>
+        <activity android:name=".ui.order.OrderReturnLockerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>

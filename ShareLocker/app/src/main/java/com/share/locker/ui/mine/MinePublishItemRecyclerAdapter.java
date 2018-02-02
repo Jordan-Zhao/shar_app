@@ -72,9 +72,9 @@ public class MinePublishItemRecyclerAdapter extends RecyclerView.Adapter<MinePub
         Glide.with(activity).load(itemDTO.getSmallImgUrl()).into(holder.getImgView());
         holder.getTitleTxt().setText(itemDTO.getTitle());
         holder.getTitleTxt().getPaint().setFakeBoldText(true);
-        holder.getDepositTxt().setText("押金"+BizUtil.getMoneyStr(itemDTO.getDeposit())+"元");
+        holder.getDepositTxt().setText(BizUtil.getMoneyStr(itemDTO.getDeposit())+"元");
         holder.getPriceTxt().setText(itemDTO.getPriceStr());
-        holder.getCommentTxt().setText("评论"+String.valueOf(itemDTO.getComment()));
+        holder.getCommentTxt().setText(String.valueOf(itemDTO.getComment()));
         holder.getStatusTxt().setText(BizUtil.getItemStatusByCode(itemDTO.getStatus()));
 
         holder.getPutBtn().setOnClickListener(new View.OnClickListener() {
@@ -121,8 +121,8 @@ public class MinePublishItemRecyclerAdapter extends RecyclerView.Adapter<MinePub
         private TextView priceTxt;
         private TextView commentTxt;
         private TextView statusTxt;
-        private Button putBtn;
-        private Button getBackBtn;
+        private TextView putBtn;
+        private TextView getBackBtn;
 
         public ItemViewHolder(View view) {
             super(view);
@@ -193,19 +193,19 @@ public class MinePublishItemRecyclerAdapter extends RecyclerView.Adapter<MinePub
             this.statusTxt = statusTxt;
         }
 
-        public Button getPutBtn() {
+        public TextView getPutBtn() {
             return putBtn;
         }
 
-        public void setPutBtn(Button putBtn) {
+        public void setPutBtn(TextView putBtn) {
             this.putBtn = putBtn;
         }
 
-        public Button getGetBackBtn() {
+        public TextView getGetBackBtn() {
             return getBackBtn;
         }
 
-        public void setGetBackBtn(Button getBackBtn) {
+        public void setGetBackBtn(TextView getBackBtn) {
             this.getBackBtn = getBackBtn;
         }
     }

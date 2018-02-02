@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.share.locker.R;
 import com.share.locker.common.Constants;
@@ -43,6 +44,9 @@ public class TabHomeFragment extends BaseFragment {
     @ViewInject(R.id.hot_item_list)
     private RecyclerView hotItemRclView;
     private HomeRecyclerViewAdapter homeRecyclerViewAdapter;
+
+    @ViewInject(R.id.search_input)
+    private EditText searchTxt;
 
     @Nullable
     @Override
@@ -123,6 +127,8 @@ public class TabHomeFragment extends BaseFragment {
             View headerView = LayoutInflater.from(getActivity()).inflate(R.layout.home_list_head, hotItemRclView, false);
             homeRecyclerViewAdapter.setHeadView(headerView);
         }
+
+        searchTxt.clearFocus();
     }
 
 }
