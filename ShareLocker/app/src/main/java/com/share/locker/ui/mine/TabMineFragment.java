@@ -226,7 +226,7 @@ public class TabMineFragment extends BaseFragment {
      * TODO 这个方法只是测试用
      * @param view
      */
-    @Event(value = R.id.mine_layout,type = View.OnClickListener.class)
+    @Event(value = R.id.mine_logined_layout,type = View.OnClickListener.class)
     private void onClickLayout(View view){
         if(ClickManager.isTriggered("MINE_LAYOUT",2)){
             //触发2次连续点击，去服务端随机取另外一个用户

@@ -2,13 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="10dp"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -29,8 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="1"
-                android:textSize="8pt"
-                android:textStyle="bold" />
+                style="@style/locker_text_view_title" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,13 +38,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="押         金:" />
+                    android:text="押         金:"
+                    style="@style/locker_text_view_normal"/>
 
                 <TextView
                     android:id="@+id/mine_rent_item_deposit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp" />
+                    style="@style/locker_text_view_normal"/>
             </LinearLayout>
 
             <LinearLayout
@@ -55,13 +55,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="价         格:" />
+                    android:text="价         格:"
+                    style="@style/locker_text_view_normal"/>
 
                 <TextView
                     android:id="@+id/mine_rent_item_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp" />
+                    style="@style/locker_text_view_normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -71,13 +72,14 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="租用时间:" />
+                    android:text="租用时间:"
+                    style="@style/locker_text_view_normal"/>
 
                 <TextView
                     android:id="@+id/mine_rent_item_create_time"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp" />
+                    style="@style/locker_text_view_normal"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -92,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:text="租用中"
                 android:textColor="@color/red"
-                android:textSize="6pt" />
+                style="@style/locker_text_view_small" />
 
             <TextView
                 android:id="@+id/mine_rent_item_pay_deposit_btn"

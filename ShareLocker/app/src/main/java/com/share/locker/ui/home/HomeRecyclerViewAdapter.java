@@ -145,7 +145,7 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
                 new ImageLoader() {
                     @Override
                     public void displayImage(Context context, Object path, ImageView imageView) {
-                        Glide.with(context).load((String) path).into(imageView);
+                        Glide.with(context).load((String) path).centerCrop().into(imageView);
                     }
                 });
         //设置图片网址或地址的集合`
@@ -172,27 +172,23 @@ public class HomeRecyclerViewAdapter extends RecyclerView.Adapter<HomeRecyclerVi
         //left
         Glide.with(mainActivity).load(operationSettingDTO.getLeftImgUrl()).into(headViewHolder.getOptLeftImg());
         headViewHolder.getOptLeftTxt().setText(operationSettingDTO.getLeftTxt());
-        headViewHolder.getOptLeftTxt().getPaint().setFakeBoldText(true);
 
         //right1
         Glide.with(mainActivity).load(operationSettingDTO.getRightImgUrl1()).into(headViewHolder.getOptRightImg1());
         headViewHolder.getOptRightTitle1().setText(operationSettingDTO.getRightTitle1());
-        headViewHolder.getOptRightTitle1().getPaint().setFakeBoldText(true);
         headViewHolder.getOptRightTxt1().setText(operationSettingDTO.getRightTxt1());
 
         //right2
         Glide.with(mainActivity).load(operationSettingDTO.getRightImgUrl2()).into(headViewHolder.getOptRightImg2());
         headViewHolder.getOptRightTitle2().setText(operationSettingDTO.getRightTitle2());
-        headViewHolder.getOptRightTitle2().getPaint().setFakeBoldText(true);
         headViewHolder.getOptRightTxt2().setText(operationSettingDTO.getRightTxt2());
     }
 
     private void showListItemData(HomeViewHolder listItemViewHolder, int position) {
         HotItemDTO hotItemDTO = operationSettingDTO.getHotItemDTOList().get(position - 1);
-        Glide.with(mainActivity).load(hotItemDTO.getImgUrl()).into(listItemViewHolder.getImgView());
+        Glide.with(mainActivity).load(hotItemDTO.getImgUrl()).centerCrop().into(listItemViewHolder.getImgView());
         listItemViewHolder.getTitleTxt().setText(hotItemDTO.getTitle());
         listItemViewHolder.getTitleTxt().setText(hotItemDTO.getTitle());
-        listItemViewHolder.getTitleTxt().getPaint().setFakeBoldText(true);
         listItemViewHolder.getDepositTxt().setText(String.valueOf(hotItemDTO.getDeposit())+"元");
         listItemViewHolder.getPriceTxt().setText(hotItemDTO.getPriceTxt());
         listItemViewHolder.getCommentTxt().setText(String.valueOf(hotItemDTO.getCommentCount()));

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_marginTop="5dp"
+    android:layout_marginTop="10dp"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp">
 
@@ -11,9 +11,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="5dp">
+        android:layout_marginBottom="10dp">
 
-        <!--小图尺寸200-->
+        <!--小图尺寸200*130-->
         <ImageView
             android:id="@+id/list_item_img_view"
             android:layout_width="0dp"
@@ -25,14 +25,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             android:orientation="vertical"
-            android:layout_marginLeft="5dp">
+            android:layout_marginLeft="10dp">
 
             <TextView
                 android:id="@+id/list_item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="8pt"
-                android:maxLines="2"/>
+                android:maxLines="2"
+                style="@style/locker_text_view_title"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -40,13 +40,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="押金："
-                    android:textSize="5pt"/>
+                    style="@style/locker_text_view_small"/>
                 <TextView
                     android:id="@+id/list_item_deposit"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="6pt"
-                    android:textStyle="bold"/>
+                    style="@style/locker_text_view_normal"/>
             </LinearLayout>
 
             <LinearLayout
@@ -56,14 +55,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="价格："
-                    android:textSize="5pt"/>
+                    style="@style/locker_text_view_small"/>
                 <TextView
                     android:id="@+id/list_item_price"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="6pt"
                     android:textColor="@color/red"
-                    android:textStyle="bold"/>
+                    style="@style/locker_text_view_normal"/>
             </LinearLayout>
 
 
@@ -74,13 +72,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="评价："
-                    android:textSize="5pt"/>
+                    style="@style/locker_text_view_small"/>
                 <TextView
                     android:id="@+id/list_item_comment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="6pt"
-                    android:textStyle="bold"/>
+                    style="@style/locker_text_view_normal"/>
             </LinearLayout>
 
         </LinearLayout>

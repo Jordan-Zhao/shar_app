@@ -94,7 +94,6 @@ public class ItemPublishActivity extends BaseActivity {
 
         addEventListener();
 
-        titleTxt.clearFocus();
     }
 
     private void addEventListener() {

@@ -49,7 +49,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="添加照片"
-                    android:textSize="8pt" />
+                    style="@style/locker_text_view_big"/>
             </LinearLayout>
 
             <!--缩略图list-->
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -80,7 +80,7 @@
                 android:layout_weight="1"
                 android:maxLines="1"
                 android:text="标题(必填)"
-                android:textSize="6pt" />
+                style="@style/locker_text_view_title"/>
 
             <EditText
                 android:id="@+id/publish_title"
@@ -88,7 +88,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_weight="3"
-                android:background="@drawable/shape_edit_view" />
+                android:background="@drawable/shape_edit_view"
+                style="@style/locker_text_view_big"
+                android:maxLines="1"/>
         </LinearLayout>
 
         <!--价格-->
@@ -106,13 +108,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="价格(必填)"
-                android:textSize="6pt" />
+                style="@style/locker_text_view_title" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:layout_weight="3">
+                android:layout_weight="3" >
 
                 <EditText
                     android:id="@+id/publish_price_time_txt"
@@ -121,7 +123,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/shape_edit_view"
                     android:maxLines="1"
-                    android:textSize="6pt" />
+                    style="@style/locker_text_view_big"/>
 
                 <Spinner
                     android:id="@+id/publish_price_time_unit_selector"
@@ -129,7 +131,7 @@
                     android:layout_height="match_parent"
                     android:entries="@array/price_time_unit"
                     android:gravity="center"
-                    android:textSize="6pt"></Spinner>
+                    style="@style/locker_text_view_big"></Spinner>
 
                 <EditText
                     android:id="@+id/publish_price_txt"
@@ -138,14 +140,14 @@
                     android:layout_weight="1"
                     android:background="@drawable/shape_edit_view"
                     android:maxLines="1"
-                    android:textSize="6pt" />
+                    style="@style/locker_text_view_big"/>
 
                 <TextView
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="元"
-                    android:textSize="6pt" />
+                    style="@style/locker_text_view_big" />
             </LinearLayout>
         </LinearLayout>
 
@@ -156,7 +158,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -166,7 +168,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="押金(必填)"
-                android:textSize="6pt" />
+                style="@style/locker_text_view_title" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -181,14 +183,14 @@
                     android:layout_weight="1"
                     android:background="@drawable/shape_edit_view"
                     android:maxLines="1"
-                    android:textSize="6pt"/>
+                    style="@style/locker_text_view_big"/>
 
                 <TextView
                     android:layout_width="30dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:text="元"
-                    android:textSize="6pt" />
+                    style="@style/locker_text_view_big" />
             </LinearLayout>
         </LinearLayout>
 
@@ -198,7 +200,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -207,7 +209,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="柜门尺寸(必填)"
-                android:textSize="6pt" />
+                style="@style/locker_text_view_title"/>
             <Spinner
                 android:id="@+id/publish_locker_size_selector"
                 android:layout_width="0dp"
@@ -217,7 +219,7 @@
                 android:background="@drawable/shape_edit_view"
                 android:entries="@array/locker_size"
                 android:gravity="center"
-                android:textSize="6pt"></Spinner>
+                style="@style/locker_text_view_big"></Spinner>
         </LinearLayout>
 
         <!--箱柜-->
@@ -226,7 +228,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -235,7 +237,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:text="附近可选箱柜"
-                android:textSize="6pt" />
+                style="@style/locker_text_view_title"/>
 
             <Spinner
                 android:id="@+id/publish_machine_selector"
@@ -246,7 +248,7 @@
                 android:background="@drawable/shape_edit_view"
                 android:gravity="center"
                 android:minWidth="150dp"
-                android:textSize="6pt"></Spinner>
+                style="@style/locker_text_view_big"></Spinner>
         </LinearLayout>
 
         <!--描述-->
@@ -255,7 +257,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -265,7 +267,7 @@
                 android:layout_height="match_parent"
                 android:gravity="top"
                 android:text="描述"
-                android:textSize="6pt" />
+                style="@style/locker_text_view_title"/>
 
             <EditText
                 android:id="@+id/publish_description_txt"
@@ -274,7 +276,9 @@
                 android:layout_weight="3"
                 android:background="@drawable/shape_edit_view"
                 android:layout_marginLeft="3dp"
-                android:lines="5"/>
+                android:lines="5"
+                style="@style/locker_text_view_big"
+                android:gravity="left|top"/>
         </LinearLayout>
 
         <!--是否上架-->

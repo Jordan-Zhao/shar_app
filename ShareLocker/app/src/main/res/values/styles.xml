@@ -65,4 +65,38 @@
         <item name="android:textStyle">bold</item>
     </style>
     <!-- ================ activity title end==========-->
+
+
+    <!-- ================ 标题 start==========-->
+    <style name="locker_text_view_title_biger">
+        <item name="android:textSize">10pt</item>
+        <item name="android:textColor">@color/black_title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <style name="locker_text_view_title_big">
+        <item name="android:textSize">10pt</item>
+        <item name="android:textColor">@color/black_title</item>
+    </style>
+    <style name="locker_text_view_title">
+        <item name="android:textSize">8pt</item>
+        <item name="android:textColor">@color/black_title</item>
+    </style>
+    <style name="locker_text_view_title_small">
+        <item name="android:textSize">6pt</item>
+        <item name="android:textColor">@color/black_title</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+    <!--================ 标题 end==========-->
+
+
+    <!-- ================ 文本 start==========-->
+    <style name="locker_text_view_big">
+        <item name="android:textSize">8pt</item>
+    </style>
+    <style name="locker_text_view_normal">
+        <item name="android:textSize">7pt</item>
+    </style>
+    <style name="locker_text_view_small">
+        <item name="android:textSize">6pt</item>
+    </style>
 </resources>

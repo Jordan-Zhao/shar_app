@@ -41,8 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lines="1"
-                android:text="带妹子去兜风吧~"
-                android:textSize="6pt" />
+                style="@style/locker_text_view_small"/>
         </LinearLayout>
 
         <!--right-->
@@ -75,19 +74,16 @@
 
                     <TextView
                         android:id="@+id/opt_right_title1"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:text="这是光盘"
-                        android:textSize="8pt"
-                        android:textStyle="bold" />
+                        style="@style/locker_text_view_title"/>
 
                     <TextView
                         android:id="@+id/opt_right_txt1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="里面是什么？里面是什么？里面是什么？里面是什么？"
-                        android:textSize="6pt" />
+                        style="@style/locker_text_view_small" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -117,16 +113,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:lines="1"
-                        android:text="这是游戏"
-                        android:textSize="8pt"
-                        android:textStyle="bold" />
+                        style="@style/locker_text_view_title"/>
 
                     <TextView
                         android:id="@+id/opt_right_txt2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="里面是什么？里面是什么？里面是什么？里面是什么？"
-                        android:textSize="6pt" />
+                        style="@style/locker_text_view_small"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -138,7 +131,6 @@
         android:orientation="horizontal"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp">
         <FrameLayout
             android:layout_width="0dp"
@@ -151,7 +143,8 @@
             android:layout_height="wrap_content"
             android:text="热门宝贝"
             android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:textSize="5pt"/>
         <FrameLayout
             android:layout_width="0dp"
             android:layout_weight="1"

@@ -25,15 +25,15 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginTop="20dp"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="手机号"
-                android:textSize="10pt" />
+                android:textSize="10pt"
+                style="@style/locker_text_view_title"/>
 
             <EditText
                 android:id="@+id/register_phone_txt"
@@ -43,7 +43,8 @@
                 android:layout_weight="3"
                 android:background="@drawable/shape_edit_view"
                 android:text="18688888888"
-                android:textSize="10pt" />
+                android:textSize="10pt"
+                style="@style/locker_text_view_normal"/>
         </LinearLayout>
 
         <!--密码-->
@@ -60,7 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="密     码"
-                android:textSize="10pt" />
+                android:textSize="10pt"
+                style="@style/locker_text_view_title"/>
 
             <EditText
                 android:id="@+id/register_password_txt1"
@@ -70,7 +72,8 @@
                 android:layout_weight="3"
                 android:background="@drawable/shape_edit_view"
                 android:text="123456"
-                android:textSize="10pt" />
+                android:textSize="10pt"
+                style="@style/locker_text_view_normal"/>
         </LinearLayout>
         <!--确认密码-->
         <LinearLayout
@@ -95,7 +98,8 @@
                 android:background="@drawable/shape_edit_view"
                 android:hint="再次确认密码"
                 android:text="123456"
-                android:textSize="10pt" />
+                android:textSize="10pt"
+                style="@style/locker_text_view_normal"/>
         </LinearLayout>
 
         <!--验证码-->
@@ -126,7 +130,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_weight="3"
                 android:background="@drawable/shape_edit_view"
-                android:textSize="10pt" />
+                android:textSize="10pt"
+                style="@style/locker_text_view_normal"/>
         </LinearLayout>
 
         <Button

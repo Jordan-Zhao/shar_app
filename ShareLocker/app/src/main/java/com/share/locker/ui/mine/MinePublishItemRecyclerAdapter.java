@@ -69,7 +69,7 @@ public class MinePublishItemRecyclerAdapter extends RecyclerView.Adapter<MinePub
         holder.getView().setTag(position);  //使用position作为tag，点击时，可以取到position
 
         ItemDTO itemDTO = itemList.get(position);
-        Glide.with(activity).load(itemDTO.getSmallImgUrl()).into(holder.getImgView());
+        Glide.with(activity).load(itemDTO.getSmallImgUrl()).centerCrop().into(holder.getImgView());
         holder.getTitleTxt().setText(itemDTO.getTitle());
         holder.getTitleTxt().getPaint().setFakeBoldText(true);
         holder.getDepositTxt().setText(BizUtil.getMoneyStr(itemDTO.getDeposit())+"元");

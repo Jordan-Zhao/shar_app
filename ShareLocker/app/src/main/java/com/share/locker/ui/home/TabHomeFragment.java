@@ -128,7 +128,6 @@ public class TabHomeFragment extends BaseFragment {
             homeRecyclerViewAdapter.setHeadView(headerView);
         }
 
-        searchTxt.clearFocus();
     }
 
 }

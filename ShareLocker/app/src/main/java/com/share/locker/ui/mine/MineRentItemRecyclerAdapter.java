@@ -73,7 +73,7 @@ public class MineRentItemRecyclerAdapter extends RecyclerView.Adapter<MineRentIt
 
         OrderDTO orderDTO = itemList.get(position);
 
-        Glide.with(activity).load(orderDTO.getItemSmallImgUrl()).into(holder.getImgView());
+        Glide.with(activity).load(orderDTO.getItemSmallImgUrl()).centerCrop().into(holder.getImgView());
         holder.getTitleTxt().setText(orderDTO.getTitle());
         holder.getTitleTxt().getPaint().setFakeBoldText(true);
         holder.getDepositTxt().setText(BizUtil.getMoneyStr(orderDTO.getDeposit())+"元");
