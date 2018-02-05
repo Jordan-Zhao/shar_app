@@ -20,6 +20,7 @@ import com.share.locker.common.JsonUtil;
 import com.share.locker.dto.UserDTO;
 import com.share.locker.http.HttpCallback;
 import com.share.locker.http.LockerHttpUtil;
+import com.share.locker.ui.admin.AdminMainActivity;
 import com.share.locker.ui.component.BaseFragment;
 import com.share.locker.ui.component.ClickManager;
 import com.share.locker.vo.LoginUserVO;
@@ -258,4 +259,17 @@ public class TabMineFragment extends BaseFragment {
             });
         }
     }
+
+    /**
+     * 进入管理员操作页面
+     * @param view
+     */
+    @Event(value = R.id.mine_enter_admin_layout,type = View.OnClickListener.class)
+    private void onClickEnterAdminLayout(View view){
+        if(ClickManager.isTriggered("MINE_LAYOUT",2)){
+            Intent intent = new Intent(getContext(), AdminMainActivity.class);
+            startActivity(intent);
+        }
+    }
+
 }

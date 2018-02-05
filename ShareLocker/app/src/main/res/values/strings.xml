@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">共享柜</string>
 
-    <string name="tab_home">主页</string>
-    <string name="tab_cart">小推车</string>
-    <string name="tab_item_publish">发布宝贝</string>
-    <string name="tab_message">消息</string>
+    <string name="tab_home">首页</string>
+    <string name="tab_cart">收藏</string>
+    <string name="tab_item_publish">出租宝贝</string>
+    <string name="tab_message">通知</string>
     <string name="tab_mine">我的</string>
     <string name="title_activity_login">Sign in</string>
 

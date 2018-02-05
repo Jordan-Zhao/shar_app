@@ -17,9 +17,14 @@ public class Constants {
 
     public final static String PASSWORD_MD5_KEY = "passworkMD5Key";
 
-    public final static String URL_IP = "192.168.0.103";
-    public final static String URL_BASE = "http://"+URL_IP+":8080/locker/";
+    public final static String URL_IP = "47.96.141.170";    //线上
+
+    //public final static String URL_IP = "192.168.0.101:8080";  //本地
+
+    public final static String URL_BASE = "http://"+URL_IP+"/locker/";
 //public final static String URL_BASE = "http://192.168.2.195:8080/locker/";
+
+    public final static String[] serverIpArr = {"47.96.141.170","192.168.0.101:8080","192.168.0.103:8080"};   //服务端可能部署的ip地址
 
     public final static String OPERATION_BANNER = "OPERATION_BANNER";	//banner图片配置code
     public final static String OPERATION_CENTER = "OPERATION_CENTER";	//首页中间位置配置code

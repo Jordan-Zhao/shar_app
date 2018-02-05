@@ -184,11 +184,13 @@ public class LockerHttpUtil {
 
     //TODO MOCK 替换服务器ip
     private static String filterResponseData(String responseData){
-        int idx1 = responseData.indexOf("http://");
-        int idx2 = responseData.indexOf(":8080");
-        if(idx1 > -1 && idx2 > -1) {
-            return responseData.replaceAll(responseData.substring(idx1+7,idx2),Constants.URL_IP);
+        for(int i=0;i<Constants.serverIpArr.length;i++){
+            if(responseData.contains(Constants.serverIpArr[i]) &&
+                    !Constants.URL_IP.equals(Constants.serverIpArr[i])){
+                responseData = responseData.replaceAll(Constants.serverIpArr[i],Constants.URL_IP);
+            }
         }
+
         return responseData;
     }
 

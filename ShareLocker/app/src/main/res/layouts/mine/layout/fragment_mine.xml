@@ -244,5 +244,25 @@
                 android:textSize="10pt"
                 android:textStyle="bold" />
         </LinearLayout>
+
+        <!--进入管理员操作-->
+        <LinearLayout
+            android:id="@+id/mine_enter_admin_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="20dp">
+            <Button
+                android:id="@+id/enter_admin_opt_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shape_button_color"
+                android:text="进入管理员操作页面"
+                android:textColor="@color/white"
+                android:textSize="10pt"
+                android:textStyle="bold" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
